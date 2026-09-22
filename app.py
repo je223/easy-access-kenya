@@ -919,6 +919,21 @@ def register():
 @app.route("/admin-login", methods=["GET", "POST"])
 def admin_login():
 
+    connection = get_db()
+
+    # If no administrator exists yet, send the user
+    # to the first-time administrator setup page.
+    existing_admin = connection.execute("""
+        SELECT id
+        FROM admins
+        LIMIT 1
+    """).fetchone()
+
+    connection.close()
+
+    if existing_admin is None:
+        return redirect(url_for("admin_setup"))
+
     if request.method == "POST":
 
         email = request.form.get("email", "").strip().lower()
@@ -1037,6 +1052,7 @@ def admin_profile_photo():
 
     return redirect(url_for("admin_dashboard"))
 
+
 # =========================================
 # ADMIN FIRST-TIME SETUP
 # =========================================
@@ -1046,7 +1062,8 @@ def admin_setup():
 
     connection = get_db()
 
-    # Do not allow another admin to be created
+    # Do not allow another first-time setup once
+    # an administrator already exists.
     existing_admin = connection.execute("""
         SELECT id
         FROM admins
@@ -1086,9 +1103,31 @@ def admin_setup():
             INSERT INTO admins (
                 name,
                 email,
-                password_hash
+                password_hash,
+                role,
+                security_code_hash,
+                profile_photo,
+                can_manage_companies,
+                can_manage_opportunities,
+                can_manage_applications,
+                can_view_users,
+                can_manage_business_ideas,
+                can_view_reports
             )
-            VALUES (?, ?, ?)
+            VALUES (
+                ?,
+                ?,
+                ?,
+                'main_admin',
+                NULL,
+                NULL,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            )
         """, (
             name,
             email,
@@ -1098,7 +1137,7 @@ def admin_setup():
         connection.commit()
         connection.close()
 
-        flash("Administrator account created successfully.")
+        flash("Main Administrator account created successfully.")
 
         return redirect(url_for("admin_login"))
 
