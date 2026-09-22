@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}Easy Access Kenya{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+
+        /* =========================================
+           TOP NAVIGATION
+           ========================================= */
+
+        .navbar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 72px;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        /* LEFT */
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+        }
+
+        .navbar-left a {
+            text-decoration: none;
+            font-weight: 700;
+            color: #064e6b;
+        }
+
+        .admin-nav-button,
+        .company-nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 16px;
+            border-radius: 10px;
+            transition: 0.2s ease;
+        }
+
+        .admin-nav-button {
+            background: #e0f2fe;
+            border: 1px solid #bae6fd;
+        }
+
+        .admin-nav-button:hover {
+            background: #bae6fd;
+        }
+
+        .company-nav-button {
+            background: #0f766e;
+            color: white !important;
+            border: 1px solid #0f766e;
+        }
+
+        .company-nav-button:hover {
+            background: #0d5f59;
+        }
+
+
+        /* CENTER BRAND */
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area span {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .logo-area strong {
+            color: #0782b5;
+        }
+
+
+        /* RIGHT */
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            min-width: 300px;
+        }
+
+        .navbar-right a {
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .register-nav-button,
+        .login-nav-button {
+            padding: 11px 20px;
+            border-radius: 10px;
+        }
+
+        .register-nav-button {
+            background: white;
+            color: #086d91 !important;
+            border: 1px solid #0782b5;
+        }
+
+        .register-nav-button:hover {
+            background: #eaf7fb;
+        }
+
+        .login-nav-button {
+            background: #0782b5;
+            color: white !important;
+            border: 1px solid #0782b5;
+        }
+
+        .login-nav-button:hover {
+            background: #056b91;
+        }
+
+
+        /* =========================================
+           THREE DOTS MENU
+           ========================================= */
+
+        .nav-more-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-more-button {
+            width: 44px;
+            height: 44px;
+            border: 1px solid #d5dce5;
+            border-radius: 10px;
+            background: white;
+            color: #172033;
+            font-size: 24px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: 0.2s ease;
+        }
+
+        .nav-more-button:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .nav-more-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 52px;
+            width: 220px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+            padding: 8px;
+            z-index: 9999;
+            box-sizing: border-box;
+        }
+
+        .nav-more-menu.show {
+            display: block;
+        }
+
+        .nav-more-menu a {
+            display: block;
+            padding: 12px 13px;
+            border-radius: 9px;
+            text-decoration: none;
+            color: #172033 !important;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .nav-more-menu a:hover {
+            background: #f0fdfa;
+            color: #0f766e !important;
+        }
+
+        .nav-more-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 6px 4px;
+        }
+
+
+        /* =========================================
+           MOBILE
+           ========================================= */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .navbar-left,
+            .navbar-right {
+                min-width: auto;
+            }
+
+            .navbar-left {
+                display: none;
+            }
+
+            .logo-area {
+                order: -1;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navbar-right {
+                width: 100%;
+                flex: 1;
+                justify-content: flex-end;
+            }
+
+            .register-nav-button,
+            .login-nav-button {
+                padding: 10px 14px;
+            }
+
+            .nav-more-button {
+                width: 42px;
+                height: 42px;
+            }
+
+            .nav-more-menu {
+                right: 0;
+                top: 50px;
+            }
+
+        }
+
+
+        /* =========================================
+           ORIGINAL EASY ACCESS KENYA COLORS
+           ========================================= */
+
+        body {
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        body main {
+            background: #f4f7fb;
+        }
+
+        body footer {
+            background: #f4f7fb;
+            color: #6b7280;
+        }
+
+        .opportunities-page,
+        .opportunities-wrapper {
+            background: #f4f7fb !important;
+        }
+
+
+        /* =========================================
+           ORIGINAL EASY ACCESS KENYA DARK THEME
+           ========================================= */
+
+        body.theme-dark {
+            background: #111722 !important;
+            color: #e8edf4 !important;
+        }
+
+        body.theme-dark .navbar {
+            background: #171e2a !important;
+            border-bottom-color: #303a49 !important;
+        }
+
+        body.theme-dark .navbar a {
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark .navbar a:hover {
+            color: #4caf70 !important;
+        }
+
+        body.theme-dark main {
+            background: #111722 !important;
+        }
+
+        body.theme-dark footer {
+            background: #111722 !important;
+            color: #9da8b7 !important;
+        }
+
+        body.theme-dark h1,
+        body.theme-dark h2,
+        body.theme-dark h3,
+        body.theme-dark h4,
+        body.theme-dark h5,
+        body.theme-dark h6 {
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark p {
+            color: #9da8b7;
+        }
+
+        /* CARDS */
+
+        body.theme-dark .card,
+        body.theme-dark .header-card,
+        body.theme-dark .form-card,
+        body.theme-dark .dashboard-card-v2,
+        body.theme-dark .dashboard-stat,
+        body.theme-dark .quick-card,
+        body.theme-dark .application-card {
+            background: #1b2330 !important;
+            color: #e8edf4 !important;
+            border-color: #303a49 !important;
+        }
+
+        /* INPUTS */
+
+        body.theme-dark input,
+        body.theme-dark select,
+        body.theme-dark textarea {
+            background: #151c27 !important;
+            color: #f1f4f8 !important;
+            border-color: #354052 !important;
+        }
+
+        body.theme-dark input::placeholder,
+        body.theme-dark textarea::placeholder {
+            color: #7f8a9b !important;
+        }
+
+        /* COMMON BOXES */
+
+        body.theme-dark .info-item,
+        body.theme-dark .document-item,
+        body.theme-dark .skills-box,
+        body.theme-dark .info-box,
+        body.theme-dark .opportunity-preview,
+        body.theme-dark .quick-card {
+            background: #151c27 !important;
+            color: #e8edf4 !important;
+            border-color: #303a49 !important;
+        }
+
+        /* BORDERS */
+
+        body.theme-dark .section-title,
+        body.theme-dark .section-heading,
+        body.theme-dark .application-bottom {
+            border-color: #303a49 !important;
+        }
+
+        /* OPPORTUNITIES PAGE */
+
+        body.theme-dark .opportunities-page,
+        body.theme-dark .opportunities-wrapper {
+            background: #111722 !important;
+            color: #e8edf4 !important;
+        }
+
+        body.theme-dark .opportunities-page-header h1 {
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark .opportunities-page-header p {
+            color: #9da8b7 !important;
+        }
+
+        body.theme-dark .opportunities-label {
+            color: #4caf70 !important;
+        }
+
+        body.theme-dark .opportunities-count {
+            background: #1b2330 !important;
+            border-color: #303a49 !important;
+        }
+
+        body.theme-dark .opportunities-count strong {
+            color: #4caf70 !important;
+        }
+
+        body.theme-dark .opportunities-count span {
+            color: #9da8b7 !important;
+        }
+
+        /* OPPORTUNITY SEARCH */
+
+        body.theme-dark .opportunities-search-panel {
+            background: #1b2330 !important;
+            border-color: #303a49 !important;
+        }
+
+        body.theme-dark .opportunities-search-input {
+            background: #151c27 !important;
+            border-color: #354052 !important;
+        }
+
+        body.theme-dark .opportunities-search-input input {
+            background: transparent !important;
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark .opportunities-search-input input::placeholder {
+            color: #7f8a9b !important;
+        }
+
+        body.theme-dark .opportunities-search-panel select {
+            background: #151c27 !important;
+            color: #f1f4f8 !important;
+            border-color: #354052 !important;
+        }
+
+        body.theme-dark .opportunities-search-panel button {
+            background: #4caf70 !important;
+            color: white !important;
+        }
+
+        /* OPPORTUNITY CARDS */
+
+        body.theme-dark .opportunity-item {
+            background: #1b2330 !important;
+            border-color: #303a49 !important;
+        }
+
+        body.theme-dark .opportunity-item-content h2 {
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark .opportunity-company,
+        body.theme-dark .opportunity-information,
+        body.theme-dark .opportunity-summary {
+            color: #9da8b7 !important;
+        }
+
+        body.theme-dark .opportunity-item-action a {
+            background: #0e1420 !important;
+            color: #ffffff !important;
+        }
+
+        body.theme-dark .opportunity-item-action a:hover {
+            background: #4caf70 !important;
+        }
+
+        body.theme-dark .opportunity-item-icon {
+            background: #202c25 !important;
+        }
+
+        /* EMPTY STATE */
+
+        body.theme-dark .opportunities-empty {
+            background: #1b2330 !important;
+            border-color: #303a49 !important;
+        }
+
+        body.theme-dark .opportunities-empty h2 {
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark .opportunities-empty p {
+            color: #9da8b7 !important;
+        }
+
+        /* BACK BUTTON */
+
+        body.theme-dark .global-back-button {
+            background: #171e2a !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        /* THREE DOTS MENU
+           Keep the newer navigation design */
+
+        body.theme-dark .nav-more-button {
+            background: #171e2a !important;
+            color: #ffffff !important;
+            border-color: #303a49 !important;
+        }
+
+        body.theme-dark .nav-more-button:hover {
+            background: #202a38 !important;
+        }
+
+        body.theme-dark .nav-more-menu {
+            background: #171e2a !important;
+            border-color: #303a49 !important;
+        }
+
+        body.theme-dark .nav-more-menu a {
+            color: #f1f4f8 !important;
+        }
+
+        body.theme-dark .nav-more-menu a:hover {
+            background: #202a38 !important;
+            color: #4caf70 !important;
+        }
+
+        body.theme-dark .nav-more-divider {
+            background: #303a49 !important;
+        }
+
+    </style>
+
+</head>
+
+
+<body id="easy-access-body">
+
+    <script>
+
+        (function () {
+
+            const savedTheme =
+                localStorage.getItem("easyAccessTheme");
+
+            const theme = savedTheme || "light";
+
+            document.body.classList.remove(
+                "theme-light",
+                "theme-dark",
+                "theme-lightblue",
+                "theme-ocean",
+                "theme-kenya"
+            );
+
+            document.body.classList.add(
+                "theme-" + theme
+            );
+
+        })();
+
+    </script>
+
+
+    <!-- =========================================
+         MAIN NAVIGATION
+         ========================================= -->
+
+    <header class="navbar">
+
+        <div class="navbar-left">
+        </div>
+
+        <div class="logo-area">
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/easy-access-logo.png'
+                ) }}"
+                alt="Easy Access Kenya"
+                class="main-logo"
+            >
+
+            <span>
+                Easy Access <strong>Kenya</strong>
+            </span>
+
+        </div>
+
+        <div class="navbar-right">
+
+            <a
+                href="{{ url_for('register') }}"
+                class="register-nav-button"
+            >
+                Register
+            </a>
+
+            <a
+                href="{{ url_for('login') }}"
+                class="login-nav-button"
+            >
+                Login
+            </a>
+
+            <div class="nav-more-container">
+
+                <button
+                    type="button"
+                    class="nav-more-button"
+                    id="navMoreButton"
+                    aria-label="More options"
+                    aria-expanded="false"
+                >
+                    ⋮
+                </button>
+
+                <div
+                    class="nav-more-menu"
+                    id="navMoreMenu"
+                >
+
+                    <a href="{{ url_for('admin_login') }}">
+                        👤 Admin
+                    </a>
+
+                    <a href="{{ url_for('company_register') }}">
+                        🏢 Company Registration
+                    </a>
+
+                    <div class="nav-more-divider"></div>
+
+                    <a href="{{ url_for('logout') }}">
+                        🚪 Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         THREE DOTS JAVASCRIPT
+         ========================================= -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const button =
+                    document.getElementById("navMoreButton");
+
+                const menu =
+                    document.getElementById("navMoreMenu");
+
+                if (!button || !menu) {
+                    return;
+                }
+
+                button.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.stopPropagation();
+
+                        const isOpen =
+                            menu.classList.toggle("show");
+
+                        button.setAttribute(
+                            "aria-expanded",
+                            isOpen ? "true" : "false"
+                        );
+
+                    }
+                );
+
+                document.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (
+                            !menu.contains(event.target) &&
+                            !button.contains(event.target)
+                        ) {
+
+                            menu.classList.remove("show");
+
+                            button.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+    <!-- =========================================
+         FLASH MESSAGES
+         ========================================= -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            <div
+                id="flash-message"
+                style="
+                    max-width: 560px;
+                    margin: 20px auto;
+                    padding: 14px 18px;
+                    background: #fff7ed;
+                    border: 1px solid #fdba74;
+                    border-radius: 10px;
+                    color: #9a3412;
+                    font-weight: 600;
+                    text-align: center;
+                    box-sizing: border-box;
+                    transition: opacity 0.5s ease;
+                "
+            >
+
+                {% for message in messages %}
+
+                    <div>
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <script>
+
+        setTimeout(function () {
+
+            const flashMessage =
+                document.getElementById("flash-message");
+
+            if (flashMessage) {
+
+                flashMessage.style.opacity = "0";
+
+                setTimeout(function () {
+
+                    flashMessage.remove();
+
+                }, 500);
+
+            }
+
+        }, 3000);
+
+    </script>
+
+
+    <!-- =========================================
+         GLOBAL BACK BUTTON
+         ========================================= -->
+
+    <div
+        style="
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+        "
+    >
+
+        <button
+            type="button"
+            onclick="history.back()"
+            aria-label="Go back"
+            class="global-back-button"
+            style="
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                border: none;
+                background: white;
+                color: #222;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+                font-size: 22px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            "
+        >
+            ←
+        </button>
+
+    </div>
+
+
+    {% block content %}{% endblock %}
+
+
+    <footer>
+
+        <p>
+            © 2026 Easy Access Kenya.
+            Connecting Kenyans to opportunities.
+        </p>
+
+    </footer>
+
+
+</body>
+</html>
+```

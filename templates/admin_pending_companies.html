@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* ==============================
+   ADMIN PENDING COMPANIES
+   ============================== */
+
+.admin-pending-page {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-pending-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.admin-pending-header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.admin-pending-header p {
+    margin: 7px 0 0;
+    opacity: 0.7;
+}
+
+.admin-pending-count {
+    background: #fff7ed;
+    color: #c2410c;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* ==============================
+   CARD
+   ============================== */
+
+.admin-pending-card {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.admin-pending-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-pending-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+}
+
+.admin-pending-table th {
+    background: #f8fafc;
+    padding: 16px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 800;
+    color: #475569;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.admin-pending-table td {
+    padding: 17px 14px;
+    border-bottom: 1px solid #eef2f7;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.admin-pending-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-pending-table tbody tr {
+    transition: 0.2s ease;
+}
+
+.admin-pending-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* ==============================
+   COMPANY
+   ============================== */
+
+.admin-company-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-company-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #475569;
+    flex-shrink: 0;
+}
+
+.admin-company-name {
+    font-weight: 800;
+    color: #111827;
+}
+
+.admin-company-email {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+
+/* ==============================
+   BADGES
+   ============================== */
+
+.admin-pending-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* ==============================
+   ACTIONS
+   ============================== */
+
+.admin-company-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-company-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 13px;
+    border-radius: 9px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-review-button {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.admin-review-button:hover {
+    background: #bae6fd;
+}
+
+
+/* ==============================
+   EMPTY STATE
+   ============================== */
+
+.admin-pending-empty {
+    padding: 70px 30px;
+    text-align: center;
+}
+
+.admin-pending-empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.admin-pending-empty h3 {
+    margin: 0 0 8px;
+    font-size: 21px;
+}
+
+.admin-pending-empty p {
+    margin: 0;
+    opacity: 0.65;
+}
+
+
+/* ==============================
+   DARK THEME
+   ============================== */
+
+body.theme-dark .admin-pending-page {
+    color: #f8fafc;
+}
+
+body.theme-dark .admin-pending-count {
+    background: #3f2a18;
+    color: #fdba74;
+}
+
+body.theme-dark .admin-pending-card {
+    background: #111827;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-dark .admin-pending-table th {
+    background: #1e293b;
+    color: #cbd5e1;
+    border-bottom-color: #334155;
+}
+
+body.theme-dark .admin-pending-table td {
+    border-bottom-color: #263244;
+}
+
+body.theme-dark .admin-pending-table tbody tr:hover {
+    background: #1e293b;
+}
+
+body.theme-dark .admin-company-name {
+    color: #f8fafc;
+}
+
+body.theme-dark .admin-company-email {
+    color: #94a3b8;
+}
+
+body.theme-dark .admin-company-avatar {
+    background: #334155;
+    color: #cbd5e1;
+}
+
+
+/* ==============================
+   MOBILE
+   ============================== */
+
+@media (max-width: 768px) {
+
+    .admin-pending-page {
+        padding: 20px 14px;
+    }
+
+    .admin-pending-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-pending-header h1 {
+        font-size: 25px;
+    }
+
+    .admin-pending-count {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+</style>
+
+
+<div class="admin-pending-page">
+
+    <div class="admin-pending-header">
+
+        <div>
+
+            <h1>Pending Verification</h1>
+
+            <p>
+                Review companies waiting for administrator verification.
+            </p>
+
+        </div>
+
+        <div class="admin-pending-count">
+            {{ companies|length }} Pending
+        </div>
+
+    </div>
+
+
+    <div class="admin-pending-card">
+
+        {% if companies %}
+
+        <div class="admin-pending-table-wrapper">
+
+            <table class="admin-pending-table">
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Company</th>
+                        <th>Contact Person</th>
+                        <th>Phone</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for company in companies %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ company["id"] }}</strong>
+                        </td>
+
+
+                        <td>
+
+                            <div class="admin-company-profile">
+
+                                <div class="admin-company-avatar">
+                                    {{ company["company_name"][0]|upper }}
+                                </div>
+
+                                <div>
+
+                                    <div class="admin-company-name">
+                                        {{ company["company_name"] }}
+                                    </div>
+
+                                    <div class="admin-company-email">
+                                        {{ company["email"] }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            {{ company["contact_person"] or "—" }}
+                        </td>
+
+
+                        <td>
+                            {{ company["phone"] or "—" }}
+                        </td>
+
+
+                        <td>
+                            {{ company["location"] or "—" }}
+                        </td>
+
+
+                        <td>
+
+                            <span class="admin-pending-badge">
+                                Pending
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            {{ company["submitted_at"] or "—" }}
+                        </td>
+
+
+                        <td>
+
+                            <div class="admin-company-actions">
+
+                                <a
+                                    href="{{ url_for('admin_company', company_id=company['id']) }}"
+                                    class="admin-company-action admin-review-button"
+                                >
+                                    Review
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="admin-pending-empty">
+
+            <div class="admin-pending-empty-icon">
+                ✅
+            </div>
+
+            <h3>No Pending Companies</h3>
+
+            <p>
+                There are currently no companies waiting for verification.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

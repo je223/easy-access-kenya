@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Apply - Easy Access Kenya</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 30px 20px 50px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .header-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-card h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .header-card p {
+            margin: 6px 0;
+            color: #6b7280;
+        }
+
+        .opportunity-name {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 130px;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            background: #e5e7eb;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .step.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            background: white;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-back:hover {
+            background: #d1d5db;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            .form-card,
+            .header-card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="container">
+
+        <!-- =====================================
+             BACK TO OPPORTUNITY
+             ===================================== -->
+
+        <a
+            href="{{ url_for('opportunity', opportunity_id=opportunity['id']) }}"
+            class="back-link"
+        >
+            ← Back to Opportunity
+        </a>
+
+
+        <!-- =====================================
+             APPLICATION HEADER
+             ===================================== -->
+
+        <div class="header-card">
+
+            <h1>
+                Apply for Opportunity
+            </h1>
+
+            <p>
+                You are applying for:
+                <span class="opportunity-name">
+                    {{ opportunity['title'] }}
+                </span>
+            </p>
+
+            <p>
+                Company:
+                <strong>
+                    {{ opportunity['company'] }}
+                </strong>
+            </p>
+
+
+            <!-- =====================================
+                 APPLICATION PROGRESS
+                 ===================================== -->
+
+            <div class="progress">
+
+                <div class="step active">
+                    1. Personal Information
+                </div>
+
+                <div class="step">
+                    2. Documents
+                </div>
+
+                <div class="step">
+                    3. Verification
+                </div>
+
+                <div class="step">
+                    4. Review
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             APPLICATION FORM
+             ===================================== -->
+
+        <form
+            method="POST"
+            action="{{ url_for('apply', opportunity_id=opportunity['id']) }}"
+            class="form-card"
+        >
+
+            <!-- =====================================
+                 CSRF PROTECTION
+                 ===================================== -->
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+
+            <!-- =====================================
+                 INFORMATION MESSAGE
+                 ===================================== -->
+
+            <div class="info-box">
+
+                Your saved profile information has been
+                automatically loaded below.
+
+                Please review your information carefully.
+                You can edit any field before continuing.
+
+            </div>
+
+
+            <!-- =====================================
+                 PERSONAL INFORMATION
+                 ===================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    Personal Information
+                </div>
+
+
+                <div class="grid">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="field">
+
+                        <label for="full_name">
+
+                            Full Name
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            id="full_name"
+                            type="text"
+                            name="full_name"
+                            value="{{ application.full_name }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="field">
+
+                        <label for="email">
+
+                            Email
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value="{{ application.email }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="field">
+
+                        <label for="phone">
+
+                            Phone Number
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            id="phone"
+                            type="tel"
+                            name="phone"
+                            value="{{ application.phone }}"
+                            placeholder="e.g. 0712345678"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- COUNTY -->
+
+                    <div class="field">
+
+                        <label for="county">
+
+                            County
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <select
+                            id="county"
+                            name="county"
+                            required
+                        >
+
+                            <option value="">
+                                Select County
+                            </option>
+
+                            {% for county in counties %}
+
+                            <option
+                                value="{{ county }}"
+                                {% if application.county == county %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ county }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TOWN -->
+
+                    <div class="field">
+
+                        <label for="town">
+                            Town
+                        </label>
+
+                        <input
+                            id="town"
+                            type="text"
+                            name="town"
+                            value="{{ application.town }}"
+                            placeholder="Enter your town"
+                        >
+
+                    </div>
+
+
+                    <!-- DATE OF BIRTH -->
+
+                    <div class="field">
+
+                        <label for="date_of_birth">
+
+                            Date of Birth
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            id="date_of_birth"
+                            type="date"
+                            name="date_of_birth"
+                            value="{{ application.date_of_birth }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 ACADEMIC INFORMATION
+                 ===================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    Academic Information
+                </div>
+
+
+                <div class="grid">
+
+
+                    <!-- INSTITUTION -->
+
+                    <div class="field">
+
+                        <label for="institution">
+
+                            Institution
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            id="institution"
+                            type="text"
+                            name="institution"
+                            value="{{ application.institution }}"
+                            placeholder="University / College / TVET"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- COURSE -->
+
+                    <div class="field">
+
+                        <label for="course">
+
+                            Course
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <input
+                            id="course"
+                            type="text"
+                            name="course"
+                            value="{{ application.course }}"
+                            placeholder="e.g. Mechanical Engineering"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EDUCATION LEVEL -->
+
+                    <div class="field">
+
+                        <label for="education_level">
+
+                            Education Level
+                            <span class="required">*</span>
+
+                        </label>
+
+                        <select
+                            id="education_level"
+                            name="education_level"
+                            required
+                        >
+
+                            <option value="">
+                                Select Education Level
+                            </option>
+
+                            <option
+                                value="Certificate"
+                                {% if application.education_level == "Certificate" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Certificate
+                            </option>
+
+                            <option
+                                value="Diploma"
+                                {% if application.education_level == "Diploma" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Diploma
+                            </option>
+
+                            <option
+                                value="Higher Diploma"
+                                {% if application.education_level == "Higher Diploma" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Higher Diploma
+                            </option>
+
+                            <option
+                                value="Degree"
+                                {% if application.education_level == "Degree" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Degree
+                            </option>
+
+                            <option
+                                value="Postgraduate"
+                                {% if application.education_level == "Postgraduate" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Postgraduate
+                            </option>
+
+                            <option
+                                value="Other"
+                                {% if application.education_level == "Other" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- YEAR OF STUDY -->
+
+                    <div class="field">
+
+                        <label for="year_of_study">
+                            Year of Study
+                        </label>
+
+                        <select
+                            id="year_of_study"
+                            name="year_of_study"
+                        >
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option
+                                value="Year 1"
+                                {% if application.year_of_study == "Year 1" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Year 1
+                            </option>
+
+                            <option
+                                value="Year 2"
+                                {% if application.year_of_study == "Year 2" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Year 2
+                            </option>
+
+                            <option
+                                value="Year 3"
+                                {% if application.year_of_study == "Year 3" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Year 3
+                            </option>
+
+                            <option
+                                value="Year 4"
+                                {% if application.year_of_study == "Year 4" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Year 4
+                            </option>
+
+                            <option
+                                value="Year 5"
+                                {% if application.year_of_study == "Year 5" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Year 5
+                            </option>
+
+                            <option
+                                value="Other"
+                                {% if application.year_of_study == "Other" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- GRADUATION YEAR -->
+
+                    <div class="field">
+
+                        <label for="graduation_year">
+                            Expected Graduation Year
+                        </label>
+
+                        <input
+                            id="graduation_year"
+                            type="number"
+                            name="graduation_year"
+                            value="{{ application.graduation_year }}"
+                            placeholder="e.g. 2027"
+                            min="2020"
+                            max="2050"
+                        >
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="field full">
+
+                        <label for="skills">
+                            Skills
+                        </label>
+
+                        <textarea
+                            id="skills"
+                            name="skills"
+                            placeholder="List your relevant skills, experience or technical abilities..."
+                        >{{ application.skills }}</textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 ACTIONS
+                 ===================================== -->
+
+            <div class="actions">
+
+                <a
+                    href="{{ url_for('opportunity', opportunity_id=opportunity['id']) }}"
+                    class="btn btn-back"
+                >
+                    ← Back to Opportunity
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Continue to Documents →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

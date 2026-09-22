@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Opportunity | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+    /* ================================
+       EDIT OPPORTUNITY PAGE
+       Scoped only to this page
+       ================================ */
+
+    .edit-opportunity-page {
+        min-height: calc(100vh - 80px);
+        padding: 45px 20px 70px;
+    }
+
+    .edit-opportunity-wrapper {
+        width: 100%;
+        max-width: 1050px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .edit-opportunity-header {
+        margin-bottom: 28px;
+    }
+
+    .edit-opportunity-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: rgba(20, 108, 67, 0.10);
+        color: #146c43;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
+    .edit-opportunity-header h1 {
+        margin: 0;
+        font-size: 34px;
+        line-height: 1.2;
+        font-weight: 800;
+        color: #172033;
+    }
+
+    .edit-opportunity-header p {
+        margin: 9px 0 0;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    /* Main card */
+    .edit-opportunity-card {
+        background: #ffffff;
+        border: 1px solid #e7eaf0;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.07);
+        padding: 34px;
+    }
+
+    /* Form layout */
+    .edit-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .edit-form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit-form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .edit-form-group label {
+        margin-bottom: 8px;
+        color: #263044;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .edit-form-group input,
+    .edit-form-group select,
+    .edit-form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #dfe3ea;
+        border-radius: 11px;
+        background: #fbfcfe;
+        color: #172033;
+        font-family: inherit;
+        font-size: 15px;
+        padding: 13px 14px;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+    .edit-form-group input,
+    .edit-form-group select {
+        height: 48px;
+    }
+
+    .edit-form-group textarea {
+        min-height: 145px;
+        resize: vertical;
+        line-height: 1.55;
+    }
+
+    .edit-form-group input:focus,
+    .edit-form-group select:focus,
+    .edit-form-group textarea:focus {
+        border-color: #146c43;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(20, 108, 67, 0.10);
+    }
+
+    .edit-form-group input::placeholder,
+    .edit-form-group textarea::placeholder {
+        color: #9aa3b2;
+    }
+
+    /* Bottom actions */
+    .edit-form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #edf0f4;
+    }
+
+    .edit-form-actions-left {
+        color: #7a8494;
+        font-size: 13px;
+    }
+
+    .edit-form-actions-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .edit-save-button,
+    .edit-cancel-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 20px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .edit-save-button {
+        border: none;
+        background: #146c43;
+        color: #ffffff;
+    }
+
+    .edit-save-button:hover {
+        background: #0f5836;
+        transform: translateY(-1px);
+        box-shadow: 0 7px 18px rgba(20, 108, 67, 0.20);
+    }
+
+    .edit-cancel-button {
+        border: 1px solid #dfe3ea;
+        background: #ffffff;
+        color: #465064;
+    }
+
+    .edit-cancel-button:hover {
+        background: #f5f7fa;
+        border-color: #cbd1da;
+    }
+
+    /* Responsive */
+    @media (max-width: 750px) {
+        .edit-opportunity-page {
+            padding: 30px 15px 50px;
+        }
+
+        .edit-opportunity-header h1 {
+            font-size: 28px;
+        }
+
+        .edit-opportunity-card {
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .edit-form-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .edit-form-group.full-width {
+            grid-column: auto;
+        }
+
+        .edit-form-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .edit-form-actions-right {
+            width: 100%;
+        }
+
+        .edit-save-button,
+        .edit-cancel-button {
+            flex: 1;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .edit-form-actions-right {
+            flex-direction: column;
+        }
+
+        .edit-save-button,
+        .edit-cancel-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<section class="edit-opportunity-page">
+
+    <div class="edit-opportunity-wrapper">
+
+        <!-- Header -->
+        <div class="edit-opportunity-header">
+
+            <span class="edit-opportunity-badge">
+                EASY ACCESS KENYA
+            </span>
+
+            <h1>Edit Opportunity</h1>
+
+            <p>
+                Update the details of your opportunity and keep your listing accurate.
+            </p>
+
+        </div>
+
+
+        <!-- Form Card -->
+        <div class="edit-opportunity-card">
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <div class="edit-form-grid">
+
+                    <!-- Opportunity Title -->
+                    <div class="edit-form-group full-width">
+
+                        <label for="title">
+                            Opportunity Title
+                        </label>
+
+                        <input
+                            id="title"
+                            type="text"
+                            name="title"
+                            value="{{ opportunity['title'] }}"
+                            placeholder="Enter opportunity title"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Opportunity Type -->
+                    <div class="edit-form-group">
+
+                        <label for="opportunity_type">
+                            Opportunity Type
+                        </label>
+
+                        <select
+                            id="opportunity_type"
+                            name="opportunity_type"
+                            required
+                        >
+
+                            <option
+                                value="Attachment"
+                                {% if opportunity['opportunity_type'] == 'Attachment' %}selected{% endif %}
+                            >
+                                Attachment
+                            </option>
+
+                            <option
+                                value="Internship"
+                                {% if opportunity['opportunity_type'] == 'Internship' %}selected{% endif %}
+                            >
+                                Internship
+                            </option>
+
+                            <option
+                                value="Job"
+                                {% if opportunity['opportunity_type'] == 'Job' %}selected{% endif %}
+                            >
+                                Job
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- County -->
+                    <div class="edit-form-group">
+
+                        <label for="county">
+                            County
+                        </label>
+
+                        <input
+                            id="county"
+                            type="text"
+                            name="county"
+                            value="{{ opportunity['county'] }}"
+                            placeholder="e.g. Nairobi"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Description -->
+                    <div class="edit-form-group full-width">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Describe the opportunity..."
+                            required
+                        >{{ opportunity['description'] }}</textarea>
+
+                    </div>
+
+
+                    <!-- Requirements -->
+                    <div class="edit-form-group full-width">
+
+                        <label for="requirements">
+                            Requirements
+                        </label>
+
+                        <textarea
+                            id="requirements"
+                            name="requirements"
+                            placeholder="List the requirements for applicants..."
+                        >{{ opportunity['requirements'] }}</textarea>
+
+                    </div>
+
+
+                    <!-- Deadline -->
+                    <div class="edit-form-group">
+
+                        <label for="deadline">
+                            Application Deadline
+                        </label>
+
+                        <input
+                            id="deadline"
+                            type="date"
+                            name="deadline"
+                            value="{{ opportunity['deadline'] }}"
+                        >
+
+                    </div>
+
+
+                    <!-- Contact Email -->
+                    <div class="edit-form-group">
+
+                        <label for="contact_email">
+                            Contact Email
+                        </label>
+
+                        <input
+                            id="contact_email"
+                            type="email"
+                            name="contact_email"
+                            value="{{ opportunity['contact_email'] }}"
+                            placeholder="example@company.com"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Actions -->
+                <div class="edit-form-actions">
+
+                    <div class="edit-form-actions-left">
+                        Make sure all opportunity information is accurate.
+                    </div>
+
+                    <div class="edit-form-actions-right">
+
+                        <a
+                            href="{{ url_for('company_dashboard') }}"
+                            class="edit-cancel-button"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="edit-save-button"
+                        >
+                            💾 Save Changes
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

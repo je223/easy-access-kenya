@@ -1,0 +1,6 @@
+easy_access.db
+uploads/
+__pycache__/
+.env
+.vscode/
+easy-access-kenya/

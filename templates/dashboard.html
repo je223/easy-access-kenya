@@ -1,0 +1,1675 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   DASHBOARD V2
+   ========================================= */
+
+.dashboard-v2 {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    background: #17324D;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
+.dashboard-sidebar-v2 {
+    width: 250px;
+    background: #ffffff;
+    border-right: 1px solid #dbe7f1;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.brand-v2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px 25px;
+}
+
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.brand-v2 strong {
+    display: block;
+    color: #111827;
+    font-size: 15px;
+}
+
+.brand-v2 small {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.dashboard-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.menu-item span {
+    width: 22px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.menu-item:hover {
+    background: #eef5fb;
+    color: #2563eb;
+}
+
+.menu-item.active {
+    background: #e8f1ff;
+    color: #2563eb;
+}
+
+.sidebar-footer-v2 {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 20px;
+    border-top: 1px solid #e5edf5;
+}
+
+.logout-v2:hover {
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+
+/* =========================================
+   MAIN
+   ========================================= */
+
+.dashboard-main-v2 {
+    flex: 1;
+    min-width: 0;
+    padding: 30px;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.dashboard-header-v2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.dashboard-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.dashboard-header-v2 h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #111827;
+}
+
+.dashboard-header-v2 p {
+    margin: 8px 0 0;
+    color: #64748b;
+}
+
+.dashboard-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+/* =========================================
+   NOTIFICATION BELL
+   ========================================= */
+
+.notification-wrapper-v2 {
+    position: relative;
+    display: inline-flex;
+}
+
+.notification-v2 {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #dbe7f1;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.notification-badge-v2 {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.notification-alert-v2 {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
+    background: #dc2626;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    display: none;
+    z-index: 1000;
+}
+
+@keyframes notification-ring-v2 {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    15% {
+        transform: rotate(15deg);
+    }
+
+    30% {
+        transform: rotate(-15deg);
+    }
+
+    45% {
+        transform: rotate(12deg);
+    }
+
+    60% {
+        transform: rotate(-12deg);
+    }
+
+    75% {
+        transform: rotate(6deg);
+    }
+
+    90% {
+        transform: rotate(-6deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.notification-ring-v2 {
+    animation: notification-ring-v2 0.8s ease-in-out;
+}
+
+
+/* =========================================
+   USER
+   ========================================= */
+
+.avatar-v2 {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.user-info-v2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info-v2 strong {
+    color: #111827;
+    font-size: 14px;
+}
+
+.user-info-v2 span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+.dashboard-search {
+    background: #176b3a !important;
+    border: 1px solid #dbe7f1;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+}
+
+.search-text h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: #ffffff !important;
+}
+
+.search-text p {
+    margin: 0 0 16px;
+    color: #ffffff !important;
+    font-size: 14px;
+}
+
+.dashboard-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fbfe;
+    border: 1px solid #dbe7f1;
+    border-radius: 12px;
+    padding: 7px;
+}
+
+.dashboard-search-box span {
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+.dashboard-search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 11px 5px;
+    font-size: 14px;
+    color: #1f2937;
+}
+
+.dashboard-search-box button {
+    border: none;
+    border-radius: 9px;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* =========================================
+   STATS
+   ========================================= */
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.dashboard-stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    min-height: 98px;
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+}
+
+.dashboard-stat-button {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-stat-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+}
+
+.stat-symbol {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: #e8f1ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.dashboard-stat > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-stat > div:nth-child(2) span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.dashboard-stat > div:nth-child(2) strong {
+    color: #111827;
+    font-size: 15px;
+}
+
+.dashboard-stat > b {
+    margin-left: auto;
+    color: #2563eb;
+    font-size: 22px;
+}
+
+
+/* =========================================
+   CONTENT GRID
+   ========================================= */
+
+.dashboard-grid-v2 {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+}
+
+.dashboard-card-v2 {
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+}
+
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.card-heading h2 {
+    margin: 0 0 5px;
+    font-size: 19px;
+    color: #111827;
+}
+
+.card-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.card-heading a {
+    color: #2563eb;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   OPPORTUNITY PREVIEWS
+   ========================================= */
+
+.opportunity-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f8fbfe;
+    border: 1px solid #e1ebf3;
+    border-radius: 12px;
+}
+
+.opportunity-preview:last-child {
+    margin-bottom: 0;
+}
+
+.preview-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #e8f1ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.opportunity-preview > div:nth-child(2) {
+    flex: 1;
+}
+
+.opportunity-preview strong {
+    display: block;
+    font-size: 14px;
+    color: #111827;
+    margin-bottom: 3px;
+}
+
+.opportunity-preview span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.opportunity-preview > a {
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   PROFILE
+   ========================================= */
+
+.profile-card-v2 {
+    text-align: center;
+}
+
+.profile-avatar-large {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px auto 12px;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.profile-card-v2 h3 {
+    margin: 0 0 4px;
+    color: #111827;
+}
+
+.profile-type {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.profile-progress-v2 {
+    margin-top: 22px;
+    text-align: left;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.progress-label span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.progress-label strong {
+    font-size: 12px;
+    color: #2563eb;
+}
+
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background: #e7eef5;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-value {
+    width: 25%;
+    height: 100%;
+    background: #2563eb;
+}
+
+.complete-profile-button {
+    display: block;
+    margin-top: 18px;
+    padding: 11px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   QUICK ACTIONS
+   ========================================= */
+
+.quick-section {
+    margin-top: 20px;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.quick-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 17px;
+    background: #f8fbfe;
+    border: 1px solid #e1ebf3;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.quick-card:hover {
+    transform: translateY(-2px);
+    border-color: #bfd6ee;
+}
+
+.quick-card > span {
+    font-size: 22px;
+}
+
+.quick-card strong {
+    color: #111827;
+    font-size: 13px;
+}
+
+.quick-card small {
+    color: #64748b;
+    font-size: 11px;
+}
+
+
+/* =========================================
+   RECOMMENDATIONS
+   ========================================= */
+
+.recommendations {
+    margin-top: 20px;
+}
+
+.recommendation-empty {
+    background: #f8fbfe;
+    border: 1px dashed #cbd9e6;
+    border-radius: 14px;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.recommendation-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.recommendation-empty h3 {
+    margin: 0 0 7px;
+    color: #111827;
+}
+
+.recommendation-empty p {
+    max-width: 600px;
+    margin: 0 auto 16px;
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.recommendation-empty a {
+    display: inline-block;
+    padding: 11px 16px;
+    border-radius: 9px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.dashboard-footer-v2 {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 24px 4px 5px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1100px) {
+
+    .dashboard-sidebar-v2 {
+        width: 220px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .dashboard-v2 {
+        display: block;
+    }
+
+    .dashboard-sidebar-v2 {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #dbe7f1;
+    }
+
+    .dashboard-menu {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .sidebar-footer-v2 {
+        margin-top: 15px;
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .dashboard-grid-v2 {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header-v2 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-main-v2 {
+        padding: 18px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-footer-v2 {
+        flex-direction: column;
+    }
+
+    .dashboard-user {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================
+   GREEN STAT BUTTONS
+   ========================================= */
+
+.dashboard-stat.dashboard-stat-button {
+    background: #eaf8ef !important;
+    border: 1px solid #b9e3c5 !important;
+    color: #166534 !important;
+    text-decoration: none !important;
+}
+
+.dashboard-stat.dashboard-stat-button:hover {
+    background: #dff4e6 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(34, 197, 94, 0.15);
+}
+
+.dashboard-stat.dashboard-stat-button .stat-symbol {
+    background: #22c55e !important;
+    color: #ffffff !important;
+}
+
+.dashboard-stat.dashboard-stat-button span {
+    color: #4b5563 !important;
+}
+
+.dashboard-stat.dashboard-stat-button strong {
+    color: #166534 !important;
+}
+
+.dashboard-stat.dashboard-stat-button b {
+    color: #16a34a !important;
+}
+
+</style>
+
+
+<div class="dashboard-v2">
+
+    <!-- SIDEBAR -->
+
+    <aside class="dashboard-sidebar-v2">
+
+        <div class="brand-v2">
+
+            <div class="brand-logo">
+                EA
+            </div>
+
+            <div>
+                <strong>Easy Access</strong>
+                <small>KENYA</small>
+            </div>
+
+        </div>
+
+
+        <nav class="dashboard-menu">
+
+            <a
+                href="/dashboard"
+                class="menu-item active"
+            >
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="/opportunities"
+                class="menu-item"
+            >
+                <span>⌕</span>
+                Opportunities
+            </a>
+
+
+            <a
+                href="/profile"
+                class="menu-item"
+            >
+                <span>♙</span>
+                My Profile
+            </a>
+
+
+            <a
+                href="{{ url_for('my_applications') }}"
+                class="menu-item"
+            >
+                <span>▣</span>
+                Applications
+            </a>
+
+
+            <a
+                href="#"
+                class="menu-item"
+            >
+                <span>♡</span>
+                Saved
+            </a>
+
+
+            <a
+                href="#"
+                class="menu-item"
+            >
+                <span>♧</span>
+                Notifications
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer-v2">
+
+            <a
+                href="/settings"
+                class="menu-item"
+            >
+                <span>⚙</span>
+                Settings
+            </a>
+
+
+            <a
+                href="/logout"
+                class="menu-item logout-v2"
+            >
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main-v2">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header-v2">
+
+            <div>
+
+                <span class="dashboard-label">
+                    DASHBOARD
+                </span>
+
+                <h1>
+                    Welcome, {{ name }} 👋
+                </h1>
+
+                <p>
+                    Find opportunities and take the next step toward your future.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-user">
+
+                <div class="notification-wrapper-v2">
+
+                    <div
+                        class="notification-alert-v2"
+                        id="notificationAlertV2"
+                    >
+                        New notification
+                    </div>
+
+                    <button
+                        type="button"
+                        class="notification-v2"
+                        id="notificationBellV2"
+                    >
+                        🔔
+
+                        <span
+                            class="notification-badge-v2"
+                            id="notificationBadgeV2"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="avatar-v2">
+                    {{ name[0]|upper }}
+                </div>
+
+
+                <div class="user-info-v2">
+
+                    <strong>
+                        {{ name }}
+                    </strong>
+
+                    <span>
+                        {{ account_type.replace("_", " ").title() }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- SEARCH -->
+
+        <section class="dashboard-search">
+
+            <div class="search-text">
+
+                <h2>
+                    What opportunity are you looking for?
+                </h2>
+
+                <p>
+                    Search attachments, internships and jobs across Kenya.
+                </p>
+
+            </div>
+
+
+            <form
+                action="/opportunities"
+                method="GET"
+                class="dashboard-search-box"
+            >
+
+                <span>
+                    🔎
+                </span>
+
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search jobs, internships, attachments..."
+                >
+
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="dashboard-stats">
+
+
+            <a
+                href="/opportunities"
+                class="dashboard-stat dashboard-stat-button"
+            >
+
+                <div class="stat-symbol">
+                    💼
+                </div>
+
+                <div>
+
+                    <span>
+                        Available
+                    </span>
+
+                    <strong>
+                        Opportunities
+                    </strong>
+
+                </div>
+
+                <b>
+                    {{ opportunity_count }}
+                </b>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('my_applications') }}"
+                class="dashboard-stat dashboard-stat-button"
+            >
+
+                <div class="stat-symbol">
+                    📋
+                </div>
+
+                <div>
+
+                    <span>
+                        My
+                    </span>
+
+                    <strong>
+                        Applications
+                    </strong>
+
+                </div>
+
+                <b>
+                    0
+                </b>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="dashboard-stat dashboard-stat-button"
+            >
+
+                <div class="stat-symbol">
+                    ❤️
+                </div>
+
+                <div>
+
+                    <span>
+                        Saved
+                    </span>
+
+                    <strong>
+                        Opportunities
+                    </strong>
+
+                </div>
+
+                <b>
+                    0
+                </b>
+
+            </a>
+
+
+            <a
+                href="/profile"
+                class="dashboard-stat dashboard-stat-button"
+            >
+
+                <div class="stat-symbol">
+                    👤
+                </div>
+
+                <div>
+
+                    <span>
+                        Profile
+                    </span>
+
+                    <strong>
+                        Completion
+                    </strong>
+
+                </div>
+
+                <b>
+                    25%
+                </b>
+
+            </a>
+
+        </section>
+
+
+        <!-- CONTENT GRID -->
+
+        <section class="dashboard-grid-v2">
+
+
+            <!-- OPPORTUNITIES -->
+
+            <div class="dashboard-card-v2 opportunities-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <h2>
+                            Explore Opportunities
+                        </h2>
+
+                        <p>
+                            Find something that matches your goals.
+                        </p>
+
+                    </div>
+
+
+                    <a href="/opportunities">
+                        View all →
+                    </a>
+
+                </div>
+
+
+                <div class="opportunity-preview">
+
+                    <div class="preview-icon">
+                        🎓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Industrial Attachments
+                        </strong>
+
+                        <span>
+                            Find attachment opportunities for your course.
+                        </span>
+
+                    </div>
+
+                    <a href="/opportunities">
+                        Explore
+                    </a>
+
+                </div>
+
+
+                <div class="opportunity-preview">
+
+                    <div class="preview-icon">
+                        💼
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Jobs & Internships
+                        </strong>
+
+                        <span>
+                            Discover employment opportunities across Kenya.
+                        </span>
+
+                    </div>
+
+                    <a href="/opportunities">
+                        Explore
+                    </a>
+
+                </div>
+
+
+                <div class="opportunity-preview">
+
+                    <div class="preview-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Business Ideas
+                        </strong>
+
+                        <span>
+                            Discover ideas that could become your next project.
+                        </span>
+
+                    </div>
+
+                    <a href="/opportunities">
+                        Explore
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="dashboard-card-v2 profile-card-v2">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <h2>
+                            Your Profile
+                        </h2>
+
+                        <p>
+                            Make your profile stronger.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-avatar-large">
+                    {{ name[0]|upper }}
+                </div>
+
+
+                <h3>
+                    {{ name }}
+                </h3>
+
+
+                <span class="profile-type">
+                    {{ account_type.replace("_", " ").title() }}
+                </span>
+
+
+                <div class="profile-progress-v2">
+
+                    <div class="progress-label">
+
+                        <span>
+                            Profile completion
+                        </span>
+
+                        <strong>
+                            25%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-track">
+
+                        <div class="progress-value"></div>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="/profile"
+                    class="complete-profile-button"
+                >
+                    Complete Profile →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="dashboard-card-v2 quick-section">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+                    <p>
+                        Get things done faster.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <a
+                    href="/opportunities"
+                    class="quick-card"
+                >
+
+                    <span>
+                        🔎
+                    </span>
+
+                    <strong>
+                        Find Opportunities
+                    </strong>
+
+                    <small>
+                        Search jobs and attachments
+                    </small>
+
+                </a>
+
+
+                <a
+                    href="/profile"
+                    class="quick-card"
+                >
+
+                    <span>
+                        👤
+                    </span>
+
+                    <strong>
+                        Update Profile
+                    </strong>
+
+                    <small>
+                        Add your skills and education
+                    </small>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('my_applications') }}"
+                    class="quick-card"
+                >
+
+                    <span>
+                        📋
+                    </span>
+
+                    <strong>
+                        Applications
+                    </strong>
+
+                    <small>
+                        Track your applications
+                    </small>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="quick-card"
+                >
+
+                    <span>
+                        ❤️
+                    </span>
+
+                    <strong>
+                        Saved
+                    </strong>
+
+                    <small>
+                        View saved opportunities
+                    </small>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECOMMENDATIONS -->
+
+        <section class="dashboard-card-v2 recommendations">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h2>
+                        Recommended For You
+                    </h2>
+
+                    <p>
+                        Opportunities selected based on your profile.
+                    </p>
+
+                </div>
+
+
+                <a href="/opportunities">
+                    View all →
+                </a>
+
+            </div>
+
+
+            <div class="recommendation-empty">
+
+                <div class="recommendation-icon">
+                    🚀
+                </div>
+
+                <h3>
+                    Your recommendations are coming soon
+                </h3>
+
+                <p>
+                    Complete your profile and we'll be able to show
+                    opportunities that better match your course, skills
+                    and interests.
+                </p>
+
+                <a href="/profile">
+                    Complete My Profile
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer class="dashboard-footer-v2">
+
+            <span>
+                © 2026 Easy Access Kenya
+            </span>
+
+            <span>
+                Connecting Kenyans to opportunities 🇰🇪
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================
+     NOTIFICATION SYSTEM
+     ========================================= -->
+
+<script>
+
+(function () {
+
+    const bell = document.getElementById("notificationBellV2");
+    const badge = document.getElementById("notificationBadgeV2");
+    const alertBox = document.getElementById("notificationAlertV2");
+
+    if (!bell || !badge || !alertBox) {
+        return;
+    }
+
+
+    let latestNotificationId = null;
+    let alertTimeout = null;
+
+
+    function updateBadge(count) {
+
+        if (count > 0) {
+
+            badge.textContent = count > 99 ? "99+" : count;
+            badge.style.display = "flex";
+
+        } else {
+
+            badge.textContent = "0";
+            badge.style.display = "none";
+
+        }
+
+    }
+
+
+    function showNewNotificationAlert() {
+
+        bell.classList.remove("notification-ring-v2");
+
+        void bell.offsetWidth;
+
+        bell.classList.add("notification-ring-v2");
+
+        alertBox.textContent = "New notification";
+        alertBox.style.display = "block";
+
+
+        if (alertTimeout) {
+            clearTimeout(alertTimeout);
+        }
+
+
+        alertTimeout = setTimeout(function () {
+
+            alertBox.style.display = "none";
+            bell.classList.remove("notification-ring-v2");
+
+        }, 5000);
+
+    }
+
+
+    async function checkNotifications() {
+
+        try {
+
+            const response = await fetch(
+                "{{ url_for('notification_status') }}",
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
+
+
+            if (!response.ok) {
+                return;
+            }
+
+
+            const data = await response.json();
+
+
+            updateBadge(data.count);
+
+
+            /*
+             * First check establishes the current notification.
+             * It does not ring the bell.
+             */
+
+            if (latestNotificationId === null) {
+
+                latestNotificationId = data.latest_id;
+
+                return;
+            }
+
+
+            /*
+             * A higher notification ID means
+             * a new notification has arrived.
+             */
+
+            if (data.latest_id > latestNotificationId) {
+
+                latestNotificationId = data.latest_id;
+
+                showNewNotificationAlert();
+
+            }
+
+        } catch (error) {
+
+            console.log("Notification check failed.");
+
+        }
+
+    }
+
+
+    /*
+     * Check immediately when dashboard loads.
+     */
+
+    checkNotifications();
+
+
+    /*
+     * Check for new notifications every 5 seconds.
+     */
+
+    setInterval(checkNotifications, 5000);
+
+})();
+
+</script>
+
+
+{% endblock %}

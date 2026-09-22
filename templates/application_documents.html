@@ -1,0 +1,879 @@
+{% extends "base.html" %}
+
+{% block title %}Documents | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+    /* =========================================================
+       EASY ACCESS KENYA — DOCUMENT UPLOAD PAGE
+       Scoped styling — does not modify Dashboard V2
+       ========================================================= */
+
+    .documents-page {
+        min-height: calc(100vh - 80px);
+        padding: 42px 20px 70px;
+        background: #f6f8fb;
+    }
+
+    .documents-wrapper {
+        width: 100%;
+        max-width: 1120px;
+        margin: 0 auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    .documents-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 24px;
+        color: #146c43;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.2s ease;
+    }
+
+    .documents-back:hover {
+        transform: translateX(-3px);
+        color: #0f5736;
+    }
+
+    /* ================= PROGRESS ================= */
+
+    .application-progress {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 32px;
+    }
+
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        min-width: 72px;
+        color: #9aa3b2;
+    }
+
+    .progress-step span {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #e7ebf0;
+        color: #7c8797;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .progress-step small {
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .progress-step.completed span,
+    .progress-step.active span {
+        background: #146c43;
+        color: #ffffff;
+    }
+
+    .progress-step.completed,
+    .progress-step.active {
+        color: #263044;
+    }
+
+    .progress-step.active small {
+        color: #146c43;
+    }
+
+    .progress-line {
+        height: 2px;
+        flex: 1;
+        margin: 0 7px 20px;
+        background: #e1e6ec;
+    }
+
+    .progress-line.completed {
+        background: #146c43;
+    }
+
+    /* ================= MAIN LAYOUT ================= */
+
+    .documents-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 25px;
+        align-items: start;
+    }
+
+    /* ================= MAIN CARD ================= */
+
+    .documents-card {
+        background: #ffffff;
+        border: 1px solid #e5e9ef;
+        border-radius: 20px;
+        padding: 34px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+    }
+
+    .documents-label {
+        display: inline-flex;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(20, 108, 67, 0.09);
+        color: #146c43;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .documents-card h1 {
+        margin: 14px 0 7px;
+        color: #172033;
+        font-size: 31px;
+        line-height: 1.2;
+        font-weight: 800;
+    }
+
+    .documents-description {
+        margin: 0 0 24px;
+        color: #6c7585;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* ================= OPPORTUNITY ================= */
+
+    .application-opportunity {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 27px;
+        padding: 16px;
+        border: 1px solid #e4e9ee;
+        border-radius: 14px;
+        background: #f8fafc;
+    }
+
+    .application-opportunity-icon {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #e9f5ef;
+        font-size: 22px;
+    }
+
+    .application-opportunity strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #1d2738;
+        font-size: 15px;
+    }
+
+    .application-opportunity span,
+    .application-opportunity small {
+        display: block;
+        color: #707b8b;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* ================= DOCUMENT SECTION ================= */
+
+    .document-upload-section {
+        margin-bottom: 18px;
+        padding: 20px;
+        border: 1px solid #e5e9ef;
+        border-radius: 15px;
+        background: #ffffff;
+        transition: border-color 0.2s ease,
+                    box-shadow 0.2s ease,
+                    transform 0.2s ease;
+    }
+
+    .document-upload-section:hover {
+        border-color: #cbd8d1;
+        box-shadow: 0 7px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .document-upload-heading {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 14px;
+    }
+
+    .document-upload-icon {
+        width: 43px;
+        height: 43px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        background: #eef7f2;
+        font-size: 19px;
+    }
+
+    .document-upload-heading h2 {
+        margin: 0 0 3px;
+        color: #263044;
+        font-size: 15px;
+        font-weight: 750;
+    }
+
+    .document-upload-heading p {
+        margin: 0;
+        color: #8992a1;
+        font-size: 12px;
+    }
+
+    /* ================= UPLOAD BOX ================= */
+
+    .document-upload-box {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 105px;
+        padding: 18px;
+        box-sizing: border-box;
+        border: 1.5px dashed #cdd5de;
+        border-radius: 12px;
+        background: #fafbfc;
+        text-align: center;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .document-upload-box:hover {
+        border-color: #146c43;
+        background: #f5faf7;
+    }
+
+    .document-upload-box > span {
+        margin-bottom: 5px;
+        font-size: 21px;
+    }
+
+    .document-upload-box strong {
+        color: #263044;
+        font-size: 13px;
+        font-weight: 750;
+    }
+
+    .document-upload-box small {
+        margin-top: 4px;
+        color: #8a94a3;
+        font-size: 11px;
+    }
+
+    .document-upload-box input[type="file"] {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* ================= SECURITY NOTE ================= */
+
+    .application-note {
+        display: flex;
+        gap: 10px;
+        margin-top: 23px;
+        padding: 14px 16px;
+        border: 1px solid #dfe9e4;
+        border-radius: 11px;
+        background: #f3f9f5;
+        color: #53665b;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .application-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid #edf0f3;
+    }
+
+    .cancel-application-button,
+    .submit-application-button {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 750;
+        text-decoration: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+
+    .cancel-application-button {
+        border: 1px solid #dce2e8;
+        background: #ffffff;
+        color: #596475;
+    }
+
+    .cancel-application-button:hover {
+        background: #f5f7f9;
+    }
+
+    .submit-application-button {
+        border: none;
+        background: #146c43;
+        color: #ffffff;
+        box-shadow: 0 6px 16px rgba(20, 108, 67, 0.18);
+    }
+
+    .submit-application-button:hover {
+        background: #0f5836;
+        transform: translateY(-1px);
+        box-shadow: 0 9px 21px rgba(20, 108, 67, 0.23);
+    }
+
+    /* ================= SIDE CARD ================= */
+
+    .application-info-card {
+        position: sticky;
+        top: 25px;
+        padding: 24px;
+        border: 1px solid #e5e9ef;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    .application-info-card h2 {
+        margin: 0 0 20px;
+        color: #202a3b;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .application-info-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid #edf0f3;
+        color: #566174;
+        font-size: 13px;
+    }
+
+    .application-info-item:last-child {
+        border-bottom: none;
+    }
+
+    .application-info-item strong {
+        color: #146c43;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 850px) {
+
+        .documents-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .application-info-card {
+            position: static;
+        }
+    }
+
+    @media (max-width: 650px) {
+
+        .documents-page {
+            padding: 28px 14px 50px;
+        }
+
+        .documents-card {
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .documents-card h1 {
+            font-size: 27px;
+        }
+
+        .application-progress {
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .progress-step {
+            min-width: 65px;
+        }
+
+        .progress-line {
+            min-width: 35px;
+        }
+
+        .application-actions {
+            flex-direction: column-reverse;
+            align-items: stretch;
+        }
+
+        .cancel-application-button,
+        .submit-application-button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 430px) {
+
+        .documents-card {
+            padding: 18px;
+        }
+
+        .document-upload-section {
+            padding: 16px;
+        }
+
+        .application-opportunity {
+            align-items: flex-start;
+        }
+    }
+</style>
+
+
+<section class="documents-page">
+
+    <div class="documents-wrapper">
+
+        <!-- BACK -->
+        <a
+            href="{{ url_for('apply', opportunity_id=opportunity['id']) }}"
+            class="documents-back"
+        >
+            ← Back to Application
+        </a>
+
+
+        <!-- PROGRESS -->
+        <div class="application-progress">
+
+            <div class="progress-step completed">
+                <span>✓</span>
+                <small>Personal</small>
+            </div>
+
+            <div class="progress-line completed"></div>
+
+            <div class="progress-step active">
+                <span>2</span>
+                <small>Documents</small>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step">
+                <span>3</span>
+                <small>Verification</small>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step">
+                <span>4</span>
+                <small>Review</small>
+            </div>
+
+        </div>
+
+
+        <!-- MAIN CONTENT -->
+        <div class="documents-layout">
+
+
+            <!-- DOCUMENT FORM -->
+            <div class="documents-card">
+
+                <span class="documents-label">
+                    EASY ACCESS KENYA
+                </span>
+
+                <h1>Upload Your Documents</h1>
+
+                <p class="documents-description">
+                    Add the documents you want to include with your
+                    application. Your CV is required; the other documents
+                    are optional.
+                </p>
+
+
+                <!-- OPPORTUNITY -->
+                <div class="application-opportunity">
+
+                    <div class="application-opportunity-icon">
+
+                        {% if opportunity["opportunity_type"] == "Attachment" %}
+                            🎓
+                        {% elif opportunity["opportunity_type"] == "Internship" %}
+                            💼
+                        {% else %}
+                            🚀
+                        {% endif %}
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            {{ opportunity["title"] }}
+                        </strong>
+
+                        <span>
+                            🏢 {{ opportunity["company"] }}
+                        </span>
+
+                        <small>
+                            📍 {{ opportunity["county"] }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORM -->
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+
+                    <!-- CV -->
+                    <div class="document-upload-section">
+
+                        <div class="document-upload-heading">
+
+                            <div class="document-upload-icon">
+                                📄
+                            </div>
+
+                            <div>
+                                <h2>Curriculum Vitae (CV)</h2>
+                                <p>Required</p>
+                            </div>
+
+                        </div>
+
+                        <label
+                            for="cv"
+                            class="document-upload-box"
+                        >
+
+                            <span>📁</span>
+
+                            <strong>
+                                Choose your CV
+                            </strong>
+
+                            <small>
+                                PDF, DOC or DOCX
+                            </small>
+
+                            <input
+                                type="file"
+                                id="cv"
+                                name="cv"
+                                accept=".pdf,.doc,.docx"
+                                required
+                            >
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- CERTIFICATE -->
+                    <div class="document-upload-section">
+
+                        <div class="document-upload-heading">
+
+                            <div class="document-upload-icon">
+                                🎓
+                            </div>
+
+                            <div>
+                                <h2>Academic Certificate</h2>
+                                <p>Optional</p>
+                            </div>
+
+                        </div>
+
+                        <label
+                            for="certificate"
+                            class="document-upload-box"
+                        >
+
+                            <span>📁</span>
+
+                            <strong>
+                                Choose certificate
+                            </strong>
+
+                            <small>
+                                PDF, JPG, PNG, DOC or DOCX
+                            </small>
+
+                            <input
+                                type="file"
+                                id="certificate"
+                                name="certificate"
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                            >
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- TRANSCRIPT -->
+                    <div class="document-upload-section">
+
+                        <div class="document-upload-heading">
+
+                            <div class="document-upload-icon">
+                                📑
+                            </div>
+
+                            <div>
+                                <h2>Academic Transcript</h2>
+                                <p>Optional</p>
+                            </div>
+
+                        </div>
+
+                        <label
+                            for="transcript"
+                            class="document-upload-box"
+                        >
+
+                            <span>📁</span>
+
+                            <strong>
+                                Choose transcript
+                            </strong>
+
+                            <small>
+                                PDF, JPG, PNG, DOC or DOCX
+                            </small>
+
+                            <input
+                                type="file"
+                                id="transcript"
+                                name="transcript"
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                            >
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- COVER LETTER -->
+                    <div class="document-upload-section">
+
+                        <div class="document-upload-heading">
+
+                            <div class="document-upload-icon">
+                                📝
+                            </div>
+
+                            <div>
+                                <h2>Cover Letter</h2>
+                                <p>Optional</p>
+                            </div>
+
+                        </div>
+
+                        <label
+                            for="cover_letter"
+                            class="document-upload-box"
+                        >
+
+                            <span>📁</span>
+
+                            <strong>
+                                Choose cover letter
+                            </strong>
+
+                            <small>
+                                PDF, DOC or DOCX
+                            </small>
+
+                            <input
+                                type="file"
+                                id="cover_letter"
+                                name="cover_letter"
+                                accept=".pdf,.doc,.docx"
+                            >
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- OTHER DOCUMENT -->
+                    <div class="document-upload-section">
+
+                        <div class="document-upload-heading">
+
+                            <div class="document-upload-icon">
+                                📎
+                            </div>
+
+                            <div>
+                                <h2>Other Supporting Document</h2>
+                                <p>Optional</p>
+                            </div>
+
+                        </div>
+
+                        <label
+                            for="other_document"
+                            class="document-upload-box"
+                        >
+
+                            <span>📁</span>
+
+                            <strong>
+                                Choose supporting document
+                            </strong>
+
+                            <small>
+                                PDF, JPG, PNG, DOC or DOCX
+                            </small>
+
+                            <input
+                                type="file"
+                                id="other_document"
+                                name="other_document"
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                            >
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- SECURITY NOTE -->
+                    <div class="application-note">
+
+                        <span>🔒</span>
+
+                        <span>
+                            Upload only documents necessary for your
+                            application. Avoid including unnecessary
+                            personal information.
+                        </span>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+                    <div class="application-actions">
+
+                        <a
+                            href="{{ url_for('apply', opportunity_id=opportunity['id']) }}"
+                            class="cancel-application-button"
+                        >
+                            ← Back
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="submit-application-button"
+                        >
+                            Continue →
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- CHECKLIST -->
+            <aside class="application-info-card">
+
+                <h2>Application Checklist</h2>
+
+                <div class="application-info-item">
+                    <span>Personal Information</span>
+                    <strong>✓ Done</strong>
+                </div>
+
+                <div class="application-info-item">
+                    <span>Academic Information</span>
+                    <strong>✓ Done</strong>
+                </div>
+
+                <div class="application-info-item">
+                    <span>CV</span>
+                    <strong>Required</strong>
+                </div>
+
+                <div class="application-info-item">
+                    <span>Certificate</span>
+                    <strong>Optional</strong>
+                </div>
+
+                <div class="application-info-item">
+                    <span>Transcript</span>
+                    <strong>Optional</strong>
+                </div>
+
+                <div class="application-info-item">
+                    <span>Cover Letter</span>
+                    <strong>Optional</strong>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

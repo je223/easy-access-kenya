@@ -1,0 +1,1300 @@
+{% extends "base.html" %}
+
+{% block title %}Post Opportunity | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+{% macro course_options() %}
+
+<option value="" selected disabled>Select a course / field</option>
+
+<optgroup label="Agriculture & Natural Resources">
+    <option value="Agribusiness Management">Agribusiness Management</option>
+    <option value="Agricultural Economics">Agricultural Economics</option>
+    <option value="Agricultural Education">Agricultural Education</option>
+    <option value="Agricultural Extension">Agricultural Extension</option>
+    <option value="Agricultural Science">Agricultural Science</option>
+    <option value="Animal Health">Animal Health</option>
+    <option value="Animal Science">Animal Science</option>
+    <option value="Aquaculture">Aquaculture</option>
+    <option value="Crop Science">Crop Science</option>
+    <option value="Food Science & Technology">Food Science & Technology</option>
+    <option value="Forestry">Forestry</option>
+    <option value="Horticulture">Horticulture</option>
+    <option value="Land Resource Management">Land Resource Management</option>
+    <option value="Natural Resource Management">Natural Resource Management</option>
+    <option value="Range Management">Range Management</option>
+    <option value="Soil Science">Soil Science</option>
+    <option value="Veterinary Medicine">Veterinary Medicine</option>
+    <option value="Wildlife Management">Wildlife Management</option>
+</optgroup>
+
+<optgroup label="Architecture, Building & Construction">
+    <option value="Architecture">Architecture</option>
+    <option value="Building Construction">Building Construction</option>
+    <option value="Construction Management">Construction Management</option>
+    <option value="Interior Design">Interior Design</option>
+    <option value="Land Surveying">Land Surveying</option>
+    <option value="Quantity Surveying">Quantity Surveying</option>
+    <option value="Real Estate Management">Real Estate Management</option>
+    <option value="Urban & Regional Planning">Urban & Regional Planning</option>
+</optgroup>
+
+<optgroup label="Arts, Design & Creative Media">
+    <option value="Animation">Animation</option>
+    <option value="Creative Arts">Creative Arts</option>
+    <option value="Fashion Design">Fashion Design</option>
+    <option value="Fine Art">Fine Art</option>
+    <option value="Graphic Design">Graphic Design</option>
+    <option value="Industrial Design">Industrial Design</option>
+    <option value="Music">Music</option>
+    <option value="Photography">Photography</option>
+    <option value="Product Design">Product Design</option>
+    <option value="Textile Design">Textile Design</option>
+    <option value="Theatre Arts">Theatre Arts</option>
+    <option value="Visual Communication Design">Visual Communication Design</option>
+</optgroup>
+
+<optgroup label="Business, Economics & Finance">
+    <option value="Accounting">Accounting</option>
+    <option value="Actuarial Science">Actuarial Science</option>
+    <option value="Banking & Finance">Banking & Finance</option>
+    <option value="Business Administration">Business Administration</option>
+    <option value="Commerce">Commerce</option>
+    <option value="Cooperative Management">Cooperative Management</option>
+    <option value="Economics">Economics</option>
+    <option value="Entrepreneurship">Entrepreneurship</option>
+    <option value="Finance">Finance</option>
+    <option value="Human Resource Management">Human Resource Management</option>
+    <option value="Insurance">Insurance</option>
+    <option value="International Business">International Business</option>
+    <option value="Marketing">Marketing</option>
+    <option value="Procurement & Supply Chain Management">Procurement & Supply Chain Management</option>
+    <option value="Project Management">Project Management</option>
+    <option value="Public Administration">Public Administration</option>
+    <option value="Records Management">Records Management</option>
+    <option value="Secretarial Studies">Secretarial Studies</option>
+</optgroup>
+
+<optgroup label="Computing, ICT & Information Systems">
+    <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & Machine Learning</option>
+    <option value="Business Information Technology">Business Information Technology</option>
+    <option value="Cloud Computing">Cloud Computing</option>
+    <option value="Computer Applications">Computer Applications</option>
+    <option value="Computer Forensics">Computer Forensics</option>
+    <option value="Computer Networks">Computer Networks</option>
+    <option value="Computer Science">Computer Science</option>
+    <option value="Cyber Security">Cyber Security</option>
+    <option value="Data Science">Data Science</option>
+    <option value="Database Administration">Database Administration</option>
+    <option value="Information Systems">Information Systems</option>
+    <option value="Information Technology">Information Technology</option>
+    <option value="Software Engineering">Software Engineering</option>
+    <option value="Systems Administration">Systems Administration</option>
+    <option value="Web & Application Development">Web & Application Development</option>
+</optgroup>
+
+<optgroup label="Education">
+    <option value="Early Childhood Education">Early Childhood Education</option>
+    <option value="Educational Administration">Educational Administration</option>
+    <option value="Educational Psychology">Educational Psychology</option>
+    <option value="Guidance & Counselling">Guidance & Counselling</option>
+    <option value="Primary Education">Primary Education</option>
+    <option value="Secondary Education">Secondary Education</option>
+    <option value="Special Needs Education">Special Needs Education</option>
+    <option value="Teacher Education">Teacher Education</option>
+    <option value="TVET Education">TVET Education</option>
+</optgroup>
+
+<optgroup label="Engineering & Technology">
+    <option value="Automotive Engineering">Automotive Engineering</option>
+    <option value="Biomedical Engineering">Biomedical Engineering</option>
+    <option value="Chemical Engineering">Chemical Engineering</option>
+    <option value="Civil Engineering">Civil Engineering</option>
+    <option value="Computer Engineering">Computer Engineering</option>
+    <option value="Electrical & Electronic Engineering">Electrical & Electronic Engineering</option>
+    <option value="Electromechanical Engineering">Electromechanical Engineering</option>
+    <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+    <option value="Energy Engineering">Energy Engineering</option>
+    <option value="Environmental Engineering">Environmental Engineering</option>
+    <option value="Geospatial Engineering">Geospatial Engineering</option>
+    <option value="Industrial Engineering">Industrial Engineering</option>
+    <option value="Manufacturing Engineering">Manufacturing Engineering</option>
+    <option value="Marine Engineering">Marine Engineering</option>
+    <option value="Mechanical Engineering">Mechanical Engineering</option>
+    <option value="Mechanical Engineering — Design">Mechanical Engineering — Design</option>
+    <option value="Mechanical Engineering — Maintenance">Mechanical Engineering — Maintenance</option>
+    <option value="Mechanical Engineering — Manufacturing">Mechanical Engineering — Manufacturing</option>
+    <option value="Mechanical Engineering — Plant">Mechanical Engineering — Plant</option>
+    <option value="Mechanical Engineering — Production">Mechanical Engineering — Production</option>
+    <option value="Mechanical Engineering — Thermal & Fluid Systems">Mechanical Engineering — Thermal & Fluid Systems</option>
+    <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+    <option value="Metallurgical & Materials Engineering">Metallurgical & Materials Engineering</option>
+    <option value="Mining Engineering">Mining Engineering</option>
+    <option value="Petroleum Engineering">Petroleum Engineering</option>
+    <option value="Railway Engineering">Railway Engineering</option>
+    <option value="Structural Engineering">Structural Engineering</option>
+    <option value="Telecommunications Engineering">Telecommunications Engineering</option>
+    <option value="Water & Environmental Engineering">Water & Environmental Engineering</option>
+</optgroup>
+
+<optgroup label="Environment & Natural Sciences">
+    <option value="Climate Change Studies">Climate Change Studies</option>
+    <option value="Environmental Management">Environmental Management</option>
+    <option value="Environmental Science">Environmental Science</option>
+    <option value="Geography">Geography</option>
+    <option value="Geology">Geology</option>
+    <option value="Meteorology">Meteorology</option>
+    <option value="Natural Resource Management">Natural Resource Management</option>
+    <option value="Oceanography">Oceanography</option>
+</optgroup>
+
+<optgroup label="Health Sciences & Medicine">
+    <option value="Clinical Medicine">Clinical Medicine</option>
+    <option value="Community Health">Community Health</option>
+    <option value="Dental Technology">Dental Technology</option>
+    <option value="Dentistry">Dentistry</option>
+    <option value="Dietetics & Nutrition">Dietetics & Nutrition</option>
+    <option value="Environmental Health">Environmental Health</option>
+    <option value="Health Records & Information">Health Records & Information</option>
+    <option value="Medical Laboratory Science">Medical Laboratory Science</option>
+    <option value="Medicine & Surgery">Medicine & Surgery</option>
+    <option value="Nursing">Nursing</option>
+    <option value="Occupational Therapy">Occupational Therapy</option>
+    <option value="Optometry">Optometry</option>
+    <option value="Orthopaedic Technology">Orthopaedic Technology</option>
+    <option value="Pharmacy">Pharmacy</option>
+    <option value="Physiotherapy">Physiotherapy</option>
+    <option value="Public Health">Public Health</option>
+    <option value="Radiography & Medical Imaging">Radiography & Medical Imaging</option>
+    <option value="Speech & Language Therapy">Speech & Language Therapy</option>
+    <option value="Surgical Technology">Surgical Technology</option>
+</optgroup>
+
+<optgroup label="Hospitality, Tourism & Culinary">
+    <option value="Food & Beverage Management">Food & Beverage Management</option>
+    <option value="Food Production & Culinary Arts">Food Production & Culinary Arts</option>
+    <option value="Hospitality Management">Hospitality Management</option>
+    <option value="Hotel Management">Hotel Management</option>
+    <option value="Tourism Management">Tourism Management</option>
+    <option value="Travel & Tourism">Travel & Tourism</option>
+</optgroup>
+
+<optgroup label="Humanities, Languages & Social Sciences">
+    <option value="Anthropology">Anthropology</option>
+    <option value="Community Development">Community Development</option>
+    <option value="Criminology">Criminology</option>
+    <option value="Development Studies">Development Studies</option>
+    <option value="Gender Studies">Gender Studies</option>
+    <option value="History">History</option>
+    <option value="International Relations">International Relations</option>
+    <option value="Languages">Languages</option>
+    <option value="Philosophy">Philosophy</option>
+    <option value="Political Science">Political Science</option>
+    <option value="Psychology">Psychology</option>
+    <option value="Religious Studies">Religious Studies</option>
+    <option value="Social Work">Social Work</option>
+    <option value="Sociology">Sociology</option>
+</optgroup>
+
+<optgroup label="Law">
+    <option value="Law">Law</option>
+    <option value="Paralegal Studies">Paralegal Studies</option>
+</optgroup>
+
+<optgroup label="Media & Communication">
+    <option value="Broadcast Journalism">Broadcast Journalism</option>
+    <option value="Communication & Media Studies">Communication & Media Studies</option>
+    <option value="Film & Television">Film & Television</option>
+    <option value="Journalism">Journalism</option>
+    <option value="Public Relations">Public Relations</option>
+    <option value="Publishing">Publishing</option>
+</optgroup>
+
+<optgroup label="Pure & Applied Sciences">
+    <option value="Biochemistry">Biochemistry</option>
+    <option value="Biology">Biology</option>
+    <option value="Biotechnology">Biotechnology</option>
+    <option value="Chemistry">Chemistry</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="Microbiology">Microbiology</option>
+    <option value="Physics">Physics</option>
+    <option value="Statistics">Statistics</option>
+</optgroup>
+
+<optgroup label="Sports & Recreation">
+    <option value="Exercise & Sports Science">Exercise & Sports Science</option>
+    <option value="Fitness & Wellness">Fitness & Wellness</option>
+    <option value="Physical Education">Physical Education</option>
+    <option value="Sports Management">Sports Management</option>
+    <option value="Sports Science">Sports Science</option>
+</optgroup>
+
+<optgroup label="Transport, Aviation & Maritime">
+    <option value="Aeronautical Engineering">Aeronautical Engineering</option>
+    <option value="Aviation Management">Aviation Management</option>
+    <option value="Maritime Studies">Maritime Studies</option>
+    <option value="Marine Transport">Marine Transport</option>
+    <option value="Nautical Science">Nautical Science</option>
+    <option value="Railway Operations">Railway Operations</option>
+</optgroup>
+
+{% endmacro %}
+
+<style>
+
+    .post-section {
+        padding: 35px 20px 60px;
+    }
+
+    .post-card {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--card-bg, #ffffff);
+        border: 1px solid rgba(76, 175, 112, 0.18);
+        border-radius: 22px;
+        padding: 35px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .post-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .post-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 30px;
+        background: rgba(76, 175, 112, 0.12);
+        color: #4caf70;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 14px;
+    }
+
+    .post-header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text-color, #17202a);
+    }
+
+    .post-header p {
+        max-width: 650px;
+        margin: 10px auto 0;
+        color: var(--secondary-text, #6f7a86);
+        line-height: 1.6;
+    }
+
+    .posting-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+        margin-bottom: 30px;
+    }
+
+    .posting-option {
+        position: relative;
+    }
+
+    .posting-option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .posting-card {
+        display: block;
+        min-height: 210px;
+        padding: 28px;
+        border: 2px solid #dfe5ea;
+        border-radius: 18px;
+        background: var(--input-bg, #ffffff);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .posting-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+    }
+
+    .job-posting {
+        border-top: 5px solid #3b82f6;
+    }
+
+    .student-posting {
+        border-top: 5px solid #4caf70;
+    }
+
+    .posting-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 18px;
+    }
+
+    .job-posting .posting-icon {
+        background: rgba(59, 130, 246, 0.12);
+    }
+
+    .student-posting .posting-icon {
+        background: rgba(76, 175, 112, 0.12);
+    }
+
+    .posting-card h2 {
+        margin: 0 0 9px;
+        font-size: 21px;
+        color: var(--text-color, #17202a);
+    }
+
+    .posting-card p {
+        margin: 0;
+        color: var(--secondary-text, #6f7a86);
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .posting-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 11px 18px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .job-button {
+        background: #3b82f6;
+        color: white;
+    }
+
+    .student-button {
+        background: #4caf70;
+        color: white;
+    }
+
+    .posting-option input:checked + .posting-card {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 32px rgba(76, 175, 112, 0.15);
+    }
+
+    .posting-option input:checked + .job-posting {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.05);
+    }
+
+    .posting-option input:checked + .student-posting {
+        border-color: #4caf70;
+        background: rgba(76, 175, 112, 0.06);
+    }
+
+    .opportunity-form {
+        display: none;
+        animation: formAppear 0.25s ease;
+    }
+
+    .opportunity-form.active {
+        display: block;
+    }
+
+    @keyframes formAppear {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-heading {
+        margin: 10px 0 25px;
+        padding: 18px 20px;
+        border-radius: 13px;
+        background: rgba(76, 175, 112, 0.08);
+        border-left: 4px solid #4caf70;
+    }
+
+    .form-heading h2 {
+        margin: 0 0 5px;
+        color: var(--text-color, #17202a);
+        font-size: 20px;
+    }
+
+    .form-heading p {
+        margin: 0;
+        color: var(--secondary-text, #6f7a86);
+        font-size: 13px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-color, #17202a);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #d9e0e6;
+        border-radius: 11px;
+        padding: 13px 14px;
+        background: var(--input-bg, #ffffff);
+        color: var(--text-color, #17202a);
+        font-size: 14px;
+        outline: none;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #4caf70;
+        box-shadow: 0 0 0 3px rgba(76, 175, 112, 0.12);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+        line-height: 1.6;
+    }
+
+    .form-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 25px;
+        padding: 14px 16px;
+        border-radius: 12px;
+        background: rgba(76, 175, 112, 0.08);
+        color: var(--secondary-text, #6f7a86);
+    }
+
+    .form-note span {
+        font-size: 18px;
+    }
+
+    .form-note p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        margin-top: 28px;
+    }
+
+    .cancel-button,
+    .post-button {
+        border-radius: 11px;
+        padding: 13px 21px;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .cancel-button {
+        color: var(--secondary-text, #6f7a86);
+        background: #eef1f4;
+    }
+
+    .cancel-button:hover {
+        background: #e2e6ea;
+    }
+
+    .post-button {
+        border: none;
+        background: #4caf70;
+        color: white;
+    }
+
+    .post-button:hover {
+        background: #429b63;
+        transform: translateY(-1px);
+        box-shadow: 0 7px 18px rgba(76, 175, 112, 0.22);
+    }
+
+    body.theme-dark .post-card {
+        background: #1b2330;
+        border-color: #303a49;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+    }
+
+    body.theme-dark .post-header h1,
+    body.theme-dark .posting-card h2,
+    body.theme-dark .form-heading h2,
+    body.theme-dark .form-group label {
+        color: #f1f4f8;
+    }
+
+    body.theme-dark .post-header p,
+    body.theme-dark .posting-card p,
+    body.theme-dark .form-heading p {
+        color: #9da8b7;
+    }
+
+    body.theme-dark .posting-card {
+        background: #151c27;
+        border-color: #354052;
+    }
+
+    body.theme-dark .posting-option input:checked + .job-posting {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: #3b82f6;
+    }
+
+    body.theme-dark .posting-option input:checked + .student-posting {
+        background: rgba(76, 175, 112, 0.09);
+        border-color: #4caf70;
+    }
+
+    body.theme-dark .form-group input,
+    body.theme-dark .form-group select,
+    body.theme-dark .form-group textarea {
+        background: #151c27;
+        border-color: #354052;
+        color: #f1f4f8;
+    }
+
+    body.theme-dark .form-group select option,
+    body.theme-dark .form-group select optgroup {
+        background: #151c27;
+        color: #f1f4f8;
+    }
+
+    body.theme-dark .cancel-button {
+        background: #303a49;
+        color: #f1f4f8;
+    }
+
+    @media (max-width: 750px) {
+
+        .post-section {
+            padding: 20px 12px 40px;
+        }
+
+        .post-card {
+            padding: 22px 17px;
+            border-radius: 17px;
+        }
+
+        .post-header h1 {
+            font-size: 26px;
+        }
+
+        .posting-options,
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .full-width {
+            grid-column: auto;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+            align-items: stretch;
+        }
+
+        .cancel-button,
+        .post-button {
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+
+</style>
+
+<section class="post-section">
+
+    <div class="post-card">
+
+        <div class="post-header">
+
+            <span class="post-badge">
+                🇰🇪 EASY ACCESS KENYA
+            </span>
+
+            <h1>
+                Post an Opportunity
+            </h1>
+
+            <p>
+                Choose what you are offering and provide the opportunity
+                details below.
+            </p>
+
+        </div>
+
+        <!-- =====================================
+             POSTING OPTIONS
+             ===================================== -->
+
+        <div class="posting-options">
+
+            <!-- JOB -->
+
+            <div class="posting-option">
+
+                <input
+                    type="radio"
+                    id="post_job"
+                    name="posting_mode"
+                    value="job"
+                >
+
+                <label
+                    for="post_job"
+                    class="posting-card job-posting"
+                >
+
+                    <div class="posting-icon">
+                        💼
+                    </div>
+
+                    <h2>
+                        Job Opportunity
+                    </h2>
+
+                    <p>
+                        Post a job vacancy for qualified
+                        job seekers to discover and apply.
+                    </p>
+
+                    <span class="posting-button job-button">
+                        Post a Job →
+                    </span>
+
+                </label>
+
+            </div>
+
+            <!-- STUDENT -->
+
+            <div class="posting-option">
+
+                <input
+                    type="radio"
+                    id="post_student"
+                    name="posting_mode"
+                    value="student"
+                >
+
+                <label
+                    for="post_student"
+                    class="posting-card student-posting"
+                >
+
+                    <div class="posting-icon">
+                        🎓
+                    </div>
+
+                    <h2>
+                        Attachment / Internship
+                    </h2>
+
+                    <p>
+                        Post an industrial attachment or
+                        internship opportunity for students.
+                    </p>
+
+                    <span class="posting-button student-button">
+                        Post for Students →
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- =====================================
+             JOB FORM
+             ===================================== -->
+
+        <div
+            id="job_form"
+            class="opportunity-form"
+        >
+
+            <div class="form-heading">
+
+                <h2>
+                    💼 Job Opportunity Details
+                </h2>
+
+                <p>
+                    This opportunity will be targeted to Job Seekers.
+                </p>
+
+            </div>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="audience"
+                    value="job_seeker"
+                >
+
+                <input
+                    type="hidden"
+                    name="opportunity_type"
+                    value="Job"
+                >
+
+                <div class="form-grid">
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Job Title *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="e.g. Mechanical Engineer"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Company Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="company"
+                            placeholder="e.g. ABC Engineering Ltd"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            County *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="county"
+                            placeholder="e.g. Nairobi, Mombasa, Kisumu"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- COURSE / FIELD -->
+
+                    <div class="form-group">
+
+                        <label for="job_course">
+                            Course / Field *
+                        </label>
+
+                        <select
+                            id="job_course"
+                            name="course"
+                            required
+                        >
+
+                            {{ course_options() }}
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Industry
+                        </label>
+
+                        <select name="industry">
+
+                            <option value="">
+                                Select industry
+                            </option>
+
+                            <option>Engineering</option>
+                            <option>Information Technology</option>
+                            <option>Construction</option>
+                            <option>Finance & Banking</option>
+                            <option>Healthcare</option>
+                            <option>Manufacturing</option>
+                            <option>Energy</option>
+                            <option>Telecommunications</option>
+                            <option>Transport & Logistics</option>
+                            <option>Agriculture</option>
+                            <option>Education</option>
+                            <option>Hospitality & Tourism</option>
+                            <option>Retail & Sales</option>
+                            <option>Media & Communications</option>
+                            <option>Government & Public Sector</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Number of Positions Available *
+                        </label>
+
+                        <input
+                            type="number"
+                            name="positions_available"
+                            min="1"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Application Deadline
+                        </label>
+
+                        <input
+                            type="date"
+                            name="deadline"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Contact Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="contact_email"
+                            placeholder="company@example.com"
+                        >
+
+                    </div>
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Job Description *
+                        </label>
+
+                        <textarea
+                            name="description"
+                            rows="6"
+                            placeholder="Describe the job, duties, location, working hours, salary information, etc."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Requirements
+                        </label>
+
+                        <textarea
+                            name="requirements"
+                            rows="5"
+                            placeholder="e.g. Degree/Diploma, experience, technical skills..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="form-note">
+
+                    <span>
+                        💼
+                    </span>
+
+                    <p>
+                        This job will be available to Job Seekers.
+                    </p>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <a
+                        href="{{ url_for('company_dashboard') }}"
+                        class="cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="post-button"
+                    >
+                        🚀 Post Job
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- =====================================
+             STUDENT FORM
+             ===================================== -->
+
+        <div
+            id="student_form"
+            class="opportunity-form"
+        >
+
+            <div class="form-heading">
+
+                <h2>
+                    🎓 Attachment / Internship Details
+                </h2>
+
+                <p>
+                    This opportunity will be targeted to Students.
+                </p>
+
+            </div>
+
+            <form method="POST">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="audience"
+                    value="student"
+                >
+
+                <div class="form-grid">
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Opportunity Title *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="e.g. Mechanical Engineering Attachment"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Opportunity Type *
+                        </label>
+
+                        <select
+                            name="opportunity_type"
+                            required
+                        >
+
+                            <option value="">
+                                Select type
+                            </option>
+
+                            <option value="Attachment">
+                                Industrial Attachment
+                            </option>
+
+                            <option value="Internship">
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Company Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="company"
+                            placeholder="e.g. ABC Engineering Ltd"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            County *
+                        </label>
+
+                        <input
+                            type="text"
+                            name="county"
+                            placeholder="e.g. Nairobi, Mombasa, Kisumu"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- COURSE / FIELD -->
+
+                    <div class="form-group">
+
+                        <label for="student_course">
+                            Course / Field *
+                        </label>
+
+                        <select
+                            id="student_course"
+                            name="course"
+                            required
+                        >
+
+                            {{ course_options() }}
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Industry
+                        </label>
+
+                        <select name="industry">
+
+                            <option value="">
+                                Select industry
+                            </option>
+
+                            <option>Engineering</option>
+                            <option>Information Technology</option>
+                            <option>Construction</option>
+                            <option>Finance & Banking</option>
+                            <option>Healthcare</option>
+                            <option>Manufacturing</option>
+                            <option>Energy</option>
+                            <option>Telecommunications</option>
+                            <option>Transport & Logistics</option>
+                            <option>Agriculture</option>
+                            <option>Education</option>
+                            <option>Hospitality & Tourism</option>
+                            <option>Retail & Sales</option>
+                            <option>Media & Communications</option>
+                            <option>Government & Public Sector</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Number of Positions Available *
+                        </label>
+
+                        <input
+                            type="number"
+                            name="positions_available"
+                            min="1"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Application Deadline
+                        </label>
+
+                        <input
+                            type="date"
+                            name="deadline"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Contact Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="contact_email"
+                            placeholder="company@example.com"
+                        >
+
+                    </div>
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Opportunity Description *
+                        </label>
+
+                        <textarea
+                            name="description"
+                            rows="6"
+                            placeholder="Describe the attachment or internship, duties, location, working hours, etc."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Requirements
+                        </label>
+
+                        <textarea
+                            name="requirements"
+                            rows="5"
+                            placeholder="e.g. Diploma/Degree in Mechanical Engineering, good communication skills..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="form-note">
+
+                    <span>
+                        🎓
+                    </span>
+
+                    <p>
+                        This attachment or internship will be available to Students.
+                    </p>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <a
+                        href="{{ url_for('company_dashboard') }}"
+                        class="cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="post-button"
+                    >
+                        🚀 Post Student Opportunity
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+    const jobOption = document.getElementById("post_job");
+    const studentOption = document.getElementById("post_student");
+
+    const jobForm = document.getElementById("job_form");
+    const studentForm = document.getElementById("student_form");
+
+    jobOption.addEventListener("change", function () {
+
+        if (this.checked) {
+
+            jobForm.classList.add("active");
+            studentForm.classList.remove("active");
+
+        }
+
+    });
+
+    studentOption.addEventListener("change", function () {
+
+        if (this.checked) {
+
+            studentForm.classList.add("active");
+            jobForm.classList.remove("active");
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}

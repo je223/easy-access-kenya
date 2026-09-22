@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+.admin-verified-page {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-verified-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.admin-verified-header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.admin-verified-header p {
+    margin: 7px 0 0;
+    opacity: 0.7;
+}
+
+.admin-verified-count {
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* CARD */
+
+.admin-verified-card {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.admin-verified-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-verified-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+}
+
+.admin-verified-table th {
+    background: #f8fafc;
+    padding: 16px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 800;
+    color: #475569;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.admin-verified-table td {
+    padding: 17px 14px;
+    border-bottom: 1px solid #eef2f7;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.admin-verified-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-verified-table tbody tr {
+    transition: 0.2s ease;
+}
+
+.admin-verified-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* COMPANY */
+
+.admin-verified-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-verified-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #dcfce7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #166534;
+    flex-shrink: 0;
+}
+
+.admin-verified-company-name {
+    font-weight: 800;
+    color: #111827;
+}
+
+.admin-verified-email {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+
+/* STATUS */
+
+.admin-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* ACTION */
+
+.admin-verified-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-verified-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 13px;
+    border-radius: 9px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-verified-review {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.admin-verified-review:hover {
+    background: #bae6fd;
+}
+
+
+/* EMPTY */
+
+.admin-verified-empty {
+    padding: 70px 30px;
+    text-align: center;
+}
+
+.admin-verified-empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.admin-verified-empty h3 {
+    margin: 0 0 8px;
+    font-size: 21px;
+}
+
+.admin-verified-empty p {
+    margin: 0;
+    opacity: 0.65;
+}
+
+
+/* DARK THEME */
+
+body.theme-dark .admin-verified-page {
+    color: #f8fafc;
+}
+
+body.theme-dark .admin-verified-count {
+    background: #16351f;
+    color: #86efac;
+}
+
+body.theme-dark .admin-verified-card {
+    background: #111827;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-dark .admin-verified-table th {
+    background: #1e293b;
+    color: #cbd5e1;
+    border-bottom-color: #334155;
+}
+
+body.theme-dark .admin-verified-table td {
+    border-bottom-color: #263244;
+}
+
+body.theme-dark .admin-verified-table tbody tr:hover {
+    background: #1e293b;
+}
+
+body.theme-dark .admin-verified-company-name {
+    color: #f8fafc;
+}
+
+body.theme-dark .admin-verified-email {
+    color: #94a3b8;
+}
+
+body.theme-dark .admin-verified-avatar {
+    background: #1f4930;
+    color: #86efac;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .admin-verified-page {
+        padding: 20px 14px;
+    }
+
+    .admin-verified-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-verified-header h1 {
+        font-size: 25px;
+    }
+
+    .admin-verified-count {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+</style>
+
+
+<div class="admin-verified-page">
+
+    <div class="admin-verified-header">
+
+        <div>
+
+            <h1>Verified Companies</h1>
+
+            <p>
+                View companies that have been verified by Easy Access Kenya administrators.
+            </p>
+
+        </div>
+
+        <div class="admin-verified-count">
+            {{ companies|length }} Verified
+        </div>
+
+    </div>
+
+
+    <div class="admin-verified-card">
+
+        {% if companies %}
+
+        <div class="admin-verified-table-wrapper">
+
+            <table class="admin-verified-table">
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Company</th>
+                        <th>Contact Person</th>
+                        <th>Phone</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Verified</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for company in companies %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ company["id"] }}</strong>
+                        </td>
+
+
+                        <td>
+
+                            <div class="admin-verified-profile">
+
+                                <div class="admin-verified-avatar">
+                                    {{ company["company_name"][0]|upper }}
+                                </div>
+
+                                <div>
+
+                                    <div class="admin-verified-company-name">
+                                        {{ company["company_name"] }}
+                                    </div>
+
+                                    <div class="admin-verified-email">
+                                        {{ company["email"] }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            {{ company["contact_person"] or "—" }}
+                        </td>
+
+
+                        <td>
+                            {{ company["phone"] or "—" }}
+                        </td>
+
+
+                        <td>
+                            {{ company["location"] or "—" }}
+                        </td>
+
+
+                        <td>
+
+                            <span class="admin-verified-badge">
+                                ✓ Verified
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            {{ company["verified_at"] or "—" }}
+                        </td>
+
+
+                        <td>
+
+                            <div class="admin-verified-actions">
+
+                                <a
+                                    href="{{ url_for('admin_company', company_id=company['id']) }}"
+                                    class="admin-verified-action admin-verified-review"
+                                >
+                                    View
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="admin-verified-empty">
+
+            <div class="admin-verified-empty-icon">
+                🏢
+            </div>
+
+            <h3>No Verified Companies</h3>
+
+            <p>
+                There are currently no verified companies.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

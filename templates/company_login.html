@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .company-login-page {
+        min-height: calc(100vh - 140px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+        background: #f4f7fb;
+    }
+
+    .company-login-card {
+        width: 100%;
+        max-width: 500px;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 38px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5eaf0;
+    }
+
+    .company-login-header {
+        text-align: center;
+        margin-bottom: 28px;
+    }
+
+    .company-login-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        border-radius: 18px;
+        background: #0f766e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .company-login-header h1 {
+        margin: 0 0 10px;
+        font-size: 30px;
+        color: #172033;
+    }
+
+    .company-login-header p {
+        margin: 0;
+        color: #6b7280;
+        line-height: 1.6;
+        font-size: 15px;
+    }
+
+    .company-login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .company-login-form label {
+        font-weight: 700;
+        color: #263247;
+        font-size: 14px;
+        margin-bottom: -8px;
+    }
+
+    .company-login-form input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 15px;
+        border: 1px solid #d8dee8;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #172033;
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s ease;
+    }
+
+    .company-login-form input:focus {
+        border-color: #0f766e;
+        box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.10);
+    }
+
+    /* MAIN ACTION BUTTON */
+
+    .company-action-button {
+        margin-top: 8px;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: #16a34a;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .company-action-button:hover {
+        background: #15803d;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(22, 163, 74, 0.20);
+    }
+
+    /* WAITING MESSAGE */
+
+    .pending-box {
+        display: none;
+        background: #fff7ed;
+        border: 1px solid #fdba74;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 18px;
+        text-align: center;
+        color: #9a3412;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .pending-box strong {
+        font-size: 16px;
+    }
+
+    .company-login-footer {
+        text-align: center;
+        margin-top: 24px;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .company-login-footer a {
+        color: #0f766e;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .company-login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* DARK THEME */
+
+    body.theme-dark .company-login-page {
+        background: #111827;
+    }
+
+    body.theme-dark .company-login-card {
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    body.theme-dark .company-login-header h1,
+    body.theme-dark .company-login-form label {
+        color: #f3f4f6;
+    }
+
+    body.theme-dark .company-login-header p,
+    body.theme-dark .company-login-footer {
+        color: #9ca3af;
+    }
+
+    body.theme-dark .company-login-form input {
+        background: #111827;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+
+    body.theme-dark .pending-box {
+        background: #431407;
+        border-color: #c2410c;
+        color: #fed7aa;
+    }
+</style>
+
+
+<div class="company-login-page">
+
+    <div class="company-login-card">
+
+        <div class="company-login-header">
+
+            <div class="company-login-icon">
+                🏢
+            </div>
+
+            <h1>Company Verification</h1>
+
+            <p>
+                Your company must be verified before you can
+                access the company dashboard.
+            </p>
+
+        </div>
+
+
+        <form method="POST" class="company-login-form">
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <label for="email">
+                Company Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter company email"
+                required
+            >
+
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+            >
+
+
+            <!-- ONE BUTTON ONLY -->
+
+            <button
+    type="submit"
+    class="company-action-button"
+>
+    ✓ Verify Company
+</button>
+
+        </form>
+
+
+        <!-- WAITING FOR APPROVAL -->
+
+        <div
+            id="pendingMessage"
+            class="pending-box"
+        >
+
+            <strong>
+                Waiting for approval
+            </strong>
+
+            <br>
+
+            Your company registration has been submitted
+            and is waiting for administrator approval.
+            This may take a while.
+
+            <br><br>
+
+            You will be notified by
+            <strong>email or SMS</strong>
+            once your company has been approved.
+
+        </div>
+
+
+        <div class="company-login-footer">
+
+    Don't have a company account?
+
+    <a href="/company-register">
+        Register Company
+    </a>
+
+    <br><br>
+
+    Are you a student or job seeker?
+
+    <a href="/login">
+        Login here
+    </a>
+
+    <br><br>
+
+    <a href="/">
+        ← Back to Home
+    </a>
+
+</div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function showPendingMessage() {
+
+    const message =
+        document.getElementById("pendingMessage");
+
+    message.style.display = "block";
+
+    message.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Application Details | Easy Access Kenya</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .page {
+            min-height: 100vh;
+            padding: 35px 20px 60px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .brand {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #6b7280;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+            color: #111827;
+        }
+
+        .hero-subtitle {
+            margin: 0;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .opportunity-name {
+            color: #2563eb;
+            font-weight: 800;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .card:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 13px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .section-heading .icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eff6ff;
+            font-size: 18px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 19px;
+            color: #111827;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .info-value {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f2937;
+            overflow-wrap: anywhere;
+        }
+
+        .skills-box {
+            margin-top: 14px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+        }
+
+        .skills-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .skills-text {
+            margin: 0;
+            line-height: 1.6;
+            color: #374151;
+            white-space: pre-wrap;
+        }
+
+        .document-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .document-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #fafafa;
+        }
+
+        .document-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .document-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 19px;
+        }
+
+        .document-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f2937;
+            overflow-wrap: anywhere;
+        }
+
+        .document-type {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .empty-documents {
+            padding: 20px;
+            text-align: center;
+            border: 1px dashed #d1d5db;
+            border-radius: 12px;
+            color: #6b7280;
+        }
+
+        .status-card {
+            position: sticky;
+            top: 20px;
+        }
+
+        .current-status {
+            padding: 16px;
+            border-radius: 12px;
+            background: #eff6ff;
+            margin-bottom: 20px;
+        }
+
+        .current-status-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .current-status-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1d4ed8;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            background: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
+        }
+
+        .update-btn {
+            width: 100%;
+            margin-top: 12px;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            background: #2563eb;
+            color: white;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .update-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .help-text {
+            margin-top: 14px;
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 800px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-card {
+                position: static;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .hero-top {
+                flex-direction: column;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .document-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .download-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero,
+            .card {
+                padding: 20px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="container">
+
+        <div class="top-bar">
+
+            <a
+                href="{{ url_for('company_applications') }}"
+                class="back-link"
+            >
+                ← Back to Applications
+            </a>
+
+            <div class="brand">
+                EASY ACCESS KENYA
+            </div>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <div class="hero">
+
+            <div class="hero-top">
+
+                <div>
+
+                    <h1>
+                        {{ application['full_name'] }}
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Application for
+                        <span class="opportunity-name">
+                            {{ application['opportunity_title'] }}
+                        </span>
+                    </p>
+
+                </div>
+
+                <div class="status-badge">
+                    {{ application['status'] }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="content-grid">
+
+            <div>
+
+
+                <!-- PERSONAL INFORMATION -->
+
+                <div class="card">
+
+                    <div class="section-heading">
+
+                        <div class="icon">
+                            👤
+                        </div>
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                    </div>
+
+
+                    <div class="info-grid">
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Full Name
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['full_name'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Email
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['email'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Phone
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['phone'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                County
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['county'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Town
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['town'] or 'Not provided' }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Date of Birth
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['date_of_birth'] }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACADEMIC INFORMATION -->
+
+                <div class="card">
+
+                    <div class="section-heading">
+
+                        <div class="icon">
+                            🎓
+                        </div>
+
+                        <h2>
+                            Academic Information
+                        </h2>
+
+                    </div>
+
+
+                    <div class="info-grid">
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Institution
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['institution'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Course
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['course'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Education Level
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['education_level'] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Year of Study
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['year_of_study'] or 'Not provided' }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <span class="info-label">
+                                Expected Graduation
+                            </span>
+
+                            <span class="info-value">
+                                {{ application['graduation_year'] or 'Not provided' }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="skills-box">
+
+                        <span class="skills-label">
+                            Skills
+                        </span>
+
+                        <p class="skills-text">
+                            {{ application['skills'] or 'No skills provided.' }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DOCUMENTS -->
+
+                <div class="card">
+
+                    <div class="section-heading">
+
+                        <div class="icon">
+                            📎
+                        </div>
+
+                        <h2>
+                            Application Documents
+                        </h2>
+
+                    </div>
+
+
+                    {% if documents %}
+
+                        <div class="document-list">
+
+                            {% for document in documents %}
+
+                            <div class="document-item">
+
+                                <div class="document-left">
+
+                                    <div class="document-icon">
+                                        📄
+                                    </div>
+
+                                    <div>
+
+                                        <div class="document-name">
+                                            {{ document['original_filename'] }}
+                                        </div>
+
+                                        <div class="document-type">
+                                            {{ document['document_type'] }}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <a
+                                    href="{{ url_for(
+                                        'company_application_document',
+                                        document_id=document['id']
+                                    ) }}"
+                                    class="download-btn"
+                                >
+                                    Download
+                                </a>
+
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="empty-documents">
+                            No documents were uploaded.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div>
+
+                <div class="card status-card">
+
+                    <div class="section-heading">
+
+                        <div class="icon">
+                            ⚙️
+                        </div>
+
+                        <h2>
+                            Application Status
+                        </h2>
+
+                    </div>
+
+
+                    <div class="current-status">
+
+                        <div class="current-status-label">
+                            Current Status
+                        </div>
+
+                        <div class="current-status-value">
+                            {{ application['status'] }}
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'company_update_application_status',
+                            application_id=application['id']
+                        ) }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+
+                        <label
+                            for="status"
+                            class="form-label"
+                        >
+                            Change Status
+                        </label>
+
+
+                        <select
+                            id="status"
+                            name="status"
+                            required
+                        >
+
+                            <option value="">
+                                Select new status
+                            </option>
+
+                            <option value="Under Review">
+                                Under Review
+                            </option>
+
+                            <option value="Shortlisted">
+                                Shortlisted
+                            </option>
+
+                            <option value="Accepted">
+                                Accepted
+                            </option>
+
+                            <option value="Rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="update-btn"
+                        >
+                            Update Application Status
+                        </button>
+
+                    </form>
+
+
+                    <p class="help-text">
+                        Updating the status helps keep track of the
+                        recruitment process for this applicant.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

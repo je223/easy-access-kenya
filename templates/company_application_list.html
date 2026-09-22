@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ page_title }} - Easy Access Kenya
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #111722;
+            color: #f1f4f8;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: #4caf70;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .header {
+            background: #171e2a;
+            border: 1px solid #303a49;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #9da8b7;
+        }
+
+        .count {
+            background: #4caf70;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .applications-card {
+            background: #171e2a;
+            border: 1px solid #303a49;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .application {
+            padding: 22px;
+            border-bottom: 1px solid #303a49;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .application:last-child {
+            border-bottom: none;
+        }
+
+        .applicant {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .applicant h2 {
+            margin: 0 0 8px;
+            font-size: 19px;
+        }
+
+        .applicant p {
+            margin: 5px 0;
+            color: #9da8b7;
+            font-size: 14px;
+        }
+
+        .opportunity {
+            color: #4caf70 !important;
+            font-weight: 700;
+            margin-top: 12px !important;
+        }
+
+        .type {
+            display: inline-block;
+            margin-top: 9px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #263244;
+            color: #9da8b7;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #263244;
+            color: #4caf70;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .actions {
+            flex-shrink: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            background: #4caf70;
+            color: white;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            background: #3d9d5f;
+        }
+
+        .empty {
+            padding: 65px 25px;
+            text-align: center;
+            color: #9da8b7;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .empty strong {
+            display: block;
+            color: #f1f4f8;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 700px) {
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .application {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .actions {
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="container">
+
+        <a
+            href="{{ url_for('company_applications') }}"
+            class="back-link"
+        >
+            ← Back to Applications
+        </a>
+
+
+        <div class="header">
+
+            <div class="header-top">
+
+                <div>
+
+                    <h1>
+                        {{ page_icon }}
+                        {{ page_title }}
+                    </h1>
+
+                    <p>
+                        {{ page_description }}
+                    </p>
+
+                </div>
+
+                <div class="count">
+                    {{ applications|length }}
+                    Application{% if applications|length != 1 %}s{% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="applications-card">
+
+            {% if applications %}
+
+                {% for application in applications %}
+
+                <div class="application">
+
+                    <div class="applicant">
+
+                        <h2>
+                            {{ application['full_name'] }}
+                        </h2>
+
+                        <p>
+                            📧
+                            {{ application['email'] }}
+                        </p>
+
+                        <p>
+                            📱
+                            {{ application['phone'] }}
+                        </p>
+
+                        <p class="opportunity">
+                            {{ application['opportunity_type'] }}
+                            —
+                            {{ application['opportunity_title'] }}
+                        </p>
+
+                        <span class="type">
+                            {{ application['opportunity_type'] }}
+                        </span>
+
+                        <span class="status">
+                            {{ application['status'] }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <a
+                            href="{{ url_for(
+                                'company_application',
+                                application_id=application['id']
+                            ) }}"
+                            class="btn"
+                        >
+                            View Application
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        {{ page_icon }}
+                    </div>
+
+                    <strong>
+                        No applications yet
+                    </strong>
+
+                    There are currently no applications
+                    in this category.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

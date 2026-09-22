@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Review Application - Easy Access Kenya
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 30px 20px 50px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header-card,
+        .card {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .header-card {
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .opportunity-name {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .progress {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 130px;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            background: #e5e7eb;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .step.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 21px;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .label {
+            display: block;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-weight: 600;
+        }
+
+        .document {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .uploaded {
+            color: #166534;
+            font-weight: 700;
+        }
+
+        .notice {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .header-card,
+            .card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="container">
+
+        <a
+            href="{{ url_for(
+                'application_verification',
+                opportunity_id=opportunity['id']
+            ) }}"
+            class="back-link"
+        >
+            ← Back to Verification
+        </a>
+
+
+        <div class="header-card">
+
+            <h1>Review Your Application</h1>
+
+            <p class="subtitle">
+                Please review everything carefully before
+                submitting your application.
+            </p>
+
+            <p>
+                Opportunity:
+                <span class="opportunity-name">
+                    {{ opportunity['title'] }}
+                </span>
+            </p>
+
+            <div class="progress">
+
+                <div class="step completed">
+                    1. Personal Information ✓
+                </div>
+
+                <div class="step completed">
+                    2. Documents ✓
+                </div>
+
+                <div class="step completed">
+                    3. Verification ✓
+                </div>
+
+                <div class="step active">
+                    4. Review
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- APPLICATION INFORMATION -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Application Information
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <span class="label">
+                        Full Name
+                    </span>
+
+                    <span class="value">
+                        {{ application['full_name'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Email
+                    </span>
+
+                    <span class="value">
+                        {{ application['email'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Phone
+                    </span>
+
+                    <span class="value">
+                        {{ application['phone'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        County
+                    </span>
+
+                    <span class="value">
+                        {{ application['county'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Town
+                    </span>
+
+                    <span class="value">
+                        {{ application['town'] or 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Institution
+                    </span>
+
+                    <span class="value">
+                        {{ application['institution'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Course
+                    </span>
+
+                    <span class="value">
+                        {{ application['course'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Education Level
+                    </span>
+
+                    <span class="value">
+                        {{ application['education_level'] }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Year of Study
+                    </span>
+
+                    <span class="value">
+                        {{ application['year_of_study'] or 'Not provided' }}
+                    </span>
+                </div>
+
+                <div class="info-item">
+                    <span class="label">
+                        Graduation Year
+                    </span>
+
+                    <span class="value">
+                        {{ application['graduation_year'] or 'Not provided' }}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DOCUMENTS -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Documents
+            </div>
+
+            {% for document in documents %}
+
+            <div class="document">
+
+                <span>
+                    {{ document['document_type'] }}
+                </span>
+
+                <span class="uploaded">
+                    ✓ Uploaded
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- FINAL SUBMISSION -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Final Confirmation
+            </div>
+
+            <div class="notice">
+
+                Your application is ready to be submitted.
+
+                <br><br>
+
+                By clicking <strong>Submit Application</strong>,
+                your application will be sent to the company
+                for consideration.
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'application_review',
+                    opportunity_id=opportunity['id']
+                ) }}"
+            >
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+
+                <div class="actions">
+
+                    <a
+                        href="{{ url_for(
+                            'application_verification',
+                            opportunity_id=opportunity['id']
+                        ) }}"
+                        class="btn btn-back"
+                    >
+                        ← Back
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Submit Application ✓
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

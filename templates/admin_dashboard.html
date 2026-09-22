@@ -1,0 +1,1034 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* =========================================
+       ADMIN PAGE
+       ========================================= */
+
+    .admin-page {
+        min-height: calc(100vh - 80px);
+        background: #f4f7f9;
+        padding: 35px 25px 60px;
+        margin-left: 245px;
+    }
+
+    .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+
+    /* =========================================
+       ALWAYS DARK ADMIN SIDEBAR
+       ========================================= */
+
+    .admin-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 225px;
+        background: #171e2a;
+        padding: 25px 15px;
+        z-index: 1000;
+        box-shadow: 4px 0 18px rgba(0, 0, 0, 0.25);
+        overflow-y: auto;
+    }
+
+    .admin-sidebar-brand {
+        padding: 5px 10px 28px;
+        border-bottom: 1px solid #303a49;
+        margin-bottom: 22px;
+    }
+
+    .admin-sidebar-brand h2 {
+        margin: 0;
+        color: #f1f4f8;
+        font-size: 21px;
+        font-weight: 900;
+        letter-spacing: 0.5px;
+    }
+
+    .admin-sidebar-brand span {
+        display: block;
+        margin-top: 5px;
+        color: #9da8b7;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .admin-sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .admin-sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 13px;
+        border-radius: 11px;
+        color: #9da8b7 !important;
+        text-decoration: none !important;
+        font-size: 14px;
+        font-weight: 700;
+        transition: 0.2s ease;
+    }
+
+    .admin-sidebar-link:hover {
+        background: #1b2330;
+        color: #f1f4f8 !important;
+        transform: translateX(2px);
+    }
+
+    .admin-sidebar-link.active {
+        background: #1b2330;
+        color: #4caf70 !important;
+        box-shadow: none;
+    }
+
+    .admin-sidebar-icon {
+        width: 25px;
+        text-align: center;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .admin-sidebar-divider {
+        height: 1px;
+        background: #303a49;
+        margin: 14px 5px;
+    }
+
+    .admin-sidebar-link.logout-link {
+        margin-top: 4px;
+    }
+
+
+    /* =========================================
+       HEADER
+       ========================================= */
+
+    .admin-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .admin-title h1 {
+        margin: 0;
+        font-size: 30px;
+        color: #172033;
+        font-weight: 800;
+    }
+
+    .admin-title p {
+        margin: 7px 0 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .admin-logout {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #172033;
+        color: white !important;
+        text-decoration: none !important;
+        padding: 11px 18px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       STAT CARDS
+       ========================================= */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 32px;
+    }
+
+    .stat-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+    }
+
+    .stat-label {
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .stat-number {
+        color: #172033;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+
+    /* =========================================
+       CONTROL CENTER
+       ========================================= */
+
+    .section-title {
+        margin: 0 0 17px;
+        color: #172033;
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .control-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 35px;
+    }
+
+    .control-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 17px;
+        padding: 22px;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+    }
+
+    .control-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #ecfdf5;
+        color: #0f766e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .control-card h3 {
+        margin: 0 0 7px;
+        font-size: 17px;
+        color: #172033;
+    }
+
+    .control-card p {
+        margin: 0 0 18px;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================
+       GREEN BUTTON
+       ========================================= */
+
+    .green-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f766e;
+        color: white !important;
+        text-decoration: none !important;
+        border-radius: 9px;
+        padding: 10px 15px;
+        font-size: 13px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .green-button:hover {
+        background: #0d5f59;
+        transform: translateY(-1px);
+        box-shadow: 0 5px 14px rgba(15, 118, 110, 0.22);
+    }
+
+
+    /* =========================================
+       COMPANY TABLE
+       ========================================= */
+
+    .company-section {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 17px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+    }
+
+    .company-header {
+        padding: 20px 22px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .company-header h2 {
+        margin: 0;
+        font-size: 19px;
+        color: #172033;
+    }
+
+    .company-table-wrap {
+        overflow-x: auto;
+    }
+
+    .company-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .company-table th {
+        padding: 14px 18px;
+        background: #f8fafc;
+        color: #64748b;
+        font-size: 12px;
+        text-align: left;
+        font-weight: 700;
+    }
+
+    .company-table td {
+        padding: 16px 18px;
+        border-top: 1px solid #eef2f7;
+        color: #334155;
+        font-size: 13px;
+    }
+
+    .company-name {
+        font-weight: 800;
+        color: #172033;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .pending {
+        background: #fff7ed;
+        color: #c2410c;
+    }
+
+    .verified {
+        background: #ecfdf5;
+        color: #047857;
+    }
+
+    .rejected {
+        background: #fef2f2;
+        color: #b91c1c;
+    }
+
+    .blocked {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+
+    /* =========================================
+       DARK THEME
+       ========================================= */
+
+    body.theme-dark .admin-page {
+        background: #111722 !important;
+    }
+
+    body.theme-dark .admin-title h1,
+    body.theme-dark .section-title,
+    body.theme-dark .stat-number,
+    body.theme-dark .control-card h3,
+    body.theme-dark .company-header h2,
+    body.theme-dark .company-name {
+        color: #f1f4f8 !important;
+    }
+
+    body.theme-dark .admin-title p,
+    body.theme-dark .stat-label,
+    body.theme-dark .control-card p {
+        color: #9da8b7 !important;
+    }
+
+
+    /* =========================================
+       DARK LOGOUT
+       ========================================= */
+
+    body.theme-dark .admin-logout {
+        background: #171e2a !important;
+        color: #f1f4f8 !important;
+        border: 1px solid #303a49 !important;
+    }
+
+
+    /* =========================================
+       DARK STAT CARDS
+       ========================================= */
+
+    body.theme-dark .stat-card {
+        background: #1b2330 !important;
+        border-color: #303a49 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20) !important;
+    }
+
+
+    /* =========================================
+       DARK CONTROL CARDS
+       ========================================= */
+
+    body.theme-dark .control-card {
+        background: #1b2330 !important;
+        border-color: #303a49 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20) !important;
+    }
+
+    body.theme-dark .control-icon {
+        background: #202c25 !important;
+        color: #4caf70 !important;
+    }
+
+
+    /* =========================================
+       DARK GREEN BUTTONS
+       ========================================= */
+
+    body.theme-dark .green-button {
+        background: #0f766e !important;
+        color: white !important;
+    }
+
+    body.theme-dark .green-button:hover {
+        background: #0d5f59 !important;
+    }
+
+
+    /* =========================================
+       DARK COMPANY SECTION
+       ========================================= */
+
+    body.theme-dark .company-section {
+        background: #1b2330 !important;
+        border-color: #303a49 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20) !important;
+    }
+
+    body.theme-dark .company-header {
+        border-color: #303a49 !important;
+    }
+
+
+    /* =========================================
+       DARK COMPANY TABLE
+       ========================================= */
+
+    body.theme-dark .company-table th {
+        background: #151c27 !important;
+        color: #9da8b7 !important;
+    }
+
+    body.theme-dark .company-table td {
+        border-color: #303a49 !important;
+        color: #cbd5e1 !important;
+    }
+
+    body.theme-dark .company-name {
+        color: #f1f4f8 !important;
+    }
+
+
+    /* =========================================
+       DARK STATUS BADGES
+       ========================================= */
+
+    body.theme-dark .pending {
+        background: #3a291b !important;
+        color: #f6ad55 !important;
+    }
+
+    body.theme-dark .verified {
+        background: #173326 !important;
+        color: #4caf70 !important;
+    }
+
+    body.theme-dark .rejected {
+        background: #3a1f24 !important;
+        color: #f87171 !important;
+    }
+
+    body.theme-dark .blocked {
+        background: #27303d !important;
+        color: #aab4c2 !important;
+    }
+
+
+    /* =========================================
+       DARK EMPTY MESSAGE
+       ========================================= */
+
+    body.theme-dark .company-section > div[style] {
+        color: #9da8b7 !important;
+    }
+
+
+    /* =========================================
+       TABLET
+       ========================================= */
+
+    @media (max-width: 950px) {
+
+        .admin-page {
+            margin-left: 210px;
+        }
+
+        .admin-sidebar {
+            width: 190px;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .control-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+
+    /* =========================================
+       MOBILE
+       ========================================= */
+
+    @media (max-width: 700px) {
+
+        .admin-sidebar {
+            position: relative;
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .admin-sidebar-brand {
+            padding-bottom: 15px;
+            margin-bottom: 12px;
+        }
+
+        .admin-sidebar-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .admin-sidebar-divider {
+            display: none;
+        }
+
+        .admin-page {
+            margin-left: 0;
+            padding: 25px 15px 45px;
+        }
+
+        .admin-top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .stats-grid,
+        .control-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<!-- =========================================
+     ADMIN SIDEBAR
+     ========================================= -->
+
+<aside class="admin-sidebar">
+
+```
+<div class="admin-sidebar-brand">
+    <h2>EASY ACCESS</h2>
+    <span>KENYA ADMINISTRATION</span>
+</div>
+
+<nav class="admin-sidebar-menu">
+
+    <a
+        href="/admin-dashboard"
+        class="admin-sidebar-link active"
+    >
+        <span class="admin-sidebar-icon">🏠</span>
+        <span>Dashboard</span>
+    </a>
+
+    <a
+        href="/admin-companies"
+        class="admin-sidebar-link"
+    >
+        <span class="admin-sidebar-icon">🏢</span>
+        <span>Companies</span>
+    </a>
+
+    <a
+        href="/admin-opportunities"
+        class="admin-sidebar-link"
+    >
+        <span class="admin-sidebar-icon">📋</span>
+        <span>Opportunities</span>
+    </a>
+
+    <a
+        href="/admin-applications"
+        class="admin-sidebar-link"
+    >
+        <span class="admin-sidebar-icon">📄</span>
+        <span>Applications</span>
+    </a>
+
+    <a
+        href="/admin-users"
+        class="admin-sidebar-link"
+    >
+        <span class="admin-sidebar-icon">👥</span>
+        <span>Users</span>
+    </a>
+
+    <div class="admin-sidebar-divider"></div>
+
+    <a
+        href="/admin-settings"
+        class="admin-sidebar-link"
+    >
+        <span class="admin-sidebar-icon">⚙️</span>
+        <span>Settings</span>
+    </a>
+
+    <a
+        href="/logout"
+        class="admin-sidebar-link logout-link"
+    >
+        <span class="admin-sidebar-icon">🚪</span>
+        <span>Logout</span>
+    </a>
+
+</nav>
+```
+
+</aside>
+
+<!-- =========================================
+     ADMIN CONTENT
+     ========================================= -->
+
+<div class="admin-page">
+
+```
+<div class="admin-container">
+
+    <!-- HEADER -->
+
+    <div class="admin-top">
+
+        <div class="admin-title">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Welcome, {{ session.get("admin_name", "Administrator") }}.
+                Manage Easy Access Kenya from here.
+            </p>
+
+        </div>
+
+        <a href="/logout" class="admin-logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Companies
+            </div>
+
+            <div class="stat-number">
+                {{ total_companies }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Pending Verification
+            </div>
+
+            <div class="stat-number">
+                {{ pending_companies }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Verified Companies
+            </div>
+
+            <div class="stat-number">
+                {{ verified_companies }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Opportunities
+            </div>
+
+            <div class="stat-number">
+                {{ total_opportunities }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTROL CENTER -->
+
+    <h2 class="section-title">
+        Administration
+    </h2>
+
+    <div class="control-grid">
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                🏢
+            </div>
+
+            <h3>
+                Companies
+            </h3>
+
+            <p>
+                Review, verify, block and manage
+                company accounts.
+            </p>
+
+            <a
+                href="/admin-companies"
+                class="green-button"
+            >
+                Manage Companies
+            </a>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                ⏳
+            </div>
+
+            <h3>
+                Pending Verification
+            </h3>
+
+            <p>
+                {{ pending_companies }}
+                company waiting for administrator review.
+            </p>
+
+            <a
+                href="/admin-companies/pending"
+                class="green-button"
+            >
+                Review Pending
+            </a>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                ✓
+            </div>
+
+            <h3>
+                Verified Companies
+            </h3>
+
+            <p>
+                {{ verified_companies }}
+                approved companies.
+            </p>
+
+            <a
+                href="/admin-companies/verified"
+                class="green-button"
+            >
+                View Verified
+            </a>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                📋
+            </div>
+
+            <h3>
+                Opportunities
+            </h3>
+
+            <p>
+                Manage opportunities posted on
+                Easy Access Kenya.
+            </p>
+
+            <a
+                href="/admin-opportunities"
+                class="green-button"
+            >
+                Manage Opportunities
+            </a>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                📄
+            </div>
+
+            <h3>
+                Applications
+            </h3>
+
+            <p>
+                Review applications submitted
+                by students and job seekers.
+            </p>
+
+            <a
+                href="/admin-applications"
+                class="green-button"
+            >
+                Manage Applications
+            </a>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                👥
+            </div>
+
+            <h3>
+                Users
+            </h3>
+
+            <p>
+                Manage students and job seekers
+                registered on the platform.
+            </p>
+
+            <a
+                href="/admin-users"
+                class="green-button"
+            >
+                Manage Users
+            </a>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <div class="control-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Settings
+            </h3>
+
+            <p>
+                Manage administrator and platform
+                settings.
+            </p>
+
+            <a
+                href="/admin-settings"
+                class="green-button"
+            >
+                Open Settings
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPANY VERIFICATION -->
+
+    <div class="company-section">
+
+        <div class="company-header">
+
+            <h2>
+                Recent Company Registrations
+            </h2>
+
+        </div>
+
+
+        {% if companies %}
+
+        <div class="company-table-wrap">
+
+            <table class="company-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Company</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for company in companies %}
+
+                    <tr>
+
+                        <td>
+                            <span class="company-name">
+                                {{ company["company_name"] }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ company["contact_person"] }}
+                        </td>
+
+                        <td>
+                            {{ company["email"] }}
+                        </td>
+
+                        <td>
+                            {{ company["location"] }}
+                        </td>
+
+                        <td>
+
+                            {% if company["verification_status"] == "Verified" %}
+
+                                <span class="status-badge verified">
+                                    Verified
+                                </span>
+
+                            {% elif company["verification_status"] == "Rejected" %}
+
+                                <span class="status-badge rejected">
+                                    Rejected
+                                </span>
+
+                            {% elif company["verification_status"] == "Blocked" %}
+
+                                <span class="status-badge blocked">
+                                    Blocked
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge pending">
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div style="padding:30px;text-align:center;color:#64748b;">
+                No company registrations yet.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}
+
+```
+
+This version has **no `body.theme-dark` rules for the sidebar**, so the sidebar is permanently dark. The green `#0f766e` remains only for your buttons and other green accents.
+
+After replacing the file, run:
+
+`py app.py`
+
+If it starts normally, the next step can be the **Company Dashboard sidebar**, using this exact same permanently-dark style.
+

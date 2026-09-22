@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Settings | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<section class="settings-section">
+
+    <div class="settings-card">
+
+        <div class="settings-header">
+
+            <span class="settings-badge">
+                ⚙ EASY ACCESS KENYA
+            </span>
+
+            <h1>Settings</h1>
+
+            <p>
+                Customize your Easy Access Kenya experience.
+            </p>
+
+        </div>
+
+        <div class="settings-group">
+
+            <h2>Appearance</h2>
+
+            <p>
+                Choose how Easy Access Kenya looks on your device.
+            </p>
+
+            <div class="theme-options">
+
+                <button type="button"
+                        class="theme-option"
+                        data-theme="light">
+
+                    <div class="theme-preview light-preview">
+                        ☀️
+                    </div>
+
+                    <div>
+                        <strong>Light</strong>
+                        <span>Clean and bright</span>
+                    </div>
+
+                </button>
+
+
+                <button type="button"
+                        class="theme-option"
+                        data-theme="dark">
+
+                    <div class="theme-preview dark-preview">
+                        🌙
+                    </div>
+
+                    <div>
+                        <strong>Dark</strong>
+                        <span>Easy on the eyes</span>
+                    </div>
+
+                </button>
+
+
+                <button type="button"
+                        class="theme-option"
+                        data-theme="ocean">
+
+                    <div class="theme-preview ocean-preview">
+                        🌊
+                    </div>
+
+                    <div>
+                        <strong>Ocean</strong>
+                        <span>Blue modern style</span>
+                    </div>
+
+                </button>
+
+
+                <button type="button"
+                        class="theme-option"
+                        data-theme="kenya">
+
+                    <div class="theme-preview kenya-preview">
+                        🇰🇪
+                    </div>
+
+                    <div>
+                        <strong>Kenya</strong>
+                        <span>Kenyan-inspired style</span>
+                    </div>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <div class="settings-group">
+
+            <h2>Account</h2>
+
+            <a href="/profile" class="settings-link">
+
+                👤
+
+                <span>
+                    <strong>My Profile</strong>
+                    <small>Update your personal information</small>
+                </span>
+
+                →
+
+            </a>
+
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <div class="settings-group">
+
+            <h2>About</h2>
+
+            <div class="about-settings">
+
+                <strong>Easy Access Kenya</strong>
+
+                <span>
+                    Connecting Kenyans to opportunities 🇰🇪
+                </span>
+
+                <small>
+                    Version 1.0
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const themeButtons =
+    document.querySelectorAll(".theme-option");
+
+
+function applyTheme(theme) {
+
+    document.body.classList.remove(
+        "theme-dark",
+        "theme-ocean",
+        "theme-kenya"
+    );
+
+    if (theme === "dark") {
+        document.body.classList.add("theme-dark");
+    }
+
+    if (theme === "ocean") {
+        document.body.classList.add("theme-ocean");
+    }
+
+    if (theme === "kenya") {
+        document.body.classList.add("theme-kenya");
+    }
+
+    localStorage.setItem(
+        "easyAccessTheme",
+        theme
+    );
+
+    themeButtons.forEach(button => {
+
+        button.classList.remove("selected");
+
+        if (button.dataset.theme === theme) {
+            button.classList.add("selected");
+        }
+
+    });
+
+}
+
+
+themeButtons.forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        applyTheme(this.dataset.theme);
+
+    });
+
+});
+
+
+const savedTheme =
+    localStorage.getItem("easyAccessTheme") || "light";
+
+applyTheme(savedTheme);
+
+</script>
+
+{% endblock %}

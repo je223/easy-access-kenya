@@ -1,0 +1,1048 @@
+{% extends "base.html" %}
+
+{% block title %}Opportunities | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   OPPORTUNITIES PAGE
+   ========================================= */
+
+.opportunities-page {
+    min-height: calc(100vh - 120px);
+    background: #f4f7fb;
+    color: #172033;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.opportunities-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   PAGE HEADER
+   ========================================= */
+
+.opportunities-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.opportunities-label {
+    display: inline-block;
+    color: #0782b5;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.opportunities-page-header h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 30px;
+}
+
+.opportunities-page-header p {
+    margin: 8px 0 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.opportunities-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 14px;
+}
+
+.opportunities-count strong {
+    color: #0782b5;
+    font-size: 24px;
+}
+
+.opportunities-count span {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+
+/* =========================================
+   SEARCH PANEL
+   ========================================= */
+
+.opportunities-search-panel {
+    display: grid;
+    grid-template-columns: 1.5fr 0.8fr 0.8fr auto;
+    gap: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 16px;
+}
+
+.opportunities-search-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    background: #f8fbfe;
+    border: 1px solid #dbe7f1;
+    border-radius: 10px;
+}
+
+.opportunities-search-input span {
+    color: #64748b;
+    font-size: 20px;
+}
+
+.opportunities-search-input input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #172033;
+    padding: 12px 0;
+    font-size: 14px;
+}
+
+.opportunities-search-input input::placeholder {
+    color: #94a3b8;
+}
+
+.opportunities-search-panel select {
+    width: 100%;
+    padding: 12px;
+    background: #f8fbfe;
+    color: #172033;
+    border: 1px solid #dbe7f1;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+}
+
+.opportunities-search-panel button {
+    border: none;
+    padding: 0 22px;
+    border-radius: 10px;
+    background: #0782b5;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.opportunities-search-panel button:hover {
+    background: #056b91;
+}
+
+
+/* =========================================
+   ACTIVE FILTERS
+   ========================================= */
+
+.active-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px 14px;
+    background: #eef6fb;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 13px;
+}
+
+.active-filters a {
+    color: #0782b5;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   OPPORTUNITY LIST
+   ========================================= */
+
+.opportunities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.opportunity-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+
+.opportunity-item-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    background: #eaf6fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.opportunity-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.opportunity-item-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 7px;
+}
+
+.opportunity-badge,
+.opportunity-status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.attachment-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.internship-badge {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.job-badge {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.open-status {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.expired-status {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.opportunity-item-content h2 {
+    margin: 0 0 7px;
+    color: #172033;
+    font-size: 19px;
+}
+
+.opportunity-company {
+    margin: 0 0 8px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.opportunity-information {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.opportunity-summary {
+    margin: 10px 0 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   ACTION
+   ========================================= */
+
+.opportunity-item-action {
+    flex-shrink: 0;
+}
+
+.opportunity-item-action a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 15px;
+    border-radius: 10px;
+    background: #0782b5;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.opportunity-item-action a:hover {
+    background: #056b91;
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.opportunities-empty {
+    padding: 50px 25px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 16px;
+}
+
+.opportunities-empty-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.opportunities-empty h2 {
+    margin: 0 0 8px;
+    color: #172033;
+}
+
+.opportunities-empty p {
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.opportunities-empty a {
+    color: #0782b5;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+/* =========================================
+   DARK THEME
+   EXACT COLORS FROM BASE.HTML
+   ========================================= */
+
+body.theme-dark main {
+    background: #111722 !important;
+}
+
+body.theme-dark .opportunities-page {
+    background: #111722 !important;
+    color: #e8edf4 !important;
+}
+
+body.theme-dark .opportunities-page-header {
+    background: #111722 !important;
+}
+
+body.theme-dark .opportunities-page-header h1 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunities-page-header p {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunities-label {
+    color: #4caf70 !important;
+}
+
+
+/* =========================================
+   DARK COUNT
+   ========================================= */
+
+body.theme-dark .opportunities-count {
+    background: #1b2330 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunities-count strong {
+    color: #4caf70 !important;
+}
+
+body.theme-dark .opportunities-count span {
+    color: #9da8b7 !important;
+}
+
+
+/* =========================================
+   DARK SEARCH PANEL
+   ========================================= */
+
+body.theme-dark .opportunities-search-panel {
+    background: #1b2330 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunities-search-input {
+    background: #151c27 !important;
+    border-color: #354052 !important;
+}
+
+body.theme-dark .opportunities-search-input span {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunities-search-input input {
+    background: transparent !important;
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunities-search-input input::placeholder {
+    color: #7f8a9b !important;
+}
+
+body.theme-dark .opportunities-search-panel select {
+    background: #151c27 !important;
+    color: #f1f4f8 !important;
+    border-color: #354052 !important;
+}
+
+body.theme-dark .opportunities-search-panel button {
+    background: #4caf70 !important;
+    color: #ffffff !important;
+}
+
+body.theme-dark .opportunities-search-panel button:hover {
+    background: #429e64 !important;
+}
+
+
+/* =========================================
+   DARK FILTER STATUS
+   ========================================= */
+
+body.theme-dark .active-filters {
+    background: #151c27 !important;
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .active-filters a {
+    color: #4caf70 !important;
+}
+
+
+/* =========================================
+   DARK OPPORTUNITY CARDS
+   ========================================= */
+
+body.theme-dark .opportunity-item {
+    background: #1b2330 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunity-item-icon {
+    background: #202c25 !important;
+}
+
+body.theme-dark .opportunity-item-content h2 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunity-company {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunity-information {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunity-summary {
+    color: #9da8b7 !important;
+}
+
+
+/* =========================================
+   DARK BADGES
+   ========================================= */
+
+body.theme-dark .attachment-badge {
+    background: #202c25 !important;
+    color: #4caf70 !important;
+}
+
+body.theme-dark .internship-badge {
+    background: #29243a !important;
+    color: #b9a4ff !important;
+}
+
+body.theme-dark .job-badge {
+    background: #202c25 !important;
+    color: #4caf70 !important;
+}
+
+body.theme-dark .open-status {
+    background: #202c25 !important;
+    color: #4caf70 !important;
+}
+
+body.theme-dark .expired-status {
+    background: #3a2226 !important;
+    color: #ff9b9b !important;
+}
+
+
+/* =========================================
+   DARK ACTION
+   ========================================= */
+
+body.theme-dark .opportunity-item-action a {
+    background: #0e1420 !important;
+    color: #ffffff !important;
+}
+
+body.theme-dark .opportunity-item-action a:hover {
+    background: #4caf70 !important;
+}
+
+
+/* =========================================
+   DARK EMPTY STATE
+   ========================================= */
+
+body.theme-dark .opportunities-empty {
+    background: #1b2330 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunities-empty h2 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunities-empty p {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunities-empty a {
+    color: #4caf70 !important;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 850px) {
+
+    .opportunities-search-panel {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .opportunities-search-input {
+        grid-column: 1 / -1;
+    }
+
+    .opportunities-search-panel button {
+        min-height: 44px;
+    }
+
+    .opportunity-item {
+        align-items: flex-start;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .opportunities-page {
+        padding: 18px;
+    }
+
+    .opportunities-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .opportunities-count {
+        align-self: stretch;
+        flex-direction: row;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .opportunities-search-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .opportunities-search-input {
+        grid-column: auto;
+    }
+
+    .opportunity-item {
+        flex-direction: column;
+    }
+
+    .opportunity-item-action {
+        width: 100%;
+    }
+
+    .opportunity-item-action a {
+        width: 100%;
+        justify-content: center;
+    }
+
+}
+
+</style>
+
+
+<section class="opportunities-page">
+
+    <div class="opportunities-wrapper">
+
+
+        <!-- =====================================
+             PAGE HEADER
+             ===================================== -->
+
+        <div class="opportunities-page-header">
+
+            <div>
+
+                <span class="opportunities-label">
+                    EASY ACCESS KENYA
+                </span>
+
+                <h1>
+                    Find your next opportunity
+                </h1>
+
+                <p>
+                    Explore verified attachments, internships and jobs
+                    from companies across Kenya.
+                </p>
+
+            </div>
+
+
+            <div class="opportunities-count">
+
+                <strong>
+                    {{ opportunities|length }}
+                </strong>
+
+                <span>
+                    Opportunities
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             SEARCH BAR
+             ===================================== -->
+
+        <form
+            method="GET"
+            action="{{ url_for('opportunities') }}"
+            class="opportunities-search-panel"
+        >
+
+            <div class="opportunities-search-input">
+
+                <span>
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request.args.get('search', '') }}"
+                    placeholder="Search opportunities, companies or keywords..."
+                >
+
+            </div>
+
+
+            <select name="type">
+
+                <option value="">
+                    All Types
+                </option>
+
+                <option
+                    value="Attachment"
+                    {% if request.args.get('type') == 'Attachment' %}
+                        selected
+                    {% endif %}
+                >
+                    Attachment
+                </option>
+
+                <option
+                    value="Internship"
+                    {% if request.args.get('type') == 'Internship' %}
+                        selected
+                    {% endif %}
+                >
+                    Internship
+                </option>
+
+                <option
+                    value="Job"
+                    {% if request.args.get('type') == 'Job' %}
+                        selected
+                    {% endif %}
+                >
+                    Job
+                </option>
+
+            </select>
+
+
+            <select name="county">
+
+                <option value="">
+                    All Counties
+                </option>
+
+                <option
+                    value="Nairobi"
+                    {% if request.args.get('county') == 'Nairobi' %}
+                        selected
+                    {% endif %}
+                >
+                    Nairobi
+                </option>
+
+                <option
+                    value="Mombasa"
+                    {% if request.args.get('county') == 'Mombasa' %}
+                        selected
+                    {% endif %}
+                >
+                    Mombasa
+                </option>
+
+                <option
+                    value="Kisumu"
+                    {% if request.args.get('county') == 'Kisumu' %}
+                        selected
+                    {% endif %}
+                >
+                    Kisumu
+                </option>
+
+                <option
+                    value="Nakuru"
+                    {% if request.args.get('county') == 'Nakuru' %}
+                        selected
+                    {% endif %}
+                >
+                    Nakuru
+                </option>
+
+                <option
+                    value="Kiambu"
+                    {% if request.args.get('county') == 'Kiambu' %}
+                        selected
+                    {% endif %}
+                >
+                    Kiambu
+                </option>
+
+                <option
+                    value="Machakos"
+                    {% if request.args.get('county') == 'Machakos' %}
+                        selected
+                    {% endif %}
+                >
+                    Machakos
+                </option>
+
+                <option
+                    value="Kajiado"
+                    {% if request.args.get('county') == 'Kajiado' %}
+                        selected
+                    {% endif %}
+                >
+                    Kajiado
+                </option>
+
+                <option
+                    value="Uasin Gishu"
+                    {% if request.args.get('county') == 'Uasin Gishu' %}
+                        selected
+                    {% endif %}
+                >
+                    Uasin Gishu
+                </option>
+
+                <option
+                    value="Meru"
+                    {% if request.args.get('county') == 'Meru' %}
+                        selected
+                    {% endif %}
+                >
+                    Meru
+                </option>
+
+                <option
+                    value="Nyeri"
+                    {% if request.args.get('county') == 'Nyeri' %}
+                        selected
+                    {% endif %}
+                >
+                    Nyeri
+                </option>
+
+                <option
+                    value="Kakamega"
+                    {% if request.args.get('county') == 'Kakamega' %}
+                        selected
+                    {% endif %}
+                >
+                    Kakamega
+                </option>
+
+                <option
+                    value="Kisii"
+                    {% if request.args.get('county') == 'Kisii' %}
+                        selected
+                    {% endif %}
+                >
+                    Kisii
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+
+        <!-- =====================================
+             FILTER STATUS
+             ===================================== -->
+
+        {% if request.args.get('search')
+           or request.args.get('type')
+           or request.args.get('county') %}
+
+            <div class="active-filters">
+
+                <span>
+                    Filtered results
+                </span>
+
+                <a href="{{ url_for('opportunities') }}">
+                    Clear filters
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =====================================
+             OPPORTUNITY LIST
+             ===================================== -->
+
+        {% if opportunities %}
+
+            <div class="opportunities-list">
+
+                {% for opportunity in opportunities %}
+
+                    <article class="opportunity-item">
+
+
+                        <!-- ICON -->
+
+                        <div class="opportunity-item-icon">
+
+                            {% if opportunity["opportunity_type"] == "Attachment" %}
+
+                                🎓
+
+                            {% elif opportunity["opportunity_type"] == "Internship" %}
+
+                                💼
+
+                            {% else %}
+
+                                🚀
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- CONTENT -->
+
+                        <div class="opportunity-item-content">
+
+                            <div class="opportunity-item-top">
+
+                                <span
+                                    class="opportunity-badge
+                                    {% if opportunity['opportunity_type'] == 'Attachment' %}
+                                        attachment-badge
+                                    {% elif opportunity['opportunity_type'] == 'Internship' %}
+                                        internship-badge
+                                    {% else %}
+                                        job-badge
+                                    {% endif %}
+                                    "
+                                >
+                                    {{ opportunity["opportunity_type"] }}
+                                </span>
+
+
+                                {% if opportunity["deadline"] %}
+
+                                    {% if opportunity["deadline"] < today %}
+
+                                        <span class="opportunity-status expired-status">
+                                            EXPIRED
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="opportunity-status open-status">
+                                            OPEN
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="opportunity-status open-status">
+                                        OPEN
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <h2>
+                                {{ opportunity["title"] }}
+                            </h2>
+
+
+                            <p class="opportunity-company">
+                                🏢 {{ opportunity["company"] }}
+                            </p>
+
+
+                            <div class="opportunity-information">
+
+                                <span>
+                                    📍 {{ opportunity["county"] }}
+                                </span>
+
+                                {% if opportunity["deadline"] %}
+
+                                    <span>
+                                        📅 Deadline {{ opportunity["deadline"] }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <p class="opportunity-summary">
+
+                                {{ opportunity["description"][:160] }}
+
+                                {% if opportunity["description"]|length > 160 %}
+                                    ...
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+
+                        <!-- ACTION -->
+
+                        <div class="opportunity-item-action">
+
+                            <a
+                                href="{{ url_for(
+                                    'opportunity',
+                                    opportunity_id=opportunity['id']
+                                ) }}"
+                            >
+                                View Details
+                                <span>→</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="opportunities-empty">
+
+                <div class="opportunities-empty-icon">
+                    🔎
+                </div>
+
+                <h2>
+                    No opportunities found
+                </h2>
+
+                <p>
+                    Try changing your search or selecting different filters.
+                </p>
+
+                <a href="{{ url_for('opportunities') }}">
+                    View all opportunities
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</section>
+
+{% endblock %}

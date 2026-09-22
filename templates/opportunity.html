@@ -1,0 +1,808 @@
+{% extends "base.html" %}
+
+{% block title %}{{ opportunity["title"] }} | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   OPPORTUNITY DETAILS PAGE
+   ========================================= */
+
+.opportunity-view-page {
+    width: 100%;
+}
+
+.opportunity-view-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+}
+
+/* =========================================
+   BACK BUTTON
+   ========================================= */
+
+.opportunity-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* =========================================
+   HERO CARD
+   ========================================= */
+
+.opportunity-hero-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+}
+
+.opportunity-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.opportunity-large-icon {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.opportunity-hero-text h1 {
+    margin: 8px 0 6px;
+    font-size: 30px;
+}
+
+.opportunity-hero-text p {
+    margin: 0;
+}
+
+.opportunity-view-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.opportunity-hero-location {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* =========================================
+   MAIN GRID
+   ========================================= */
+
+.opportunity-view-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 25px;
+}
+
+.opportunity-view-main {
+    min-width: 0;
+}
+
+/* =========================================
+   CONTENT CARDS
+   ========================================= */
+
+.opportunity-view-card {
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.opportunity-view-card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 21px;
+}
+
+.opportunity-view-text,
+.requirements-list {
+    white-space: pre-line;
+    line-height: 1.7;
+}
+
+/* =========================================
+   CONTACT CARD
+   ========================================= */
+
+.opportunity-contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid transparent;
+}
+
+.contact-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.opportunity-contact-card h3 {
+    margin: 0 0 5px;
+}
+
+.opportunity-contact-card p {
+    margin: 0 0 5px;
+}
+
+.opportunity-contact-card a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
+.opportunity-view-sidebar {
+    min-width: 0;
+}
+
+.opportunity-apply-card,
+.opportunity-details-box {
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid transparent;
+    margin-bottom: 20px;
+}
+
+.opportunity-apply-card > span {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.opportunity-apply-card h2 {
+    margin: 8px 0 10px;
+}
+
+.opportunity-apply-card p {
+    line-height: 1.6;
+}
+
+/* =========================================
+   APPLY BUTTON
+   ========================================= */
+
+.opportunity-apply-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 18px;
+    transition: 0.2s ease;
+}
+
+.opportunity-apply-button:hover {
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   EXPIRED BOX
+   ========================================= */
+
+.opportunity-expired-box {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    text-align: center;
+}
+
+.expired-icon {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.opportunity-expired-box h3 {
+    margin: 5px 0 8px;
+}
+
+.opportunity-expired-box p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =========================================
+   DETAILS BOX
+   ========================================= */
+
+.opportunity-details-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.opportunity-detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid transparent;
+}
+
+.opportunity-detail-row:last-child {
+    border-bottom: none;
+}
+
+.opportunity-detail-row span {
+    font-size: 14px;
+}
+
+.opportunity-detail-row strong {
+    text-align: right;
+}
+
+/* =========================================
+   TIP
+   ========================================= */
+
+.opportunity-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+}
+
+.opportunity-tip span {
+    font-size: 20px;
+}
+
+.opportunity-tip p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =========================================
+   DARK THEME
+   EXACT COLORS FROM BASE.HTML
+   ========================================= */
+
+body.theme-dark main {
+    background: #111722 !important;
+}
+
+body.theme-dark .opportunity-view-page {
+    background: #111722 !important;
+    color: #e8edf4 !important;
+}
+
+body.theme-dark .opportunity-back {
+    color: #4caf70 !important;
+}
+
+body.theme-dark .opportunity-hero-card,
+body.theme-dark .opportunity-view-card,
+body.theme-dark .opportunity-details-box,
+body.theme-dark .opportunity-apply-card {
+    background: #1b2330 !important;
+    color: #e8edf4 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunity-hero-text h1,
+body.theme-dark .opportunity-view-card h2,
+body.theme-dark .opportunity-details-box h3,
+body.theme-dark .opportunity-apply-card h2 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunity-hero-text p,
+body.theme-dark .opportunity-hero-location,
+body.theme-dark .opportunity-view-text,
+body.theme-dark .requirements-list,
+body.theme-dark .opportunity-apply-card p {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunity-large-icon {
+    background: #202c25 !important;
+}
+
+body.theme-dark .opportunity-view-badge {
+    background: #202c25 !important;
+    color: #4caf70 !important;
+}
+
+body.theme-dark .opportunity-contact-card {
+    background: #1b2330 !important;
+    color: #e8edf4 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .contact-card-icon {
+    background: #202c25 !important;
+}
+
+body.theme-dark .opportunity-contact-card h3 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunity-contact-card p {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunity-contact-card a {
+    color: #4caf70 !important;
+}
+
+body.theme-dark .opportunity-apply-card > span {
+    color: #4caf70 !important;
+}
+
+body.theme-dark .opportunity-apply-button {
+    background: #4caf70 !important;
+    color: #ffffff !important;
+}
+
+body.theme-dark .opportunity-apply-button:hover {
+    background: #429e64 !important;
+}
+
+body.theme-dark .opportunity-expired-box {
+    background: #151c27 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunity-expired-box h3 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunity-expired-box p {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunity-details-box .opportunity-detail-row {
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunity-detail-row span {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .opportunity-detail-row strong {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .opportunity-tip {
+    background: #151c27 !important;
+    color: #9da8b7 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .opportunity-tip p {
+    color: #9da8b7 !important;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 850px) {
+
+    .opportunity-view-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .opportunity-hero-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .opportunity-hero-location {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .opportunity-view-container {
+        padding: 20px 15px 40px;
+    }
+
+    .opportunity-hero-card {
+        padding: 20px;
+    }
+
+    .opportunity-hero-left {
+        align-items: flex-start;
+    }
+
+    .opportunity-large-icon {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        font-size: 25px;
+    }
+
+    .opportunity-hero-text h1 {
+        font-size: 24px;
+    }
+
+    .opportunity-view-card,
+    .opportunity-apply-card,
+    .opportunity-details-box {
+        padding: 20px;
+    }
+
+    .opportunity-detail-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .opportunity-detail-row strong {
+        text-align: left;
+    }
+}
+
+</style>
+
+
+<!-- =========================================
+     OPPORTUNITY DETAILS PAGE
+     ========================================= -->
+
+<section class="opportunity-view-page">
+
+    <div class="opportunity-view-container">
+
+        <!-- BACK -->
+
+        <a href="{{ url_for('opportunities') }}" class="opportunity-back">
+            ← Back to Opportunities
+        </a>
+
+
+        <!-- HERO -->
+
+        <div class="opportunity-hero-card">
+
+            <div class="opportunity-hero-left">
+
+                <div class="opportunity-large-icon">
+
+                    {% if opportunity["opportunity_type"] == "Attachment" %}
+
+                        🎓
+
+                    {% elif opportunity["opportunity_type"] == "Internship" %}
+
+                        💼
+
+                    {% else %}
+
+                        🚀
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="opportunity-hero-text">
+
+                    <span class="opportunity-view-badge">
+                        {{ opportunity["opportunity_type"] }}
+                    </span>
+
+                    <h1>
+                        {{ opportunity["title"] }}
+                    </h1>
+
+                    <p>
+                        🏢 {{ opportunity["company"] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="opportunity-hero-location">
+                📍 {{ opportunity["county"] }}, Kenya
+            </div>
+
+        </div>
+
+
+        <!-- MAIN CONTENT -->
+
+        <div class="opportunity-view-grid">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="opportunity-view-main">
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="opportunity-view-card">
+
+                    <h2>
+                        About this opportunity
+                    </h2>
+
+                    <div class="opportunity-view-text">
+                        {{ opportunity["description"] }}
+                    </div>
+
+                </div>
+
+
+                <!-- REQUIREMENTS -->
+
+                {% if opportunity["requirements"] %}
+
+                    <div class="opportunity-view-card">
+
+                        <h2>
+                            Requirements
+                        </h2>
+
+                        <div class="requirements-list">
+                            {{ opportunity["requirements"] }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- CONTACT -->
+
+                {% if opportunity["contact_email"] %}
+
+                    <div class="opportunity-contact-card">
+
+                        <div class="contact-card-icon">
+                            ✉️
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Application Contact
+                            </h3>
+
+                            <p>
+                                Submit your application through:
+                            </p>
+
+                            <a href="mailto:{{ opportunity['contact_email'] }}">
+                                {{ opportunity["contact_email"] }}
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- RIGHT SIDEBAR -->
+
+            <aside class="opportunity-view-sidebar">
+
+
+                <!-- APPLY -->
+
+                <div class="opportunity-apply-card">
+
+                    <span>
+                        READY TO APPLY?
+                    </span>
+
+                    <h2>
+                        Take the next step
+                    </h2>
+
+                    <p>
+                        Review the opportunity details and submit
+                        your application through Easy Access Kenya.
+                    </p>
+
+
+                    {% if opportunity["deadline"] and opportunity["deadline"] < today %}
+
+                        <div class="opportunity-expired-box">
+
+                            <div class="expired-icon">
+                                🔴
+                            </div>
+
+                            <h3>
+                                Applications Closed
+                            </h3>
+
+                            <p>
+                                This opportunity expired on
+                                <strong>
+                                    {{ opportunity["deadline"] }}
+                                </strong>.
+                            </p>
+
+                        </div>
+
+
+                    {% elif session.get("account_type") in ["student", "job_seeker"] %}
+
+                        <a
+                            href="{{ url_for(
+                                'apply',
+                                opportunity_id=opportunity['id']
+                            ) }}"
+                            class="opportunity-apply-button"
+                        >
+                            🚀 Apply Now
+                        </a>
+
+
+                    {% elif session.get("account_type") == "company" %}
+
+                        <div class="opportunity-expired-box">
+
+                            <div class="expired-icon">
+                                🏢
+                            </div>
+
+                            <h3>
+                                Company Account
+                            </h3>
+
+                            <p>
+                                Company accounts cannot apply
+                                for opportunities.
+                            </p>
+
+                        </div>
+
+
+                    {% else %}
+
+                        <a
+                            href="{{ url_for('login') }}"
+                            class="opportunity-apply-button"
+                        >
+                            🔐 Login to Apply
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="opportunity-details-box">
+
+                    <h3>
+                        Opportunity Details
+                    </h3>
+
+
+                    <div class="opportunity-detail-row">
+
+                        <span>
+                            Type
+                        </span>
+
+                        <strong>
+                            {{ opportunity["opportunity_type"] }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="opportunity-detail-row">
+
+                        <span>
+                            Company
+                        </span>
+
+                        <strong>
+                            {{ opportunity["company"] }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="opportunity-detail-row">
+
+                        <span>
+                            Location
+                        </span>
+
+                        <strong>
+                            {{ opportunity["county"] }}, Kenya
+                        </strong>
+
+                    </div>
+
+
+                    <div class="opportunity-detail-row">
+
+                        <span>
+                            Deadline
+                        </span>
+
+                        <strong>
+
+                            {% if opportunity["deadline"] %}
+
+                                {{ opportunity["deadline"] }}
+
+                            {% else %}
+
+                                Not specified
+
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOTE -->
+
+                <div class="opportunity-tip">
+
+                    <span>
+                        💡
+                    </span>
+
+                    <p>
+                        Carefully review the requirements and deadline
+                        before applying.
+                    </p>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

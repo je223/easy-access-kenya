@@ -1,0 +1,513 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    .add-admin-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px 20px 60px;
+    }
+
+    .add-admin-header {
+        margin-bottom: 28px;
+    }
+
+    .add-admin-header h1 {
+        margin: 0 0 8px;
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+    .add-admin-header p {
+        margin: 0;
+        font-size: 15px;
+        opacity: 0.72;
+        line-height: 1.6;
+    }
+
+    .add-admin-card {
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+    }
+
+    .card-title {
+        margin: 0 0 8px;
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .card-description {
+        margin: 0 0 25px;
+        font-size: 14px;
+        line-height: 1.6;
+        opacity: 0.68;
+    }
+
+    .main-admin-notice {
+        padding: 15px 17px;
+        border-radius: 11px;
+        background: rgba(22, 138, 69, 0.08);
+        border: 1px solid rgba(22, 138, 69, 0.15);
+        margin-bottom: 25px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .main-admin-notice strong {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .form-group {
+        margin-bottom: 19px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+        font-weight: 750;
+    }
+
+    .form-group input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 14px;
+        border: 1px solid #d7dce2;
+        border-radius: 10px;
+        background: #fff;
+        color: #222;
+        font-size: 14px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .form-group input:focus {
+        border-color: #168a45;
+        box-shadow: 0 0 0 3px rgba(22, 138, 69, 0.12);
+    }
+
+    .form-help {
+        margin-top: 6px;
+        font-size: 12px;
+        opacity: 0.58;
+    }
+
+    .permissions-preview {
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 13px;
+        background: #f7f9f8;
+        border: 1px solid #e0e5e2;
+    }
+
+    .permissions-preview h3 {
+        margin: 0 0 7px;
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+    .permissions-preview p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.6;
+        opacity: 0.68;
+    }
+
+    .permission-tags {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .permission-tag {
+        padding: 11px 12px;
+        border-radius: 9px;
+        background: #fff;
+        border: 1px solid #dfe4e8;
+        font-size: 12px;
+        font-weight: 650;
+    }
+
+    .button-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 27px;
+    }
+
+    .create-button {
+        flex: 1;
+        border: none;
+        border-radius: 10px;
+        padding: 13px 20px;
+        background: #168a45;
+        color: white;
+        font-size: 14px;
+        font-weight: 750;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .create-button:hover {
+        transform: translateY(-1px);
+        opacity: 0.92;
+    }
+
+    .cancel-button {
+        flex: 1;
+        display: block;
+        box-sizing: border-box;
+        text-align: center;
+        text-decoration: none;
+        border: 1px solid #d7dce2;
+        border-radius: 10px;
+        padding: 12px 20px;
+        background: #fff;
+        color: #168a45;
+        font-size: 14px;
+        font-weight: 750;
+    }
+
+    .cancel-button:hover {
+        background: #f5f8f6;
+    }
+
+    .page-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 25px;
+        padding: 18px 4px 0;
+    }
+
+    .copyright {
+        font-size: 12px;
+        opacity: 0.55;
+    }
+
+
+    /* DARK THEME */
+
+    body.theme-dark .add-admin-card {
+        background: #171717;
+        border-color: #303030;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    body.theme-dark .add-admin-header h1,
+    body.theme-dark .card-title,
+    body.theme-dark .permissions-preview h3 {
+        color: #fff;
+    }
+
+    body.theme-dark .add-admin-header p,
+    body.theme-dark .card-description,
+    body.theme-dark .form-help,
+    body.theme-dark .permissions-preview p,
+    body.theme-dark .copyright {
+        color: #ccc;
+    }
+
+    body.theme-dark .form-group input {
+        background: #222;
+        color: #fff;
+        border-color: #444;
+    }
+
+    body.theme-dark .form-group input::placeholder {
+        color: #999;
+    }
+
+    body.theme-dark .main-admin-notice {
+        background: rgba(70, 180, 105, 0.09);
+        border-color: #285c3b;
+        color: #ddd;
+    }
+
+    body.theme-dark .permissions-preview {
+        background: #202020;
+        border-color: #383838;
+    }
+
+    body.theme-dark .permission-tag {
+        background: #282828;
+        border-color: #444;
+        color: #eee;
+    }
+
+    body.theme-dark .cancel-button {
+        background: #222;
+        border-color: #444;
+        color: #55c982;
+    }
+
+    body.theme-dark .cancel-button:hover {
+        background: #292929;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 750px) {
+
+        .add-admin-page {
+            padding: 22px 15px 45px;
+        }
+
+        .add-admin-header h1 {
+            font-size: 27px;
+        }
+
+        .add-admin-card {
+            padding: 22px;
+        }
+
+        .permission-tags {
+            grid-template-columns: 1fr;
+        }
+
+        .button-row {
+            flex-direction: column;
+        }
+
+        .page-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+    }
+
+</style>
+
+
+<div class="add-admin-page">
+
+
+    <!-- HEADER -->
+
+    <div class="add-admin-header">
+
+        <h1>
+            Add Administrator
+        </h1>
+
+        <p>
+            Create a new administrator account for Easy Access Kenya.
+        </p>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+
+    <div class="add-admin-card">
+
+        <h2 class="card-title">
+            Administrator Account
+        </h2>
+
+        <p class="card-description">
+            Enter the details below to create a new administrator.
+            The new administrator will initially have no system
+            permissions until you assign them.
+        </p>
+
+
+        <!-- SECURITY NOTICE -->
+
+        <div class="main-admin-notice">
+
+            <strong>
+                🔐 Main Administrator Control
+            </strong>
+
+            Only the Main Administrator can create administrator
+            accounts. New administrators cannot create or manage
+            other administrators.
+
+        </div>
+
+
+        <!-- ADD ADMIN FORM -->
+
+        <form
+            method="POST"
+            action="{{ url_for('add_administrator') }}"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label>
+                    Administrator Name
+                </label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter administrator name"
+                    autocomplete="name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label>
+                    Administrator Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter administrator email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label>
+                    Initial Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Create an initial password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <div class="form-help">
+                    The password must contain at least 8 characters.
+                </div>
+
+            </div>
+
+
+            <!-- PERMISSION INFORMATION -->
+
+            <div class="permissions-preview">
+
+                <h3>
+                    Administrator Permissions
+                </h3>
+
+                <p>
+                    This new administrator will be created without
+                    permissions. You can assign permissions after
+                    creating the account.
+                </p>
+
+
+                <div class="permission-tags">
+
+                    <div class="permission-tag">
+                        🔒 Manage Companies
+                    </div>
+
+                    <div class="permission-tag">
+                        🔒 Manage Opportunities
+                    </div>
+
+                    <div class="permission-tag">
+                        🔒 Manage Applications
+                    </div>
+
+                    <div class="permission-tag">
+                        🔒 View Users
+                    </div>
+
+                    <div class="permission-tag">
+                        🔒 Manage Business Ideas
+                    </div>
+
+                    <div class="permission-tag">
+                        🔒 View Reports
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="create-button"
+                >
+                    Create Administrator
+                </button>
+
+
+                <a
+                    href="{{ url_for('manage_administrators') }}"
+                    class="cancel-button"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="page-footer">
+
+        <a
+            href="{{ url_for('admin_settings') }}"
+            class="cancel-button"
+            style="
+                flex: none;
+                padding: 10px 16px;
+            "
+        >
+            ← Admin Settings
+        </a>
+
+
+        <div class="copyright">
+            © 2026 Easy Access Kenya. Connecting Kenyans to opportunities.
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+```

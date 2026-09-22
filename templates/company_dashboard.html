@@ -1,0 +1,978 @@
+{% extends "base.html" %}
+
+{% block title %}Company Dashboard | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+    /* =========================================
+       COMPANY DASHBOARD
+       ========================================= */
+
+    .company-dashboard-page {
+        min-height: calc(100vh - 80px);
+        background: #f4f7f9;
+        padding: 35px 25px 60px;
+        margin-left: 235px;
+    }
+
+    .company-dashboard-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+
+    /* =========================================
+       ALWAYS DARK COMPANY SIDEBAR
+       ========================================= */
+
+    .company-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 215px;
+        background: #171e2a;
+        padding: 25px 14px;
+        z-index: 1000;
+        box-shadow: 4px 0 18px rgba(0, 0, 0, 0.25);
+        overflow-y: auto;
+    }
+
+    .company-sidebar-brand {
+        padding: 5px 10px 27px;
+        border-bottom: 1px solid #303a49;
+        margin-bottom: 22px;
+    }
+
+    .company-sidebar-brand h2 {
+        margin: 0;
+        color: #f1f4f8;
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 0.4px;
+    }
+
+    .company-sidebar-brand span {
+        display: block;
+        margin-top: 5px;
+        color: #9da8b7;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .company-sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .company-sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 12px;
+        border-radius: 11px;
+        color: #9da8b7 !important;
+        text-decoration: none !important;
+        font-size: 13px;
+        font-weight: 700;
+        transition: 0.2s ease;
+    }
+
+    .company-sidebar-link:hover {
+        background: #1b2330;
+        color: #f1f4f8 !important;
+        transform: translateX(2px);
+    }
+
+    .company-sidebar-link.active {
+        background: #1b2330;
+        color: #4caf70 !important;
+        box-shadow: none;
+    }
+
+    .company-sidebar-icon {
+        width: 24px;
+        text-align: center;
+        font-size: 17px;
+        flex-shrink: 0;
+    }
+
+    .company-sidebar-divider {
+        height: 1px;
+        background: #303a49;
+        margin: 13px 5px;
+    }
+
+
+    /* =========================================
+       HEADER
+       ========================================= */
+
+    .company-dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .company-dashboard-label {
+        display: inline-block;
+        margin-bottom: 7px;
+        color: #0f766e;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .company-dashboard-header h1 {
+        margin: 0;
+        color: #172033;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .company-dashboard-header p {
+        margin: 7px 0 0;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================
+       HEADER BUTTONS
+       ========================================= */
+
+    .company-post-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f766e;
+        color: white !important;
+        text-decoration: none !important;
+        padding: 11px 16px;
+        border-radius: 10px;
+        margin-left: 7px;
+        font-size: 13px;
+        font-weight: 800;
+        transition: 0.2s ease;
+    }
+
+    .company-post-button:hover {
+        background: #0d5f59;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(15, 118, 110, 0.20);
+    }
+
+
+    /* =========================================
+       STATS
+       ========================================= */
+
+    .company-dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 30px;
+    }
+
+    .company-stat-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 21px;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+    }
+
+    .company-stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+        background: #ecfdf5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 21px;
+        flex-shrink: 0;
+    }
+
+    .company-stat-card span {
+        display: block;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .company-stat-card strong {
+        display: block;
+        color: #172033;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+
+    /* =========================================
+       OPPORTUNITIES CARD
+       ========================================= */
+
+    .company-opportunities-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 17px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+    }
+
+    .company-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 22px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .company-section-header h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .company-section-header p {
+        margin: 6px 0 0;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .company-small-post-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f766e;
+        color: white !important;
+        text-decoration: none !important;
+        padding: 9px 14px;
+        border-radius: 9px;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+
+    /* =========================================
+       OPPORTUNITY LIST
+       ========================================= */
+
+    .company-opportunity-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .company-opportunity-row {
+        display: grid;
+        grid-template-columns: 52px minmax(180px, 1fr) 150px auto;
+        align-items: center;
+        gap: 17px;
+        padding: 20px 22px;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .company-opportunity-row:last-child {
+        border-bottom: none;
+    }
+
+    .company-opportunity-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #ecfdf5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .company-opportunity-info h3 {
+        margin: 0 0 6px;
+        color: #172033;
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+    .company-opportunity-info p {
+        margin: 0;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .company-opportunity-deadline span {
+        display: block;
+        color: #94a3b8;
+        font-size: 11px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .company-opportunity-deadline strong {
+        color: #334155;
+        font-size: 12px;
+    }
+
+    .company-opportunity-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 7px;
+        flex-wrap: wrap;
+    }
+
+    .company-view-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 11px;
+        border-radius: 8px;
+        background: #ecfdf5;
+        color: #0f766e !important;
+        text-decoration: none !important;
+        font-size: 11px;
+        font-weight: 800;
+        border: none;
+    }
+
+    .company-view-button:hover {
+        background: #d1fae5;
+    }
+
+    .company-delete-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 11px;
+        border: none;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #b91c1c;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .company-delete-button:hover {
+        background: #fee2e2;
+    }
+
+
+    /* =========================================
+       EMPTY STATE
+       ========================================= */
+
+    .company-empty-state {
+        padding: 55px 25px;
+        text-align: center;
+    }
+
+    .company-empty-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        border-radius: 16px;
+        background: #ecfdf5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+    }
+
+    .company-empty-state h3 {
+        margin: 0 0 8px;
+        color: #172033;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .company-empty-state p {
+        max-width: 500px;
+        margin: 0 auto 20px;
+        color: #64748b;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .company-empty-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f766e;
+        color: white !important;
+        text-decoration: none !important;
+        padding: 11px 16px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+
+    /* =========================================
+       DARK THEME CONTENT
+       ========================================= */
+
+    body.theme-dark .company-dashboard-page {
+        background: #111722 !important;
+    }
+
+    body.theme-dark .company-dashboard-header h1,
+    body.theme-dark .company-stat-card strong,
+    body.theme-dark .company-section-header h2,
+    body.theme-dark .company-opportunity-info h3,
+    body.theme-dark .company-empty-state h3 {
+        color: #f1f4f8 !important;
+    }
+
+    body.theme-dark .company-dashboard-header p,
+    body.theme-dark .company-stat-card span,
+    body.theme-dark .company-section-header p,
+    body.theme-dark .company-opportunity-info p {
+        color: #9da8b7 !important;
+    }
+
+    body.theme-dark .company-stat-card,
+    body.theme-dark .company-opportunities-card {
+        background: #1b2330 !important;
+        border-color: #303a49 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20) !important;
+    }
+
+    body.theme-dark .company-section-header,
+    body.theme-dark .company-opportunity-row {
+        border-color: #303a49 !important;
+    }
+
+    body.theme-dark .company-opportunity-deadline strong {
+        color: #cbd5e1 !important;
+    }
+
+
+    /* =========================================
+       TABLET
+       ========================================= */
+
+    @media (max-width: 1050px) {
+
+        .company-dashboard-page {
+            margin-left: 200px;
+        }
+
+        .company-sidebar {
+            width: 180px;
+        }
+
+        .company-opportunity-row {
+            grid-template-columns: 52px 1fr;
+        }
+
+        .company-opportunity-deadline {
+            grid-column: 2;
+        }
+
+        .company-opportunity-actions {
+            grid-column: 2;
+            justify-content: flex-start;
+        }
+    }
+
+
+    /* =========================================
+       MOBILE
+       ========================================= */
+
+    @media (max-width: 700px) {
+
+        .company-sidebar {
+            position: relative;
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .company-sidebar-brand {
+            padding-bottom: 15px;
+            margin-bottom: 12px;
+        }
+
+        .company-sidebar-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .company-sidebar-divider {
+            display: none;
+        }
+
+        .company-dashboard-page {
+            margin-left: 0;
+            padding: 25px 15px 45px;
+        }
+
+        .company-dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .company-dashboard-header > div:last-child {
+            width: 100%;
+        }
+
+        .company-post-button {
+            margin-left: 0;
+            margin-right: 5px;
+            margin-bottom: 7px;
+        }
+
+        .company-dashboard-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .company-section-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
+
+    @media (max-width: 520px) {
+
+        .company-sidebar-menu {
+            grid-template-columns: 1fr;
+        }
+
+        .company-opportunity-row {
+            grid-template-columns: 1fr;
+        }
+
+        .company-opportunity-deadline,
+        .company-opportunity-actions {
+            grid-column: auto;
+        }
+
+        .company-opportunity-actions {
+            justify-content: flex-start;
+        }
+    }
+</style>
+
+<!-- =========================================
+     COMPANY SIDEBAR
+     ========================================= -->
+
+<aside class="company-sidebar">
+
+```
+<div class="company-sidebar-brand">
+    <h2>EASY ACCESS</h2>
+    <span>KENYA COMPANY PORTAL</span>
+</div>
+
+
+<nav class="company-sidebar-menu">
+
+    <a
+        href="{{ url_for('company_dashboard') }}"
+        class="company-sidebar-link active"
+    >
+        <span class="company-sidebar-icon">🏠</span>
+        <span>Dashboard</span>
+    </a>
+
+
+    <a
+        href="{{ url_for('post_opportunity') }}"
+        class="company-sidebar-link"
+    >
+        <span class="company-sidebar-icon">🚀</span>
+        <span>Post Opportunity</span>
+    </a>
+
+
+    <a
+        href="{{ url_for('company_dashboard') }}"
+        class="company-sidebar-link"
+    >
+        <span class="company-sidebar-icon">📋</span>
+        <span>My Opportunities</span>
+    </a>
+
+
+    <a
+        href="{{ url_for('company_applications') }}"
+        class="company-sidebar-link"
+    >
+        <span class="company-sidebar-icon">👥</span>
+        <span>Applications</span>
+    </a>
+
+
+    <div class="company-sidebar-divider"></div>
+
+
+    <a
+        href="{{ url_for('company_dashboard') }}"
+        class="company-sidebar-link"
+    >
+        <span class="company-sidebar-icon">🔔</span>
+        <span>Notifications</span>
+    </a>
+
+
+   <a
+    href="{{ url_for('company_settings') }}"
+    class="company-sidebar-link"
+>
+    <span class="company-sidebar-icon">⚙️</span>
+    <span>Settings</span>
+</a>
+
+
+    <a
+        href="{{ url_for('logout') }}"
+        class="company-sidebar-link"
+    >
+        <span class="company-sidebar-icon">🚪</span>
+        <span>Logout</span>
+    </a>
+
+</nav>
+```
+
+</aside>
+
+<!-- =========================================
+     COMPANY DASHBOARD CONTENT
+     ========================================= -->
+
+<section class="company-dashboard-page">
+
+```
+<div class="company-dashboard-wrapper">
+
+
+    <!-- HEADER -->
+
+    <div class="company-dashboard-header">
+
+        <div>
+
+            <span class="company-dashboard-label">
+                EASY ACCESS KENYA
+            </span>
+
+            <h1>
+                Company Dashboard
+            </h1>
+
+            <p>
+                Manage your opportunities and connect with students
+                and job seekers.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <a
+                href="{{ url_for('company_applications') }}"
+                class="company-post-button"
+            >
+                👥 Applications
+            </a>
+
+
+            <a
+                href="{{ url_for('post_opportunity') }}"
+                class="company-post-button"
+            >
+                🚀 Post Opportunity
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="company-dashboard-stats">
+
+        <div class="company-stat-card">
+
+            <div class="company-stat-icon">
+                📢
+            </div>
+
+            <div>
+
+                <span>
+                    Total Opportunities
+                </span>
+
+                <strong>
+                    {{ opportunities|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="company-stat-card">
+
+            <div class="company-stat-icon">
+                👥
+            </div>
+
+            <div>
+
+                <span>
+                    Applications
+                </span>
+
+                <strong>
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="company-stat-card">
+
+            <div class="company-stat-icon">
+                🟢
+            </div>
+
+            <div>
+
+                <span>
+                    Active Listings
+                </span>
+
+                <strong>
+                    {{ opportunities|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- OPPORTUNITIES -->
+
+    <div class="company-opportunities-card">
+
+        <div class="company-section-header">
+
+            <div>
+
+                <h2>
+                    Your Opportunities
+                </h2>
+
+                <p>
+                    Opportunities posted by your company.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('post_opportunity') }}"
+                class="company-small-post-button"
+            >
+                + Post New
+            </a>
+
+        </div>
+
+
+        {% if opportunities %}
+
+            <div class="company-opportunity-list">
+
+                {% for opportunity in opportunities %}
+
+                    <div class="company-opportunity-row">
+
+
+                        <div class="company-opportunity-icon">
+
+                            {% if opportunity["opportunity_type"] == "Attachment" %}
+
+                                🎓
+
+                            {% elif opportunity["opportunity_type"] == "Internship" %}
+
+                                💼
+
+                            {% else %}
+
+                                🚀
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="company-opportunity-info">
+
+                            <h3>
+                                {{ opportunity["title"] }}
+                            </h3>
+
+                            <p>
+                                {{ opportunity["opportunity_type"] }}
+                                ·
+                                📍 {{ opportunity["county"] }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="company-opportunity-deadline">
+
+                            {% if opportunity["deadline"] %}
+
+                                <span>
+                                    Deadline
+                                </span>
+
+                                <strong>
+                                    {{ opportunity["deadline"] }}
+                                </strong>
+
+                            {% else %}
+
+                                <span>
+                                    Deadline
+                                </span>
+
+                                <strong>
+                                    Not specified
+                                </strong>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="company-opportunity-actions">
+
+                            <a
+                                href="{{ url_for('opportunity', opportunity_id=opportunity['id']) }}"
+                                class="company-view-button"
+                            >
+                                View →
+                            </a>
+
+
+                            <a
+                                href="{{ url_for('edit_opportunity', opportunity_id=opportunity['id']) }}"
+                                class="company-view-button"
+                            >
+                                ✏️ Edit
+                            </a>
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_opportunity', opportunity_id=opportunity['id']) }}"
+                                onsubmit="return confirm('Are you sure you want to remove this opportunity? This action cannot be undone.');"
+                                style="display:inline;"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="company-delete-button"
+                                >
+                                    🗑 Remove
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="company-empty-state">
+
+                <div class="company-empty-icon">
+                    📢
+                </div>
+
+                <h3>
+                    No opportunities posted yet
+                </h3>
+
+                <p>
+                    Create your first opportunity and start connecting
+                    with students and job seekers.
+                </p>
+
+                <a
+                    href="{{ url_for('post_opportunity') }}"
+                    class="company-empty-button"
+                >
+                    🚀 Post Your First Opportunity
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+```
+
+</section>
+
+{% endblock %}
+
+````
+
+**One important improvement I made:** your old Company Dashboard used `body.dark`, while your current project uses `body.theme-dark`. I corrected that for the dashboard content, but the sidebar is independent and therefore stays dark **all the time**.
+
+After saving the file, run:
+
+```text
+Ctrl+C
+py app.py
+````
+
+Then open the Company Dashboard and check the sidebar.

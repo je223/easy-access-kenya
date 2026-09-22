@@ -1,0 +1,659 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin - Manage Applications
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-applications-page">
+
+    <!-- HEADER -->
+    <div class="admin-applications-header">
+
+        <div>
+            <div class="admin-page-label">
+                EASY ACCESS KENYA
+            </div>
+
+            <h1>Manage Applications</h1>
+
+            <p>
+                Review applications submitted by students and job seekers.
+            </p>
+        </div>
+
+        <div class="applications-total-card">
+            <span>Total Applications</span>
+            <strong>{{ applications|length }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- APPLICATIONS -->
+    {% if applications %}
+
+        <div class="applications-container">
+
+            <div class="applications-table-header">
+                <h2>All Applications</h2>
+
+                <span>
+                    {{ applications|length }}
+                    application{% if applications|length != 1 %}s{% endif %}
+                </span>
+            </div>
+
+
+            <div class="applications-table-wrapper">
+
+                <table class="applications-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Applicant</th>
+                            <th>Opportunity</th>
+                            <th>Company</th>
+                            <th>Course</th>
+                            <th>County</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for application in applications %}
+
+                        <tr>
+
+                            <!-- NUMBER -->
+                            <td class="application-number">
+                                {{ loop.index }}
+                            </td>
+
+
+                            <!-- APPLICANT -->
+                            <td>
+
+                                <div class="applicant-cell">
+
+                                    <div class="applicant-avatar">
+                                        {{ (application["full_name"] or "A")[0]|upper }}
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            {{ application["full_name"] or "Not provided" }}
+                                        </strong>
+
+                                        <small>
+                                            {{ application["email"] or "No email provided" }}
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- OPPORTUNITY -->
+                            <td>
+
+                                <div class="opportunity-cell">
+
+                                    <strong>
+                                        {{ application["opportunity_title"] or "Not provided" }}
+                                    </strong>
+
+                                    {% if application["institution"] %}
+                                        <small>
+                                            {{ application["institution"] }}
+                                        </small>
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- COMPANY -->
+                            <td>
+                                <span class="company-name">
+                                    {{ application["company_name"] or "Not provided" }}
+                                </span>
+                            </td>
+
+
+                            <!-- COURSE -->
+                            <td>
+                                {{ application["course"] or "Not provided" }}
+                            </td>
+
+
+                            <!-- COUNTY -->
+                            <td>
+
+                                {% if application["county"] %}
+
+                                    <span class="county-badge">
+                                        {{ application["county"] }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="not-provided">
+                                        Not provided
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- STATUS -->
+                            <td>
+
+                                {% set status = application["status"] or "Pending" %}
+
+                                {% if status|lower == "approved" %}
+
+                                    <span class="status-badge status-approved">
+                                        ✓ Approved
+                                    </span>
+
+                                {% elif status|lower == "rejected" %}
+
+                                    <span class="status-badge status-rejected">
+                                        ✕ Rejected
+                                    </span>
+
+                                {% elif status|lower == "shortlisted" %}
+
+                                    <span class="status-badge status-shortlisted">
+                                        ★ Shortlisted
+                                    </span>
+
+                                {% elif status|lower == "reviewed" %}
+
+                                    <span class="status-badge status-reviewed">
+                                        ✓ Reviewed
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status-badge status-pending">
+                                        ⏳ {{ status }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <!-- EMPTY STATE -->
+
+        <div class="applications-empty">
+
+            <div class="empty-icon">
+                📄
+            </div>
+
+            <h2>No Applications Yet</h2>
+
+            <p>
+                There are currently no applications submitted
+                by students or job seekers.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<style>
+
+/* =========================================
+   ADMIN APPLICATIONS PAGE
+   ========================================= */
+
+.admin-applications-page {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 45px 30px 80px;
+}
+
+
+/* HEADER */
+
+.admin-applications-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.admin-page-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #0782b5;
+    margin-bottom: 8px;
+}
+
+.admin-applications-header h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 800;
+    color: #172033;
+}
+
+.admin-applications-header p {
+    margin: 8px 0 0;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+
+/* TOTAL CARD */
+
+.applications-total-card {
+    min-width: 160px;
+    padding: 20px 24px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+}
+
+.applications-total-card span {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.applications-total-card strong {
+    display: block;
+    font-size: 30px;
+    color: #0782b5;
+}
+
+
+/* MAIN CONTAINER */
+
+.applications-container {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+}
+
+
+/* TABLE HEADER */
+
+.applications-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.applications-table-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #172033;
+}
+
+.applications-table-header span {
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: #eaf7fb;
+    color: #086d91;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* TABLE */
+
+.applications-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.applications-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+}
+
+.applications-table th {
+    padding: 15px 18px;
+    background: #f7f9fc;
+    color: #5b6473;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.applications-table td {
+    padding: 17px 18px;
+    border-bottom: 1px solid #edf0f4;
+    color: #374151;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.applications-table tbody tr {
+    transition: 0.15s ease;
+}
+
+.applications-table tbody tr:hover {
+    background: #f8fbfd;
+}
+
+.applications-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* NUMBER */
+
+.application-number {
+    color: #9ca3af !important;
+    font-weight: 700;
+    width: 35px;
+}
+
+
+/* APPLICANT */
+
+.applicant-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 210px;
+}
+
+.applicant-avatar {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #e0f2fe;
+    color: #086d91;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.applicant-cell strong {
+    display: block;
+    color: #172033;
+    margin-bottom: 4px;
+}
+
+.applicant-cell small {
+    display: block;
+    color: #8a93a2;
+    font-size: 12px;
+}
+
+
+/* OPPORTUNITY */
+
+.opportunity-cell strong {
+    display: block;
+    color: #172033;
+    margin-bottom: 4px;
+}
+
+.opportunity-cell small {
+    color: #8a93a2;
+    font-size: 12px;
+}
+
+
+/* COMPANY */
+
+.company-name {
+    color: #086d91;
+    font-weight: 700;
+}
+
+
+/* COUNTY */
+
+.county-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #f0fdf4;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.not-provided {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+
+/* STATUS */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status-approved {
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.status-rejected {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.status-shortlisted {
+    background: #fefce8;
+    color: #854d0e;
+}
+
+.status-reviewed {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+
+/* EMPTY */
+
+.applications-empty {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 75px 30px;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+}
+
+.empty-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #eaf7fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.applications-empty h2 {
+    margin: 0 0 10px;
+    color: #172033;
+}
+
+.applications-empty p {
+    margin: 0;
+    color: #6b7280;
+}
+
+
+/* =========================================
+   DARK THEME
+   ========================================= */
+
+body.theme-dark .admin-applications-header h1 {
+    color: #f5f5f5;
+}
+
+body.theme-dark .admin-applications-header p {
+    color: #a1a1aa;
+}
+
+body.theme-dark .applications-total-card,
+body.theme-dark .applications-container,
+body.theme-dark .applications-empty {
+    background: #15151b;
+    border-color: #2b2b34;
+}
+
+body.theme-dark .applications-total-card span {
+    color: #a1a1aa;
+}
+
+body.theme-dark .applications-table-header {
+    border-color: #2b2b34;
+}
+
+body.theme-dark .applications-table-header h2 {
+    color: #f5f5f5;
+}
+
+body.theme-dark .applications-table-header span {
+    background: #102b36;
+    color: #67c8e8;
+}
+
+body.theme-dark .applications-table th {
+    background: #101014;
+    color: #9da8b7;
+    border-color: #2b2b34;
+}
+
+body.theme-dark .applications-table td {
+    color: #d4d4d8;
+    border-color: #2b2b34;
+}
+
+body.theme-dark .applications-table tbody tr:hover {
+    background: #1c1c23;
+}
+
+body.theme-dark .applicant-cell strong,
+body.theme-dark .opportunity-cell strong {
+    color: #f5f5f5;
+}
+
+body.theme-dark .applicant-cell small,
+body.theme-dark .opportunity-cell small {
+    color: #8f96a3;
+}
+
+body.theme-dark .applicant-avatar {
+    background: #102b36;
+    color: #67c8e8;
+}
+
+body.theme-dark .company-name {
+    color: #67c8e8;
+}
+
+body.theme-dark .applications-empty h2 {
+    color: #f5f5f5;
+}
+
+body.theme-dark .applications-empty p {
+    color: #a1a1aa;
+}
+
+body.theme-dark .empty-icon {
+    background: #102b36;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 850px) {
+
+    .admin-applications-page {
+        padding: 30px 15px 60px;
+    }
+
+    .admin-applications-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .applications-total-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .applications-table-header {
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+{% endblock %}

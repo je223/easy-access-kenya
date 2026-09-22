@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Applications - Easy Access Kenya</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* =========================================
+           PAGE
+        ========================================= */
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+
+        /* =========================================
+           BACK LINK
+        ========================================= */
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: #0782b5;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .back-link:hover {
+            color: #056b91;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .header {
+            background: #ffffff;
+            border: 1px solid #dce3eb;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            color: #172033;
+        }
+
+        .header p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+
+        /* =========================================
+           APPLICATION BUTTONS
+        ========================================= */
+
+        .application-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .application-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 40px;
+            padding: 0 12px;
+            background: #4caf70;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid #4caf70;
+            font-weight: 700;
+            box-shadow: 0 3px 8px rgba(76, 175, 112, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .application-button:hover {
+            background: #3d9d5f;
+            border-color: #3d9d5f;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(76, 175, 112, 0.22);
+        }
+
+        .button-icon {
+            font-size: 15px;
+        }
+
+        .button-title {
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .button-count {
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.20);
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+        .button-description {
+            display: none;
+        }
+
+        .button-arrow {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           APPLICATION SECTIONS
+        ========================================= */
+
+        .application-section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 22px;
+            color: #172033;
+        }
+
+        .section-count {
+            background: #eef2f6;
+            color: #6b7280;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .applications-card {
+            background: #ffffff;
+            border: 1px solid #dce3eb;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .application {
+            padding: 22px;
+            border-bottom: 1px solid #e1e6ed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .application:last-child {
+            border-bottom: none;
+        }
+
+        .applicant {
+            flex: 1;
+        }
+
+        .applicant h2 {
+            margin: 0 0 7px;
+            font-size: 19px;
+            color: #172033;
+        }
+
+        .applicant p {
+            margin: 5px 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .opportunity {
+            color: #0f766e !important;
+            font-weight: 700;
+            margin-top: 12px !important;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #eef2f6;
+            color: #0f766e;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .actions {
+            flex-shrink: 0;
+        }
+
+        .view-button {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            background: #4caf70;
+            color: white;
+            font-weight: 700;
+        }
+
+        .view-button:hover {
+            background: #3d9d5f;
+        }
+
+        .empty {
+            padding: 55px 25px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .empty strong {
+            display: block;
+            color: #172033;
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================================
+           DARK THEME
+        ========================================= */
+
+        body.theme-dark {
+            background: #111722;
+            color: #e8edf4;
+        }
+
+        body.theme-dark .back-link {
+            color: #4caf70;
+        }
+
+        body.theme-dark .back-link:hover {
+            color: #69c889;
+        }
+
+        body.theme-dark .header {
+            background: #171e2a;
+            border-color: #303a49;
+        }
+
+        body.theme-dark .header h1 {
+            color: #f1f4f8;
+        }
+
+        body.theme-dark .header p {
+            color: #9da8b7;
+        }
+
+        body.theme-dark .section-title {
+            color: #f1f4f8;
+        }
+
+        body.theme-dark .section-count {
+            background: #263244;
+            color: #9da8b7;
+        }
+
+        body.theme-dark .applications-card {
+            background: #171e2a;
+            border-color: #303a49;
+        }
+
+        body.theme-dark .application {
+            border-bottom-color: #303a49;
+        }
+
+        body.theme-dark .applicant h2 {
+            color: #f1f4f8;
+        }
+
+        body.theme-dark .applicant p {
+            color: #9da8b7;
+        }
+
+        body.theme-dark .status {
+            background: #263244;
+            color: #4caf70;
+        }
+
+        body.theme-dark .empty {
+            color: #9da8b7;
+        }
+
+        body.theme-dark .empty strong {
+            color: #f1f4f8;
+        }
+
+
+        /* =========================================
+           LIGHT BLUE THEME
+        ========================================= */
+
+        body.theme-lightblue {
+            background: #eef8fc;
+            color: #17324d;
+        }
+
+        body.theme-lightblue .header {
+            background: #ffffff;
+            border-color: #c8e4ef;
+        }
+
+        body.theme-lightblue .header h1,
+        body.theme-lightblue .section-title,
+        body.theme-lightblue .applicant h2 {
+            color: #17324d;
+        }
+
+        body.theme-lightblue .header p,
+        body.theme-lightblue .applicant p,
+        body.theme-lightblue .empty {
+            color: #527084;
+        }
+
+        body.theme-lightblue .applications-card {
+            background: #ffffff;
+            border-color: #c8e4ef;
+        }
+
+        body.theme-lightblue .application {
+            border-bottom-color: #d7eaf2;
+        }
+
+        body.theme-lightblue .section-count,
+        body.theme-lightblue .status {
+            background: #e0f2f8;
+        }
+
+
+        /* =========================================
+           OCEAN THEME
+        ========================================= */
+
+        body.theme-ocean {
+            background: #eaf6f8;
+            color: #123b46;
+        }
+
+        body.theme-ocean .header {
+            background: #ffffff;
+            border-color: #b9dce2;
+        }
+
+        body.theme-ocean .header h1,
+        body.theme-ocean .section-title,
+        body.theme-ocean .applicant h2 {
+            color: #123b46;
+        }
+
+        body.theme-ocean .header p,
+        body.theme-ocean .applicant p,
+        body.theme-ocean .empty {
+            color: #55757d;
+        }
+
+        body.theme-ocean .applications-card {
+            background: #ffffff;
+            border-color: #b9dce2;
+        }
+
+        body.theme-ocean .application {
+            border-bottom-color: #d4e9ed;
+        }
+
+        body.theme-ocean .section-count,
+        body.theme-ocean .status {
+            background: #e1f1f4;
+        }
+
+
+        /* =========================================
+           KENYA THEME
+        ========================================= */
+
+        body.theme-kenya {
+            background: #f5f7f4;
+            color: #182018;
+        }
+
+        body.theme-kenya .header {
+            background: #ffffff;
+            border-color: #d4ddd1;
+        }
+
+        body.theme-kenya .header h1,
+        body.theme-kenya .section-title,
+        body.theme-kenya .applicant h2 {
+            color: #182018;
+        }
+
+        body.theme-kenya .header p,
+        body.theme-kenya .applicant p,
+        body.theme-kenya .empty {
+            color: #667066;
+        }
+
+        body.theme-kenya .applications-card {
+            background: #ffffff;
+            border-color: #d4ddd1;
+        }
+
+        body.theme-kenya .application {
+            border-bottom-color: #dfe5dc;
+        }
+
+        body.theme-kenya .section-count,
+        body.theme-kenya .status {
+            background: #edf2ea;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .application-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .application-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .application {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .view-button {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body id="easy-access-body">
+
+
+<div class="page-wrapper">
+
+    <div class="container">
+
+
+        <a
+            href="{{ url_for('company_dashboard') }}"
+            class="back-link"
+        >
+            ← Back to Company Dashboard
+        </a>
+
+
+        <!-- =========================================
+             HEADER
+        ========================================= -->
+
+        <div class="header">
+
+            <h1>
+                Applications
+            </h1>
+
+            <p>
+                Review applications submitted for your opportunities.
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             GREEN APPLICATION BUTTONS
+        ========================================= -->
+
+        <div class="application-buttons">
+
+
+            <a
+                href="{{ url_for('company_all_applications') }}"
+                class="application-button"
+            >
+
+                <span class="button-icon">
+                    📊
+                </span>
+
+                <span class="button-title">
+                    Total Applications
+                </span>
+
+                <span class="button-count">
+                    {{ total_application_count }}
+                </span>
+
+                <span class="button-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('company_job_applications') }}"
+                class="application-button"
+            >
+
+                <span class="button-icon">
+                    💼
+                </span>
+
+                <span class="button-title">
+                    Job Applications
+                </span>
+
+                <span class="button-count">
+                    {{ job_application_count }}
+                </span>
+
+                <span class="button-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('company_student_applications') }}"
+                class="application-button"
+            >
+
+                <span class="button-icon">
+                    🎓
+                </span>
+
+                <span class="button-title">
+                    Attachment / Internship
+                </span>
+
+                <span class="button-count">
+                    {{ student_application_count }}
+                </span>
+
+                <span class="button-arrow">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- =========================================
+             JOB APPLICATIONS PREVIEW
+        ========================================= -->
+
+        <div class="application-section">
+
+            <div class="section-header">
+
+                <h2 class="section-title">
+                    💼 Job Applications
+                </h2>
+
+                <span class="section-count">
+                    {{ job_application_count }}
+                    Application{% if job_application_count != 1 %}s{% endif %}
+                </span>
+
+            </div>
+
+
+            <div class="applications-card">
+
+                {% if job_applications %}
+
+                    {% for application in job_applications %}
+
+                    <div class="application">
+
+                        <div class="applicant">
+
+                            <h2>
+                                {{ application['full_name'] }}
+                            </h2>
+
+                            <p>
+                                📧
+                                {{ application['email'] }}
+                            </p>
+
+                            <p>
+                                📱
+                                {{ application['phone'] }}
+                            </p>
+
+                            <p class="opportunity">
+                                💼
+                                {{ application['opportunity_title'] }}
+                            </p>
+
+                            <span class="status">
+                                {{ application['status'] }}
+                            </span>
+
+                        </div>
+
+                        <div class="actions">
+
+                            <a
+                                href="{{ url_for(
+                                    'company_application',
+                                    application_id=application['id']
+                                ) }}"
+                                class="view-button"
+                            >
+                                View Application
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <strong>
+                            No job applications yet
+                        </strong>
+
+                        Applications submitted for your
+                        job opportunities will appear here.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             ATTACHMENT / INTERNSHIP PREVIEW
+        ========================================= -->
+
+        <div class="application-section">
+
+            <div class="section-header">
+
+                <h2 class="section-title">
+                    🎓 Attachment / Internship Applications
+                </h2>
+
+                <span class="section-count">
+                    {{ student_application_count }}
+                    Application{% if student_application_count != 1 %}s{% endif %}
+                </span>
+
+            </div>
+
+
+            <div class="applications-card">
+
+                {% if student_applications %}
+
+                    {% for application in student_applications %}
+
+                    <div class="application">
+
+                        <div class="applicant">
+
+                            <h2>
+                                {{ application['full_name'] }}
+                            </h2>
+
+                            <p>
+                                📧
+                                {{ application['email'] }}
+                            </p>
+
+                            <p>
+                                📱
+                                {{ application['phone'] }}
+                            </p>
+
+                            <p class="opportunity">
+                                🎓
+                                {{ application['opportunity_title'] }}
+                            </p>
+
+                            <span class="status">
+                                {{ application['status'] }}
+                            </span>
+
+                        </div>
+
+                        <div class="actions">
+
+                            <a
+                                href="{{ url_for(
+                                    'company_application',
+                                    application_id=application['id']
+                                ) }}"
+                                class="view-button"
+                            >
+                                View Application
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <strong>
+                            No attachment or internship applications yet
+                        </strong>
+
+                        Applications submitted for your
+                        student opportunities will appear here.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

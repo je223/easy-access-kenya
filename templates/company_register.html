@@ -1,0 +1,408 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .company-register-page {
+        min-height: calc(100vh - 140px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+        background: #f4f7fb;
+    }
+
+    .company-register-card {
+        width: 100%;
+        max-width: 560px;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 38px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5eaf0;
+    }
+
+    .company-register-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .company-register-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        border-radius: 18px;
+        background: #0f766e;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        box-shadow: 0 8px 18px rgba(15, 118, 110, 0.20);
+    }
+
+    .company-register-header h1 {
+        margin: 0 0 10px;
+        font-size: 30px;
+        color: #172033;
+    }
+
+    .company-register-header p {
+        margin: 0;
+        color: #6b7280;
+        line-height: 1.6;
+        font-size: 15px;
+    }
+
+    /* =========================================
+       COMPANY LOGIN FIRST
+       ========================================= */
+
+    .company-login-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .company-login-button {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px;
+        border-radius: 10px;
+        background: #0f766e;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.2s ease;
+    }
+
+    .company-login-button:hover {
+        background: #0d5f59;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(15, 118, 110, 0.20);
+    }
+
+    .register-question {
+        text-align: center;
+        margin-top: 12px;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .show-register-button {
+        margin-top: 4px;
+        width: 100%;
+        padding: 13px;
+        border: 2px solid #0f766e;
+        border-radius: 10px;
+        background: transparent;
+        color: #0f766e;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .show-register-button:hover {
+        background: #0f766e;
+        color: white;
+    }
+
+    /* =========================================
+       REGISTRATION FORM
+       ========================================= */
+
+    .company-register-form {
+        display: none;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .company-register-form.active {
+        display: flex;
+    }
+
+    .company-register-form label {
+        font-weight: 700;
+        color: #263247;
+        font-size: 14px;
+        margin-bottom: -8px;
+    }
+
+    .company-register-form input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 15px;
+        border: 1px solid #d8dee8;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #172033;
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s ease;
+    }
+
+    .company-register-form input:focus {
+        border-color: #0f766e;
+        box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.10);
+    }
+
+    .company-register-button {
+        margin-top: 8px;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: #0f766e;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .company-register-button:hover {
+        background: #0d5f59;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(15, 118, 110, 0.20);
+    }
+
+    .back-to-login {
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    .back-to-login button {
+        border: none;
+        background: none;
+        color: #0f766e;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .back-to-login button:hover {
+        text-decoration: underline;
+    }
+
+    /* =========================================
+       DARK THEME
+       ========================================= */
+
+    body.theme-dark .company-register-page {
+        background: #111827;
+    }
+
+    body.theme-dark .company-register-card {
+        background: #1f2937;
+        border-color: #374151;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    body.theme-dark .company-register-header h1,
+    body.theme-dark .company-register-form label {
+        color: #f3f4f6;
+    }
+
+    body.theme-dark .company-register-header p,
+    body.theme-dark .register-question {
+        color: #9ca3af;
+    }
+
+    body.theme-dark .company-register-form input {
+        background: #111827;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+</style>
+
+
+<div class="company-register-page">
+
+    <div class="company-register-card">
+
+        <div class="company-register-header">
+
+            <div class="company-register-icon">
+                🏢
+            </div>
+
+            <h1>Company Access</h1>
+
+            <p>
+                Login to manage your company and post verified
+                opportunities on Easy Access Kenya.
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             LOGIN FIRST
+             ========================================= -->
+
+        <div class="company-login-section" id="companyLoginSection">
+
+            <a href="/company-login" class="company-login-button">
+                Company Login
+            </a>
+
+            <div class="register-question">
+                Don't have a company account?
+            </div>
+
+            <button
+                type="button"
+                class="show-register-button"
+                onclick="showCompanyRegistration()"
+            >
+                Register Company
+            </button>
+
+        </div>
+
+
+        <!-- =========================================
+             REGISTRATION FORM
+             ========================================= -->
+
+        <form
+            method="POST"
+            class="company-register-form"
+            id="companyRegisterForm"
+        >
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <label for="company_name">Company Name</label>
+
+            <input
+                type="text"
+                id="company_name"
+                name="company_name"
+                placeholder="Enter company name"
+                required
+            >
+
+
+            <label for="contact_person">Contact Person</label>
+
+            <input
+                type="text"
+                id="contact_person"
+                name="contact_person"
+                placeholder="Enter contact person's name"
+                required
+            >
+
+
+            <label for="phone">Phone Number</label>
+
+            <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="e.g. 0712 345 678"
+                required
+            >
+
+
+            <label for="location">Company Location</label>
+
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="e.g. Nairobi"
+                required
+            >
+
+
+            <label for="email">Email</label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Company email"
+                required
+            >
+
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                required
+            >
+
+
+            <label for="confirm_password">Confirm Password</label>
+
+            <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                placeholder="Confirm your password"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="company-register-button"
+            >
+                Register Company
+            </button>
+
+
+            <div class="back-to-login">
+
+                <button
+                    type="button"
+                    onclick="showCompanyLogin()"
+                >
+                    ← Back to Company Login
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function showCompanyRegistration() {
+
+        document.getElementById("companyLoginSection").style.display = "none";
+
+        document.getElementById("companyRegisterForm").classList.add("active");
+
+    }
+
+
+    function showCompanyLogin() {
+
+        document.getElementById("companyRegisterForm").classList.remove("active");
+
+        document.getElementById("companyLoginSection").style.display = "flex";
+
+    }
+
+</script>
+
+{% endblock %}

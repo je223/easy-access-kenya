@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .admin-companies-page {
+        min-height: calc(100vh - 80px);
+        background: #f4f7f9;
+        padding: 35px 25px 60px;
+    }
+
+    .admin-companies-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        color: #172033;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .page-header p {
+        margin: 7px 0 0;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        padding: 10px 16px;
+        background: #172033;
+        color: white !important;
+        text-decoration: none !important;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .companies-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .companies-card-header {
+        padding: 21px 23px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .companies-card-header h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 19px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .companies-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .companies-table th {
+        padding: 14px 18px;
+        background: #f8fafc;
+        color: #64748b;
+        font-size: 12px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .companies-table td {
+        padding: 17px 18px;
+        border-top: 1px solid #eef2f7;
+        color: #334155;
+        font-size: 13px;
+        vertical-align: middle;
+    }
+
+    .company-name {
+        font-weight: 800;
+        color: #172033;
+    }
+
+    .status {
+        display: inline-flex;
+        padding: 6px 11px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .pending {
+        background: #fff7ed;
+        color: #c2410c;
+    }
+
+    .verified {
+        background: #ecfdf5;
+        color: #047857;
+    }
+
+    .rejected {
+        background: #fef2f2;
+        color: #b91c1c;
+    }
+
+    .blocked {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    .manage-button {
+        display: inline-flex;
+        padding: 8px 13px;
+        border-radius: 8px;
+        background: #0f766e;
+        color: white !important;
+        text-decoration: none !important;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .manage-button:hover {
+        background: #0d5f59;
+    }
+
+    .empty-state {
+        padding: 45px;
+        text-align: center;
+        color: #64748b;
+    }
+
+    body.dark .admin-companies-page {
+        background: #0f172a;
+    }
+
+    body.dark .page-header h1 {
+        color: #f8fafc;
+    }
+
+    body.dark .page-header p {
+        color: #94a3b8;
+    }
+
+    body.dark .companies-card {
+        background: #172033;
+        border-color: #334155;
+    }
+
+    body.dark .companies-card-header {
+        border-color: #334155;
+    }
+
+    body.dark .companies-card-header h2,
+    body.dark .company-name {
+        color: #f8fafc;
+    }
+
+    body.dark .companies-table th {
+        background: #0f172a;
+        color: #94a3b8;
+    }
+
+    body.dark .companies-table td {
+        border-color: #334155;
+        color: #cbd5e1;
+    }
+
+    @media (max-width: 700px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .admin-companies-page {
+            padding: 25px 15px;
+        }
+    }
+</style>
+
+
+<div class="admin-companies-page">
+
+    <div class="admin-companies-container">
+
+        <div class="page-header">
+
+            <div>
+                <h1>Manage Companies</h1>
+
+                <p>
+                    Review and manage all company accounts
+                    registered on Easy Access Kenya.
+                </p>
+            </div>
+
+            <a href="/admin-dashboard" class="back-button">
+                ← Admin Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="companies-card">
+
+            <div class="companies-card-header">
+
+                <h2>
+                    Company Accounts
+                </h2>
+
+            </div>
+
+
+            {% if companies %}
+
+            <div class="table-wrapper">
+
+                <table class="companies-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Company</th>
+                            <th>Contact Person</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for company in companies %}
+
+                        <tr>
+
+                            <td>
+                                <span class="company-name">
+                                    {{ company["company_name"] }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{ company["contact_person"] }}
+                            </td>
+
+                            <td>
+                                {{ company["email"] }}
+                            </td>
+
+                            <td>
+                                {{ company["phone"] }}
+                            </td>
+
+                            <td>
+                                {{ company["location"] }}
+                            </td>
+
+                            <td>
+
+                                {% if company["verification_status"] == "Verified" %}
+
+                                    <span class="status verified">
+                                        Verified
+                                    </span>
+
+                                {% elif company["verification_status"] == "Rejected" %}
+
+                                    <span class="status rejected">
+                                        Rejected
+                                    </span>
+
+                                {% elif company["verification_status"] == "Blocked" %}
+
+                                    <span class="status blocked">
+                                        Blocked
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status pending">
+                                        Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="/admin-company/{{ company['id'] }}"
+                                    class="manage-button"
+                                >
+                                    Manage
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+                <div class="empty-state">
+                    No company accounts have been registered yet.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

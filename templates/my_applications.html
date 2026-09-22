@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Applications | Easy Access Kenya</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        .page {
+            min-height: 100vh;
+            padding: 35px 20px 60px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .back-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .brand {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #6b7280;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            color: #111827;
+        }
+
+        .header p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .application-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .application-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .application-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .opportunity-title {
+            margin: 0 0 8px;
+            font-size: 21px;
+            color: #111827;
+        }
+
+        .company {
+            margin: 0;
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .meta {
+            margin-top: 7px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .status-submitted {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-under-review {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-shortlisted {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-accepted {
+            background: #bbf7d0;
+            color: #166534;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-default {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .message-box {
+            margin-top: 20px;
+            border-radius: 14px;
+            padding: 18px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .message-box strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .message-shortlisted {
+            background: #ecfdf5;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .message-accepted {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-rejected {
+            background: #fff7ed;
+            color: #9a3412;
+            border: 1px solid #fed7aa;
+        }
+
+        .balloons {
+            font-size: 30px;
+            letter-spacing: 7px;
+            margin-bottom: 10px;
+            animation: floatBalloons 2.5s ease-in-out infinite;
+        }
+
+        @keyframes floatBalloons {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+        }
+
+        .application-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 17px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .date {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .view-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .view-button:hover {
+            background: #1d4ed8;
+        }
+
+        .empty {
+            background: white;
+            border-radius: 18px;
+            padding: 60px 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty h2 {
+            margin: 0 0 8px;
+            color: #111827;
+        }
+
+        .empty p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        @media (max-width: 650px) {
+
+            .application-top {
+                flex-direction: column;
+            }
+
+            .application-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .view-button {
+                text-align: center;
+            }
+
+            .header,
+            .application-card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="container">
+
+        <div class="top-bar">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="back-link"
+            >
+                ← Back to Dashboard
+            </a>
+
+            <div class="brand">
+                EASY ACCESS KENYA
+            </div>
+
+        </div>
+
+
+        <div class="header">
+
+            <h1>
+                My Applications
+            </h1>
+
+            <p>
+                Track your applications and see the latest
+                updates from companies.
+            </p>
+
+        </div>
+
+
+        {% if applications %}
+
+            <div class="application-list">
+
+                {% for application in applications %}
+
+                <div class="application-card">
+
+                    <div class="application-top">
+
+                        <div>
+
+                            <h2 class="opportunity-title">
+                                {{ application['opportunity_title'] }}
+                            </h2>
+
+                            <p class="company">
+                                {{ application['company_name'] }}
+                            </p>
+
+                            <p class="meta">
+                                {{ application['opportunity_type'] }}
+                                ·
+                                📍 {{ application['opportunity_county'] }}
+                            </p>
+
+                        </div>
+
+
+                        {% if application['status'] == 'Submitted' %}
+
+                            <span class="status status-submitted">
+                                Submitted
+                            </span>
+
+                        {% elif application['status'] == 'Under Review' %}
+
+                            <span class="status status-under-review">
+                                Under Review
+                            </span>
+
+                        {% elif application['status'] == 'Shortlisted' %}
+
+                            <span class="status status-shortlisted">
+                                🎯 Shortlisted
+                            </span>
+
+                        {% elif application['status'] == 'Accepted' %}
+
+                            <span class="status status-accepted">
+                                🎉 Accepted
+                            </span>
+
+                        {% elif application['status'] == 'Rejected' %}
+
+                            <span class="status status-rejected">
+                                Rejected
+                            </span>
+
+                        {% else %}
+
+                            <span class="status status-default">
+                                {{ application['status'] }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- STATUS MESSAGES -->
+
+                    {% if application['status'] == 'Shortlisted' %}
+
+                        <div class="message-box message-shortlisted">
+
+                            <strong>
+                                🎯 Great news — you have been shortlisted!
+                            </strong>
+
+                            Your application has made it to the next stage.
+                            Keep believing in yourself and stay ready for
+                            the next step. You are getting closer!
+
+                        </div>
+
+
+                    {% elif application['status'] == 'Accepted' %}
+
+                        <div class="message-box message-accepted">
+
+                            <div class="balloons">
+                                🎈🎈🎉🎈
+                            </div>
+
+                            <strong>
+                                🎉 Congratulations!
+                            </strong>
+
+                            You have been accepted for this opportunity.
+                            This is a wonderful achievement. Be proud of
+                            yourself and make the most of this opportunity!
+
+                        </div>
+
+
+                    {% elif application['status'] == 'Rejected' %}
+
+                        <div class="message-box message-rejected">
+
+                            <strong>
+                                💪 Keep Going — This Is Not The End
+                            </strong>
+
+                            Your application was not successful this time.
+                            Don't let this discourage you. Every application
+                            is a chance to learn, grow and get closer to the
+                            right opportunity. Keep applying and keep believing
+                            in yourself.
+
+                        </div>
+
+
+                    {% elif application['status'] == 'Under Review' %}
+
+                        <div class="message-box message-shortlisted">
+
+                            <strong>
+                                🔎 Your application is being reviewed.
+                            </strong>
+
+                            The company is currently considering your
+                            application. Stay positive and keep an eye
+                            on your application status.
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="application-bottom">
+
+                        <div class="date">
+
+                            Applied:
+                            {{ application['applied_at'] }}
+
+                        </div>
+
+
+                        <a
+                            href="{{ url_for(
+                                'opportunity',
+                                opportunity_id=application['opportunity_id']
+                            ) }}"
+                            class="view-button"
+                        >
+                            View Opportunity
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📄
+                </div>
+
+                <h2>
+                    No applications yet
+                </h2>
+
+                <p>
+                    Applications you submit will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

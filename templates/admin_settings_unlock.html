@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .unlock-page {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 20px;
+        background: #f4f7f9;
+    }
+
+    .unlock-card {
+        width: 100%;
+        max-width: 430px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 35px;
+        box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+        text-align: center;
+    }
+
+    .unlock-icon {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 20px;
+        border-radius: 18px;
+        background: #ecfdf5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .unlock-card h1 {
+        margin: 0 0 10px;
+        color: #172033;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .unlock-card p {
+        margin: 0 0 25px;
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .code-input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border: 1px solid #d7dce2;
+        border-radius: 10px;
+        background: #fff;
+        color: #222;
+        font-size: 20px;
+        letter-spacing: 5px;
+        text-align: center;
+        outline: none;
+        margin-bottom: 16px;
+    }
+
+    .code-input:focus {
+        border-color: #168a45;
+        box-shadow: 0 0 0 3px rgba(22, 138, 69, 0.12);
+    }
+
+    .unlock-button {
+        width: 100%;
+        border: none;
+        border-radius: 10px;
+        padding: 14px;
+        background: #168a45;
+        color: white;
+        font-size: 14px;
+        font-weight: 750;
+        cursor: pointer;
+    }
+
+    .unlock-button:hover {
+        opacity: 0.92;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #168a45;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* DARK THEME */
+
+    body.theme-dark .unlock-page {
+        background: #0f172a;
+    }
+
+    body.theme-dark .unlock-card {
+        background: #171717;
+        border-color: #303030;
+    }
+
+    body.theme-dark .unlock-card h1 {
+        color: #fff;
+    }
+
+    body.theme-dark .unlock-card p {
+        color: #ccc;
+    }
+
+    body.theme-dark .code-input {
+        background: #222;
+        color: #fff;
+        border-color: #444;
+    }
+</style>
+
+<div class="unlock-page">
+
+    <div class="unlock-card">
+
+        <div class="unlock-icon">
+            🔐
+        </div>
+
+        {% if setup %}
+
+            <h1>
+                Create Security Code
+            </h1>
+
+            <p>
+                Create the security code that will protect
+                Main Admin Settings.
+            </p>
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_settings_unlock') }}"
+            >
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <input
+                    type="password"
+                    name="security_code"
+                    class="code-input"
+                    placeholder="Create code"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <input
+                    type="password"
+                    name="confirm_code"
+                    class="code-input"
+                    placeholder="Confirm code"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="unlock-button"
+                >
+                    Create Security Code
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <h1>
+                Main Admin Security
+            </h1>
+
+            <p>
+                This area is protected by the Main Administrator
+                security code.
+            </p>
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_settings_unlock') }}"
+            >
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+                <input
+                    type="password"
+                    name="security_code"
+                    class="code-input"
+                    placeholder="Enter security code"
+                    autocomplete="off"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="unlock-button"
+                >
+                    Unlock Settings
+                </button>
+
+            </form>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back-link"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

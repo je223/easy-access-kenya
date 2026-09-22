@@ -1,0 +1,898 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | Easy Access Kenya{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   PROFILE PAGE
+   ========================================= */
+
+.profile-page {
+    min-height: calc(100vh - 120px);
+    background: #f4f7fb;
+    color: #172033;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.profile-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   PROFILE HEADER
+   ========================================= */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.profile-back {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #172033;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    border: 1px solid #dbe7f1;
+    flex-shrink: 0;
+}
+
+.profile-back:hover {
+    background: #f1f5f9;
+}
+
+.profile-header-text h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 28px;
+}
+
+.profile-header-text p {
+    margin: 5px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   PROFILE SUMMARY
+   ========================================= */
+
+.profile-summary {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid #dbe7f1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.profile-avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: #e0f2fe;
+    color: #086d91;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.profile-summary-info {
+    flex: 1;
+}
+
+.profile-summary-info h2 {
+    margin: 0 0 5px;
+    color: #172033;
+    font-size: 21px;
+}
+
+.profile-summary-info p {
+    margin: 3px 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.profile-status {
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: #eaf8ef;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   PROFILE CARD
+   ========================================= */
+
+.profile-card {
+    background: #ffffff;
+    border: 1px solid #dbe7f1;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.profile-card-header {
+    margin-bottom: 22px;
+}
+
+.profile-card-header h2 {
+    margin: 0 0 5px;
+    color: #172033;
+    font-size: 19px;
+}
+
+.profile-card-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   FORM GRID
+   ========================================= */
+
+.profile-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.profile-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.profile-field label {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.profile-field input,
+.profile-field select,
+.profile-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 13px;
+    border: 1px solid #dbe7f1;
+    border-radius: 10px;
+    background: #f8fbfe;
+    color: #1f2937;
+    font-size: 14px;
+    outline: none;
+    font-family: inherit;
+}
+
+.profile-field input:focus,
+.profile-field select:focus,
+.profile-field textarea:focus {
+    border-color: #0782b5;
+    background: #ffffff;
+}
+
+.profile-field textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.profile-field small {
+    color: #64748b;
+    font-size: 11px;
+}
+
+
+/* =========================================
+   ACTIONS
+   ========================================= */
+
+.profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.profile-cancel {
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    color: #475569;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.profile-cancel:hover {
+    background: #e2e8f0;
+}
+
+.profile-save {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: #0782b5;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.profile-save:hover {
+    background: #056b91;
+}
+
+
+/* =========================================
+   DARK THEME
+   EXACT COLORS FROM BASE.HTML
+   ========================================= */
+
+body.theme-dark .profile-page {
+    background: #111722 !important;
+    color: #e8edf4 !important;
+}
+
+body.theme-dark .profile-header-text h1 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .profile-header-text p {
+    color: #9da8b7 !important;
+}
+
+
+/* =========================================
+   DARK BACK BUTTON
+   ========================================= */
+
+body.theme-dark .profile-back {
+    background: #171e2a !important;
+    color: #ffffff !important;
+    border-color: #303a49 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.theme-dark .profile-back:hover {
+    background: #202a38 !important;
+}
+
+
+/* =========================================
+   DARK SUMMARY CARD
+   ========================================= */
+
+body.theme-dark .profile-summary {
+    background: #1b2330 !important;
+    color: #e8edf4 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .profile-avatar {
+    background: #202c25 !important;
+    color: #4caf70 !important;
+}
+
+body.theme-dark .profile-summary-info h2 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .profile-summary-info p {
+    color: #9da8b7 !important;
+}
+
+body.theme-dark .profile-status {
+    background: #202c25 !important;
+    color: #4caf70 !important;
+}
+
+
+/* =========================================
+   DARK PROFILE CARD
+   ========================================= */
+
+body.theme-dark .profile-card {
+    background: #1b2330 !important;
+    color: #e8edf4 !important;
+    border-color: #303a49 !important;
+}
+
+body.theme-dark .profile-card-header h2 {
+    color: #f1f4f8 !important;
+}
+
+body.theme-dark .profile-card-header p {
+    color: #9da8b7 !important;
+}
+
+
+/* =========================================
+   DARK FORM LABELS
+   ========================================= */
+
+body.theme-dark .profile-field label {
+    color: #e8edf4 !important;
+}
+
+
+/* =========================================
+   DARK INPUTS
+   ========================================= */
+
+body.theme-dark .profile-field input,
+body.theme-dark .profile-field select,
+body.theme-dark .profile-field textarea {
+    background: #151c27 !important;
+    color: #f1f4f8 !important;
+    border-color: #354052 !important;
+}
+
+body.theme-dark .profile-field input:focus,
+body.theme-dark .profile-field select:focus,
+body.theme-dark .profile-field textarea:focus {
+    background: #151c27 !important;
+    color: #f1f4f8 !important;
+    border-color: #4caf70 !important;
+}
+
+body.theme-dark .profile-field input::placeholder,
+body.theme-dark .profile-field textarea::placeholder {
+    color: #7f8a9b !important;
+}
+
+body.theme-dark .profile-field small {
+    color: #9da8b7 !important;
+}
+
+
+/* =========================================
+   DARK BUTTONS
+   ========================================= */
+
+body.theme-dark .profile-cancel {
+    background: #151c27 !important;
+    color: #e8edf4 !important;
+    border: 1px solid #303a49;
+}
+
+body.theme-dark .profile-cancel:hover {
+    background: #202a38 !important;
+}
+
+body.theme-dark .profile-save {
+    background: #4caf70 !important;
+    color: #ffffff !important;
+}
+
+body.theme-dark .profile-save:hover {
+    background: #429e64 !important;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .profile-page {
+        padding: 18px;
+    }
+
+    .profile-summary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-field.full-width {
+        grid-column: auto;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .profile-cancel,
+    .profile-save {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+}
+
+</style>
+
+
+<div class="profile-page">
+
+    <div class="profile-container">
+
+
+        <!-- =====================================
+             PROFILE HEADER
+             ===================================== -->
+
+        <div class="profile-header">
+
+            <a
+                href="/dashboard"
+                class="profile-back"
+            >
+                ←
+            </a>
+
+            <div class="profile-header-text">
+
+                <h1>
+                    My Profile
+                </h1>
+
+                <p>
+                    Keep your information updated to improve your opportunities.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             PROFILE SUMMARY
+             ===================================== -->
+
+        <section class="profile-summary">
+
+            <div class="profile-avatar">
+
+                {% if profile and profile.full_name %}
+
+                    {{ profile.full_name[0]|upper }}
+
+                {% else %}
+
+                    U
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="profile-summary-info">
+
+                <h2>
+
+                    {% if profile and profile.full_name %}
+
+                        {{ profile.full_name }}
+
+                    {% else %}
+
+                        Your Name
+
+                    {% endif %}
+
+                </h2>
+
+                <p>
+                    {{ account_type.replace("_", " ").title() if account_type else "User" }}
+                </p>
+
+                <p>
+                    Keep your profile complete and up to date.
+                </p>
+
+            </div>
+
+
+            <div class="profile-status">
+                Profile Active
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PROFILE FORM
+             ===================================== -->
+
+        <section class="profile-card">
+
+            <div class="profile-card-header">
+
+                <h2>
+                    Personal Information
+                </h2>
+
+                <p>
+                    Enter your basic personal and contact details.
+                </p>
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('profile') }}"
+            >
+
+                <!-- =====================================
+                     CSRF PROTECTION
+                     ===================================== -->
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+
+                <!-- =====================================
+                     PERSONAL INFORMATION
+                     ===================================== -->
+
+                <div class="profile-form-grid">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="profile-field">
+
+                        <label for="full_name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+                            value="{{ profile.full_name if profile and profile.full_name else '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-field">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{ profile.email if profile and profile.email else '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="profile-field">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value="{{ profile.phone if profile and profile.phone else '' }}"
+                            placeholder="e.g. 0712345678"
+                        >
+
+                    </div>
+
+
+                    <!-- COUNTY -->
+
+                    <div class="profile-field">
+
+                        <label for="county">
+                            County
+                        </label>
+
+                        <input
+                            type="text"
+                            id="county"
+                            name="county"
+                            value="{{ profile.county if profile and profile.county else '' }}"
+                            placeholder="e.g. Mombasa"
+                        >
+
+                    </div>
+
+
+                    <!-- TOWN -->
+
+                    <div class="profile-field">
+
+                        <label for="town">
+                            Town / Area
+                        </label>
+
+                        <input
+                            type="text"
+                            id="town"
+                            name="town"
+                            value="{{ profile.town if profile and profile.town else '' }}"
+                            placeholder="e.g. Nyali"
+                        >
+
+                    </div>
+
+
+                    <!-- DATE OF BIRTH -->
+
+                    <div class="profile-field">
+
+                        <label for="date_of_birth">
+                            Date of Birth
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date_of_birth"
+                            name="date_of_birth"
+                            value="{{ profile.date_of_birth if profile and profile.date_of_birth else '' }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     EDUCATION
+                     ===================================== -->
+
+                <div
+                    class="profile-card-header"
+                    style="margin-top: 30px;"
+                >
+
+                    <h2>
+                        Education
+                    </h2>
+
+                    <p>
+                        Add your current or most recent education information.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-form-grid">
+
+
+                    <!-- INSTITUTION -->
+
+                    <div class="profile-field">
+
+                        <label for="institution">
+                            Institution
+                        </label>
+
+                        <input
+                            type="text"
+                            id="institution"
+                            name="institution"
+                            value="{{ profile.institution if profile and profile.institution else '' }}"
+                            placeholder="University, college or institution"
+                        >
+
+                    </div>
+
+
+                    <!-- COURSE -->
+
+                    <div class="profile-field">
+
+                        <label for="course">
+                            Course
+                        </label>
+
+                        <input
+                            type="text"
+                            id="course"
+                            name="course"
+                            value="{{ profile.course if profile and profile.course else '' }}"
+                            placeholder="e.g. Mechanical Engineering"
+                        >
+
+                    </div>
+
+
+                    <!-- EDUCATION LEVEL -->
+
+                    <div class="profile-field">
+
+                        <label for="education_level">
+                            Education Level
+                        </label>
+
+                        <select
+                            id="education_level"
+                            name="education_level"
+                        >
+
+                            <option value="">
+                                Select education level
+                            </option>
+
+                            <option
+                                value="Certificate"
+                                {% if profile and profile.education_level == "Certificate" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Certificate
+                            </option>
+
+                            <option
+                                value="Diploma"
+                                {% if profile and profile.education_level == "Diploma" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Diploma
+                            </option>
+
+                            <option
+                                value="Degree"
+                                {% if profile and profile.education_level == "Degree" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Degree
+                            </option>
+
+                            <option
+                                value="Postgraduate"
+                                {% if profile and profile.education_level == "Postgraduate" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Postgraduate
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- YEAR OF STUDY -->
+
+                    <div class="profile-field">
+
+                        <label for="year_of_study">
+                            Year of Study
+                        </label>
+
+                        <input
+                            type="text"
+                            id="year_of_study"
+                            name="year_of_study"
+                            value="{{ profile.year_of_study if profile and profile.year_of_study else '' }}"
+                            placeholder="e.g. Year 3"
+                        >
+
+                    </div>
+
+
+                    <!-- GRADUATION YEAR -->
+
+                    <div class="profile-field">
+
+                        <label for="graduation_year">
+                            Expected Graduation Year
+                        </label>
+
+                        <input
+                            type="number"
+                            id="graduation_year"
+                            name="graduation_year"
+                            value="{{ profile.graduation_year if profile and profile.graduation_year else '' }}"
+                            placeholder="e.g. 2027"
+                        >
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="profile-field full-width">
+
+                        <label for="skills">
+                            Skills
+                        </label>
+
+                        <textarea
+                            id="skills"
+                            name="skills"
+                            placeholder="List your skills, separated by commas"
+                        >{{ profile.skills if profile and profile.skills else '' }}</textarea>
+
+                        <small>
+                            Example: AutoCAD, SolidWorks, teamwork, communication
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     ACTION BUTTONS
+                     ===================================== -->
+
+                <div class="profile-actions">
+
+                    <a
+                        href="/dashboard"
+                        class="profile-cancel"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="profile-save"
+                    >
+                        Save Profile
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}
